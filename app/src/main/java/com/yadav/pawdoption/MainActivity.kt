@@ -3,7 +3,10 @@ package com.yadav.pawdoption
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.ui.AppBarConfiguration
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.yadav.pawdoption.databinding.ActivityMainBinding
+import com.yadav.pawdoption.model.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,11 +21,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun usersDummyData() {
 
-        val user : Users = Users()
+        val user : User = User()
 
-        val pet1 : Pet = Pet("1002", "2002")
-        val pet2 : Pet = Pet("1003", "2001")
-        val petsList = ArrayList<Pet>()
+        val pet1 : UserPet = UserPet("1002", "2002")
+        val pet2 : UserPet = UserPet("1003", "2001")
+        val petsList = ArrayList<UserPet>()
         petsList.add(pet1)
         petsList.add(pet2)
 
@@ -40,13 +43,13 @@ class MainActivity : AppCompatActivity() {
         appointmentList.add(appointment1)
         appointmentList.add(appointment2)
 
-        val donation1 : Donations = Donations("5001", "0001", "2001")
-        val donation2 : Donations = Donations("5002", "0001", "2002")
-        val donationsList = ArrayList<Donations>()
+        val donation1 : ShelterDonation = ShelterDonation("5001", "0001", "2001")
+        val donation2 : ShelterDonation = ShelterDonation("5002", "0001", "2002")
+        val donationsList = ArrayList<ShelterDonation>()
         donationsList.add(donation1)
         donationsList.add(donation2)
 
-        user.userId = "0001"
+        user.id = "0001"
         user.name = "Vatsal Yadav"
         user.address = "1030 South Park Street"
         user.image = "url"

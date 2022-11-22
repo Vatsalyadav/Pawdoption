@@ -3,14 +3,14 @@ package com.yadav.pawdoption.model
 import com.google.gson.annotations.SerializedName
 
 
-data class Donations (
+data class ShelterDonation (
 
-    @SerializedName("donationId")
+    @SerializedName("donation_id")
     var donationId : String? = null,
 
-    @SerializedName("userId")
+    @SerializedName("user_id")
     var userId : String? = null,
 
-    @SerializedName("shelterId")
+    @SerializedName("shelter_id")
     var shelterId : String? = null
 )

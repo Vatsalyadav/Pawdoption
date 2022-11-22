@@ -3,10 +3,10 @@ package com.yadav.pawdoption.model
 import com.google.gson.annotations.SerializedName
 
 
-data class Users(
+data class User(
 
-    @SerializedName("userId")
-    var userId: String? = null,
+    @SerializedName("id")
+    var id: String? = null,
 
     @SerializedName("name")
     var name: String? = null,
@@ -21,7 +21,7 @@ data class Users(
     var image: String? = null,
 
     @SerializedName("pets")
-    var pets: ArrayList<Pet>? = null,
+    var pets: ArrayList<UserPet>? = null,
 
     @SerializedName("appointment")
     var appointments: ArrayList<Appointment>? = null,
@@ -30,6 +30,6 @@ data class Users(
     var lovedPets: ArrayList<UserLovedPet>? = null,
 
     @SerializedName("donations")
-    var donations: ArrayList<Donations>? = null
+    var donations: ArrayList<ShelterDonation>? = null
 
     )

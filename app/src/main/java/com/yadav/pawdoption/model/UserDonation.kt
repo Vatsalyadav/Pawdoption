@@ -3,7 +3,7 @@ package com.yadav.pawdoption.model
 import com.google.gson.annotations.SerializedName
 
 
-data class Donation (
+data class UserDonation (
 
     @SerializedName("id"        ) var id        : String? = null,
     @SerializedName("userID"    ) var userID    : String? = null,
