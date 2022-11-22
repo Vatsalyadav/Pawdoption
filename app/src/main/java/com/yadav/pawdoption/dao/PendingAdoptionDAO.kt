@@ -13,9 +13,10 @@ class PendingAdoptionDAO : IPendingAdoptionDAO {
             "1",
             "1",
             "1",
-            "ftuyk",
             true,
             true,
+            true,
+            haveDogHouse = true,
             false
         );
 
@@ -23,7 +24,8 @@ class PendingAdoptionDAO : IPendingAdoptionDAO {
             "2",
             "1",
             "2",
-            "ftuyk",
+            true,
+            true,
             true,
             true,
             false
