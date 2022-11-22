@@ -9,5 +9,5 @@ data class Veterinarian (
     @SerializedName("name"          ) var name          : String?           = null,
     @SerializedName("qualification" ) var qualification : String?           = null,
     @SerializedName("days"          ) var days          : ArrayList<String> = arrayListOf(),
-    @SerializedName("booked_slots"   ) var bookedSlots          : ArrayList<BookedSlot> = arrayListOf()
+    @SerializedName("booked_slots"  ) var bookedSlots   : ArrayList<BookedSlot> = arrayListOf()
 )
