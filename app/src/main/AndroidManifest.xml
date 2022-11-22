@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.yadav.pawdoption">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,8 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pawdoption"
         tools:targetApi="31">
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA-LpMB382W9d6Ecf4QASdRNYef906FFp0" />
+
         <activity
-            android:name=".ShelterMapFragment"
+            android:name=".view.ShelterMapFragment"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
