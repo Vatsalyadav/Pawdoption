@@ -3,24 +3,33 @@ package com.yadav.pawdoption.model
 import com.google.gson.annotations.SerializedName
 
 
-data class Users (
+data class Users(
 
     @SerializedName("userId")
-    var userId  : String? = null,
+    var userId: String? = null,
 
-    @SerializedName("userDetails")
-    var userDetails: UserDetails? = null,
+    @SerializedName("name")
+    var name: String? = null,
+
+    @SerializedName("address")
+    var address: String? = null,
+
+    @SerializedName("mobile_number")
+    var mobileNumber: String? = null,
+
+    @SerializedName("image")
+    var image: String? = null,
 
     @SerializedName("pets")
-    var pets : ArrayList<Pet>? = null,
+    var pets: ArrayList<Pet>? = null,
 
     @SerializedName("appointment")
-    var appointments : ArrayList<Appointment>? = null,
+    var appointments: ArrayList<Appointment>? = null,
 
     @SerializedName("lovedPets")
-    var lovedPets : ArrayList<UserLovedPet>? = null,
+    var lovedPets: ArrayList<UserLovedPet>? = null,
 
     @SerializedName("donations")
-    var donations : ArrayList<Donations>? = null
+    var donations: ArrayList<Donations>? = null
 
-)
+    )
