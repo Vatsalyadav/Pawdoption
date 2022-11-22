@@ -26,6 +26,7 @@
         android:id="@+id/relativeLayout"
         android:padding="16dp"
         >
+
         <TextView
             android:id="@+id/shelter_name"
             android:layout_width="236dp"
