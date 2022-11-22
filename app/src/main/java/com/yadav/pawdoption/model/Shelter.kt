@@ -12,6 +12,6 @@ data class Shelter (
     @SerializedName("latitude"    ) var latitude    : Double? = null,
     @SerializedName("longitude"   ) var longitude   : Double? = null,
     @SerializedName("pets"        ) var pets        : ArrayList<ShelterPet> = arrayListOf(),
-    @SerializedName("donations"   ) var donations   : ArrayList<UserDonation> = arrayListOf(),
+    @SerializedName("donations"   ) var donations   : ArrayList<ShelterDonation> = arrayListOf(),
     @SerializedName("veterinarians"   ) var veterinarians   : ArrayList<Veterinarian> = arrayListOf(),
 )

@@ -7,7 +7,7 @@ data class BookedSlot (
 
     @SerializedName("id"       ) var id       : String? = null,
     @SerializedName("day"      ) var day      : String? = null,
-    @SerializedName("timeSlot" ) var timeSlot : String? = null,
-    @SerializedName("userId"   ) var userId   : String? = null
+    @SerializedName("timeslot" ) var timeSlot : String? = null,
+    @SerializedName("user_id"   ) var userId   : String? = null
 
 )

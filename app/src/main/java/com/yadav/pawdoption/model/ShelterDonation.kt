@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName
 
 data class ShelterDonation (
 
-    @SerializedName("donation_id")
-    var donationId : String? = null,
 
-    @SerializedName("user_id")
-    var userId : String? = null,
+    @SerializedName("id"        ) var id        : String? = null,
+    @SerializedName("user_id"    ) var userID    : String? = null,
+//    @SerializedName("shelter_id" ) var shelterID : String? = null,
+    @SerializedName("comment"   ) var comment   : String? = null,
+    @SerializedName("amount"    ) var amount    : Double? = null,
+    @SerializedName("timestamp" ) var timestamp : String? = null
 
-    @SerializedName("shelter_id")
-    var shelterId : String? = null
 )

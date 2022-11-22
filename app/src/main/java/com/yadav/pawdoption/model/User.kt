@@ -30,6 +30,6 @@ data class User(
     var lovedPets: ArrayList<UserLovedPet>? = null,
 
     @SerializedName("donations")
-    var donations: ArrayList<ShelterDonation>? = null
+    var donations: ArrayList<UserDonation>? = null
 
     )
