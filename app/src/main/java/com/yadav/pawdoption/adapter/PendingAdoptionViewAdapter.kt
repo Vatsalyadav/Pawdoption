@@ -42,15 +42,5 @@ class PendingAdoptionViewAdapter(val pendingAdoptionList: MutableList<PendingAdo
                 tvTimestamp.text = pendingAdoption.timestamp;
             }
         }
-
-
-//        override fun onClick(p0: View?) {
-//
-//
-//            val pendingAdoptionFragment = PendingAdoptionFragment()
-//            pendingAdoptionFragment.findNavController().navigate(R.id.action_pendingAdoptionFragment_to_confirmAdoptionFragment)
-//        }
-
-
     }
 }

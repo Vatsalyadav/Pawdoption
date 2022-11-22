@@ -1,14 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ConfirmAdoptionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+
+    <ImageView
+        android:id="@+id/ivPendingAdoptionPetImage"
+        android:layout_width="413dp"
+        android:layout_height="256dp"
+        android:layout_centerVertical="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvPendingAdoptionPetName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="12dp"
+        android:text="Pet Name"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivPendingAdoptionPetImage" />
+
+    <TextView
+        android:id="@+id/tvPendingAdoptionPetId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Pet ID"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvPendingAdoptionPetName"
+        app:layout_constraintTop_toBottomOf="@+id/ivPendingAdoptionPetImage" />
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/mltvPendingAdoptionPetDescription"
+        android:layout_width="103dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:minHeight="48dp"
+        android:text="Pet Description"
+        android:textSize="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPendingAdoptionPetName" />
+
+    <TextView
+        android:id="@+id/tvPendingAdoptionStaticAdopterDetails"
+        android:layout_width="134dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/adopter_details"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mltvPendingAdoptionPetDescription" />
+
+    <TextView
+        android:id="@+id/tvPendingAdoptionStaticAdopterName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPendingAdoptionStaticAdopterDetails" />
+
+    <TextView
+        android:id="@+id/tvPendingAdoptionStaticAdopterMobileNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mobile_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPendingAdoptionStaticAdopterName" />
+
+    <TextView
+        android:id="@+id/tvPendingAdoptionStaticAdopterAddress"
+        android:layout_width="57dp"
+        android:layout_height="17dp"
+        android:text="@string/address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPendingAdoptionStaticAdopterMobileNumber" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/tvPendingAdoptionStaticAdopterEnoughSpace"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/enough_space"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvPendingAdoptionStaticAdopterAddress" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tvPendingAdoptionStaticAdopterDogHouse"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/dog_house"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvPendingAdoptionStaticAdopterEnoughSpace" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tvPendingAdoptionStaticAdopterAllergic"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/any_allergic"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvPendingAdoptionStaticAdopterDogHouse" />-->
+
+    <TextView
+        android:id="@+id/tvPendingAdoptionAdopterName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvPendingAdoptionStaticAdopterName"
+        app:layout_constraintTop_toBottomOf="@+id/tvPendingAdoptionStaticAdopterDetails" />
+
+    <TextView
+        android:id="@+id/tvPendingAdoptionAdopterMobileNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mobile_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvPendingAdoptionStaticAdopterMobileNumber"
+        app:layout_constraintTop_toBottomOf="@+id/tvPendingAdoptionAdopterName" />
+
+    <TextView
+        android:id="@+id/tvPendingAdoptionAdopterAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvPendingAdoptionStaticAdopterAddress"
+        app:layout_constraintTop_toBottomOf="@+id/tvPendingAdoptionAdopterMobileNumber" />
+
+    <CheckBox
+        android:id="@+id/cbPendingAdoptionAdopterEnoughSpace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enough_space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPendingAdoptionStaticAdopterAddress" />
+
+    <CheckBox
+        android:id="@+id/cbPendingAdoptionAdopterDogHouse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dog_house"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbPendingAdoptionAdopterEnoughSpace" />
+
+    <CheckBox
+        android:id="@+id/cbPendingAdoptionAdopterAnyAllergic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/any_allergic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbPendingAdoptionAdopterDogHouse" />
+
+    <Button
+        android:id="@+id/btnPendingAdopterApprove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/approve"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbPendingAdoptionAdopterAnyAllergic" />
+
+    <Button
+        android:id="@+id/btnPendingAdoptionDeny"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reject"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbPendingAdoptionAdopterAnyAllergic" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
