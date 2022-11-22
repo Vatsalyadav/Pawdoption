@@ -1,12 +1,9 @@
 package com.yadav.pawdoption
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import androidx.navigation.ui.AppBarConfiguration
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.yadav.pawdoption.databinding.ActivityMainBinding
-import com.yadav.pawdoption.model.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,6 +55,12 @@ class MainActivity : AppCompatActivity() {
         user.lovedPets = userLovedPetList
         user.appointments = appointmentList
         user.donations = donationsList
+
+    }
+
+    private fun shelterDummyData(){
+
+
 
     }
 
