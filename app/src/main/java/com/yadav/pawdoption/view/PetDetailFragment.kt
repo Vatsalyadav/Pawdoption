@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.PetDetailImageCorousalAdapter
-import com.yadav.pawdoption.databinding.FragmentPendingAdoptionsBinding
 import com.yadav.pawdoption.databinding.FragmentPetDetailBinding
-import com.yadav.pawdoption.databinding.PendingAdoptionBinding
 import me.relex.circleindicator.CircleIndicator
 
 class PetDetailFragment : Fragment() {
@@ -31,7 +29,7 @@ class PetDetailFragment : Fragment() {
 
         _binding = FragmentPetDetailBinding.inflate(inflater, container, false)
 
-        viewPager = binding.viewpager
+        viewPager = binding.vpPetDetailsImage
 
         return binding.root
     }
@@ -48,7 +46,7 @@ class PetDetailFragment : Fragment() {
         images?.let{
             viewPagerAdapter = PetDetailImageCorousalAdapter(requireContext(), it)
             viewPager.adapter = viewPagerAdapter
-            indicator = requireView().findViewById(R.id.indicator) as CircleIndicator
+            indicator = requireView().findViewById(R.id.inPetDetailsImage) as CircleIndicator
             indicator.setViewPager(viewPager)
         }
     }
