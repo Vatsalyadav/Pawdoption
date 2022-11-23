@@ -2,8 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/petDetailFragment">
+    android:id="@+id/confirm_adoption_navigation"
+    app:startDestination="@id/mapsFragment">
+
+<!--    pendingAdoptionFragment-->
 
     <fragment
         android:id="@+id/pendingAdoptionFragment"
@@ -27,8 +29,17 @@
             app:argType="com.yadav.pawdoption.model.PendingAdoption" />
     </fragment>
     <fragment
+        android:id="@+id/shelterMapFragment"
+        android:name="com.yadav.pawdoption.view.ShelterMapFragment"
+        android:label="ShelterMapFragment" />
+    <fragment
         android:id="@+id/petDetailFragment"
         android:name="com.yadav.pawdoption.view.PetDetailFragment"
         android:label="fragment_pet_detail"
         tools:layout="@layout/fragment_pet_detail" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.yadav.pawdoption.view.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>
