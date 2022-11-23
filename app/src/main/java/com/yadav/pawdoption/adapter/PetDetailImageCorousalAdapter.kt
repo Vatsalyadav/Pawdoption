@@ -21,7 +21,7 @@ class PetDetailImageCorousalAdapter(private val context: Context, private var im
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val view: View =  (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.pet_detail_image_corousal_item, null)
-        val ivImages = view.findViewById<ImageView>(R.id.iv_images)
+        val ivImages = view.findViewById<ImageView>(R.id.ivPetDetailsImageCorousal)
 
         imageList[position].let {
             Picasso.with(context)
