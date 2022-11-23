@@ -6,6 +6,7 @@
 package com.yadav.pawdoption.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.PetListAdapter
+import com.yadav.pawdoption.persistence.SheltersDAO
 
 class PetListFragment : Fragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var petListAdapter: PetListAdapter
+    private val sheltersDAO = SheltersDAO()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,18 +32,21 @@ class PetListFragment : Fragment() {
         activity?.title = "Pets"
 //        (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
-        // Code Reference 3: https://www.kodeco.com/1560485-android-recyclerview-tutorial-with-kotlin
-
-//        petListAdapter = PetListAdapter(NotesListSingleton.getNotes())
         setupRecyclerView(view)
-
         return view
     }
 
     private fun setupRecyclerView(view: View) {
+        petListAdapter = PetListAdapter(requireContext(), mutableListOf())
         linearLayoutManager = LinearLayoutManager(activity)
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = petListAdapter
+        sheltersDAO.getShelters().observe(viewLifecycleOwner
+        ) {
+            petListAdapter = PetListAdapter(requireContext(), it.get("2001")!!.pets)
+            recyclerView.adapter = petListAdapter
+            petListAdapter.notifyDataSetChanged()
+        }
     }
 }
