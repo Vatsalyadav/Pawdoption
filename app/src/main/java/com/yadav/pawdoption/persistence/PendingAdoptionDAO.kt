@@ -1,4 +1,4 @@
-package com.yadav.pawdoption.dao
+package com.yadav.pawdoption.persistence
 
 import com.yadav.pawdoption.model.PendingAdoption
 

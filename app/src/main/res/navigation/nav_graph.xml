@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/confirm_adoption_navigation"
-    app:startDestination="@id/mapsFragment">
+    app:startDestination="@id/petListFragment">
 
 <!--    pendingAdoptionFragment-->
 
@@ -37,7 +37,11 @@
         android:name="com.yadav.pawdoption.view.PetDetailFragment"
         android:label="fragment_pet_detail"
         tools:layout="@layout/fragment_pet_detail" />
-<!--    <fragment-->
+    <fragment
+        android:id="@+id/petListFragment"
+        android:name="com.yadav.pawdoption.view.PetListFragment"
+        android:label="PetListFragment" />
+    <!--    <fragment-->
 <!--        android:id="@+id/mapsFragment"-->
 <!--        android:name="com.yadav.pawdoption.view.MapsFragment"-->
 <!--        android:label="fragment_maps"-->
