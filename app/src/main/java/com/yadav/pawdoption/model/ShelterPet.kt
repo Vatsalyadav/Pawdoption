@@ -10,6 +10,7 @@ data class ShelterPet(
     @SerializedName("age"         ) var age: Int?    = null,
     @SerializedName("breed"       ) var breed: String? = null,
     @SerializedName("description" ) var description: String? = null,
-    @SerializedName("imageURL"    ) var imageURL: ArrayList<String> = arrayListOf()
+    @SerializedName("imageURL"    ) var imageURL: ArrayList<String> = arrayListOf(),
 
+    var shelterName: String
 )
