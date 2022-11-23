@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,15 +17,15 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.yadav.pawdoption.R
+import com.yadav.pawdoption.persistence.SheltersDAO
 
 
 class MapsFragment : Fragment() {
 
-
+    private val sheltersDAO = SheltersDAO()
     private lateinit var currentLocation: Location
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val permissionCode = 101
@@ -33,28 +34,37 @@ class MapsFragment : Fragment() {
     private val callback = OnMapReadyCallback { googleMap ->
         val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
 
-        val halifax:LatLng = LatLng(44.6476,-63.5728)
-        val toronto:LatLng = LatLng(43.6532,-79.3832)
-        val vancouver = LatLng(49.2827,-123.1207) as LatLng
+        sheltersDAO.getShelters().observe(viewLifecycleOwner){
+            var nearbyShelters: ArrayList<LatLng> = arrayListOf()
+            var keys = it.keys
+            for (key in keys){
+                var lat = it.get(key)!!.latitude
+                var long = it.get(key)!!.longitude
 
-        var points: MutableList<LatLng> = mutableListOf<LatLng>()
-        points.add(halifax)
-        points.add(toronto)
-        points.add(vancouver)
+                var distance: FloatArray = FloatArray(100)
 
-        var i = 0
-        for(point in points){
-            var mo = MarkerOptions().position(point).title("Here")
-            googleMap.addMarker(mo)
+                if (lat != null && long != null) {
+                    Location.distanceBetween(currentLocation.latitude,currentLocation.longitude,lat,long,distance)
+                    println("***********************************************************************************")
+                    println(distance[0])
+                    println("***********************************************************************************")
+                    if(distance[0] < 10000){
+                        nearbyShelters.add(LatLng(lat, long))
+                    }
+                }
+            }
+
+            for(point in nearbyShelters){
+                var mo = MarkerOptions().position(point).title("Here")
+                googleMap.addMarker(mo)
+            }
+
         }
 
         val markerOptions = MarkerOptions().position(latLng).title("Current location")
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
         googleMap.addMarker(markerOptions)
-
-//        var circle = CircleOptions().center(latLng).radius(100000.00).zIndex(0f)
-//        googleMap.addCircle(circle)
     }
 
 
