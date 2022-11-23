@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.PendingAdoptionViewAdapter
-import com.yadav.pawdoption.dao.PendingAdoptionDAO
+import com.yadav.pawdoption.persistence.PendingAdoptionDAO
 import com.yadav.pawdoption.databinding.FragmentPendingAdoptionsBinding
 import com.yadav.pawdoption.model.PendingAdoption
 

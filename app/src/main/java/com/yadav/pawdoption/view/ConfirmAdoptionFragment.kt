@@ -6,10 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.yadav.pawdoption.R
+import com.yadav.pawdoption.databinding.FragmentPendingAdoptionsBinding
 import com.yadav.pawdoption.model.PendingAdoption
 
 class ConfirmAdoptionFragment : Fragment() {
 
+    var _binding: FragmentPendingAdoptionsBinding? = null
+
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
