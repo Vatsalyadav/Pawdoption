@@ -16,7 +16,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+//        usersDummyData()
+//        shelterDummyData()
     }
 
     private fun usersDummyData() {
@@ -49,14 +50,14 @@ class MainActivity : AppCompatActivity() {
 //        donationsList.add(donation1)
 //        donationsList.add(donation2)
 
-        val donation1: UserDonation = UserDonation("1", "2001", "Donation made ", 100.00, "1/22/22 12:00:06")
-        val donation2: UserDonation = UserDonation("2", "2001", "Donation made to shelter ", 10.00, "1/22/22 06:04:04")
+        val donation1: UserDonation = UserDonation("donationId1", "2001", "Donation made ", 100.00, "1/22/22 12:00:06")
+        val donation2: UserDonation = UserDonation("donationId2", "2001", "Donation made to shelter ", 10.00, "1/22/22 06:04:04")
 
         val donationsList = ArrayList<UserDonation>()
         donationsList.add(donation1)
         donationsList.add(donation2)
 
-        user.id = "0001"
+        user.id = "uid1"
         user.name = "Vatsal Yadav"
         user.address = "1030 South Park Street"
         user.image = "url"
@@ -65,7 +66,9 @@ class MainActivity : AppCompatActivity() {
         user.lovedPets = userLovedPetList
         user.appointments = appointmentList
         user.donations = donationsList
-
+        val database = Firebase.database
+        val myRef = database.getReference("Users").child(user.id!!)
+        myRef.setValue(user)
     }
 
     private fun shelterDummyData(){
@@ -78,16 +81,16 @@ class MainActivity : AppCompatActivity() {
         images.add("https://firebasestorage.googleapis.com/v0/b/cosmic-kite-278709.appspot.com/o/Screen%20Shot%202022-10-15%20at%206.07.25%20PM.png?alt=media&token=b6f38fa9-3144-4ebe-97f0-021c58a892b0")
 
 
-        val pet1: ShelterPet = ShelterPet("1", "Pet1", 4, "Retrievers (Labrador)", "very nice pet", images)
-        val pet2: ShelterPet = ShelterPet("2", "Pet2", 5, "French Bulldogs", "very nice pet", images)
+        val pet1: ShelterPet = ShelterPet("1001", "Pet1", 4, "Retrievers (Labrador)", "very nice pet", images)
+        val pet2: ShelterPet = ShelterPet("1002", "Pet2", 5, "French Bulldogs", "very nice pet", images)
 
         pets.add(pet1);
         pets.add(pet2);
 
         val donations: ArrayList<ShelterDonation> = ArrayList<ShelterDonation>();
 
-        val donation1: ShelterDonation = ShelterDonation("1", "001", "Donation made ", 100.00, "1/22/22 12:00:06")
-        val donation2: ShelterDonation = ShelterDonation("2", "001", "Donation made to shelter ", 10.00, "1/22/22 06:04:04")
+        val donation1: ShelterDonation = ShelterDonation("donationId1", "uid1", "Donation made ", 100.00, "1/22/22 12:00:06")
+        val donation2: ShelterDonation = ShelterDonation("donationId2", "uid1", "Donation made to shelter ", 10.00, "1/22/22 06:04:04")
 
         donations.add(donation1);
         donations.add(donation2);
@@ -104,6 +107,9 @@ class MainActivity : AppCompatActivity() {
             arrayListOf()
         );
 
+        val database = Firebase.database
+        val myRef = database.getReference("Shelters").child(shelter.id!!)
+        myRef.setValue(shelter)
 
 
     }
