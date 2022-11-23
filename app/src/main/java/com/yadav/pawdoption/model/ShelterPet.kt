@@ -12,5 +12,5 @@ data class ShelterPet(
     @SerializedName("description" ) var description: String? = null,
     @SerializedName("imageURL"    ) var imageURL: ArrayList<String> = arrayListOf(),
 
-    var shelterName: String
+    var shelterName: String = "Default Shelter Name YOLO"
 )
