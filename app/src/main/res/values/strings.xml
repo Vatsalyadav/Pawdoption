@@ -18,7 +18,7 @@
     <string name="reject">Reject</string>
 
     <string name="login">Login</string>
-    <string name="enter_username">userName</string>
+    <string name="enter_email">Email</string>
     <string name="enter_password">Password</string>
     <string name="rememberMe">Remember Me</string>
     <string name="forgetPassword">Forget Password</string>

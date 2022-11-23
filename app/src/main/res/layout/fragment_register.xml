@@ -32,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Pet Adopter"
+                android:checked = "true"
                 android:textColor="#131212"></com.google.android.material.radiobutton.MaterialRadioButton>
 
             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -317,8 +318,6 @@
 
         </LinearLayout>
 
-
-
         <Button
             android:id="@+id/register_btn"
             android:layout_width="match_parent"
@@ -332,6 +331,7 @@
         </Button>
 
         <Button
+            android:id="@+id/redirect_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -340,9 +340,7 @@
             android:backgroundTint="@color/white"
             android:text="Already have an account ?"
             android:textColor="#131212"
-            android:onClick="call_login"
             >
-
         </Button>
 
     </LinearLayout>

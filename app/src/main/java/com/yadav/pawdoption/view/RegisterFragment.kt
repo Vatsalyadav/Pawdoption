@@ -35,12 +35,18 @@ class RegisterFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+
+
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.redirectLogin.setOnClickListener{
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        }
 
         val radioGroup = view.findViewById(R.id.radio) as RadioGroup
         var linearLayout1 = view.findViewById(R.id.linearLayout1) as LinearLayout
@@ -58,7 +64,7 @@ class RegisterFragment : Fragment() {
             }
         })
 
-    firebaseAuth = FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
 
         binding.registerBtn.setOnClickListener() {
             val email = binding.emailEt.text.toString()
@@ -71,7 +77,7 @@ class RegisterFragment : Fragment() {
                    firebaseAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener{
                                   if(it.isSuccessful){
                                       Toast.makeText(this.context,"Registered",Toast.LENGTH_SHORT).show()
-                                      findNavController().navigate(R.id.action_registerFragment_to_petListFragment)
+                                      findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
                                   }
                        else{
                            Toast.makeText(this.context,it.exception.toString(),Toast.LENGTH_SHORT).show()

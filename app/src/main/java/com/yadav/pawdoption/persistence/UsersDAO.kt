@@ -10,29 +10,22 @@ import com.google.firebase.database.ktx.getValue
 import com.yadav.pawdoption.model.*
 
 class UsersDAO : IUsersDAO {
-    val TAG = "PetsDAO"
-    private val petsListByShelters: MutableList<ShelterPet> = mutableListOf()
-    private val petsList: MutableList<ShelterPet> = mutableListOf()
+    val TAG = "UsersDAO"
 
-    private var shelters = MutableLiveData<HashMap<String, Shelter>>()
-
-//    override fun getShelters(): MutableLiveData<HashMap<String, Shelter>> {
-//        val sheltersReference = FirebaseDatabaseSingleton.getSheltersReference()
-//        sheltersReference.addValueEventListener(object: ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                shelters.value = snapshot.getValue<HashMap<String,Shelter>>()
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Log.w(TAG, "Failed to read value.", error.toException())
-//            }
-//
-//        })
-//        return shelters
-//    }
-
+    private var users = MutableLiveData<HashMap<String, User>>()
 
     override fun getUserList(): MutableLiveData<HashMap<String, User>> {
-        TODO("Not yet implemented")
+        val usersReference = FirebaseDatabaseSingleton.getUsersReference()
+        usersReference.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                users.value = snapshot.getValue<HashMap<String,User>>()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+
+        })
+        return users
     }
 }
