@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/confirm_adoption_navigation"
+    app:startDestination="@id/petListFragment">
+
+<!--    pendingAdoptionFragment-->
+
+    <fragment
+        android:id="@+id/pendingAdoptionFragment"
+        android:name="com.yadav.pawdoption.view.PendingAdoptionFragment"
+        android:label="fragment_pending_adoptions"
+        tools:layout="@layout/fragment_pending_adoptions" >
+        <action
+            android:id="@+id/action_pendingAdoptionFragment_to_confirmAdoptionFragment"
+            app:destination="@id/confirmAdoptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmAdoptionFragment"
+        android:name="com.yadav.pawdoption.view.ConfirmAdoptionFragment"
+        android:label="fragment_confirm_adoption"
+        tools:layout="@layout/fragment_confirm_adoption" >
+        <action
+            android:id="@+id/action_confirmAdoptionFragment_to_pendingAdoptionFragment"
+            app:destination="@id/pendingAdoptionFragment" />
+        <argument
+            android:name="PendingAdoption"
+            app:argType="com.yadav.pawdoption.model.PendingAdoption" />
+    </fragment>
+    <fragment
+        android:id="@+id/shelterMapFragment"
+        android:name="com.yadav.pawdoption.view.ShelterMapFragment"
+        android:label="ShelterMapFragment" />
+    <fragment
+        android:id="@+id/petDetailFragment"
+        android:name="com.yadav.pawdoption.view.PetDetailFragment"
+        android:label="fragment_pet_detail"
+        tools:layout="@layout/fragment_pet_detail" />
+    <fragment
+        android:id="@+id/petListFragment"
+        android:name="com.yadav.pawdoption.view.PetListFragment"
+        android:label="PetListFragment" />
+    <!--    <fragment-->
+<!--        android:id="@+id/mapsFragment"-->
+<!--        android:name="com.yadav.pawdoption.view.MapsFragment"-->
+<!--        android:label="fragment_maps"-->
+<!--        tools:layout="@layout/fragment_maps" />-->
+</navigation>

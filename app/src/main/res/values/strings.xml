@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">Pawdoption</string>
+    <string name="app_name">Project</string>
+    <string name="adopter_details">Adopter Details</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="name">Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="age">Age</string>
+    <string name="description">Description</string>
+    <string name="address">Address</string>
+    <string name="enough_space">Do adopter have enough space?</string>
+    <string name="dog_house">Do adopter have indoor dog house?</string>
+    <string name="any_allergic">Is anyone allergic to dog in adopter\'s family?</string>
+    <string name="adequate_food">Do adopter have the adequate food?</string>
+    <string name="adequate_water">Do adopter have the adequate water?</string>
+    <string name="adopt">Adopt</string>
+    <string name="approve">Approve</string>
+    <string name="reject">Reject</string>
+
+
 </resources>
