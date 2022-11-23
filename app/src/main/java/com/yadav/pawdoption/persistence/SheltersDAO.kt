@@ -17,6 +17,8 @@ class SheltersDAO : ISheltersDAO {
     private val petsListByShelters: MutableList<ShelterPet> = mutableListOf()
     private val petsList: MutableList<ShelterPet> = mutableListOf()
 
+    private var userTypeHashMap = MutableLiveData<HashMap<String, String>>()
+
     private var shelters = MutableLiveData<HashMap<String, Shelter>>()
 
     override fun getShelters(): MutableLiveData<HashMap<String, Shelter>> {
@@ -32,6 +34,21 @@ class SheltersDAO : ISheltersDAO {
 
         })
         return shelters
+    }
+
+    fun getUserTypes(): MutableLiveData<HashMap<String, String>> {
+        val userTypeReference = FirebaseDatabaseSingleton.getUserTypeReference()
+        userTypeReference.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userTypeHashMap.value = snapshot.getValue<HashMap<String,String>>()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+
+        })
+        return userTypeHashMap
     }
 
     override fun getPetsList() {
