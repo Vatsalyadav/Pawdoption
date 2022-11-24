@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import androidx.navigation.fragment.findNavController
 import com.yadav.pawdoption.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.ktx.Firebase
@@ -35,6 +36,8 @@ class UploadAnimalPosting : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_upload_animal_posting, container, false)
+
+        activity?.title = "Pet Posting"
 
         val btnUploadPhoto = view.findViewById<Button>(R.id.btnUploadPhoto)
         btnUploadPhoto.setOnClickListener {
@@ -63,6 +66,8 @@ class UploadAnimalPosting : Fragment() {
 
             // TODO: Upload image - Dynamically generate a file name
             uploadImage("myImage")
+
+            findNavController().navigate(R.id.action_uploadAnimalPosting_to_petListFragment)
         }
 
         return view
