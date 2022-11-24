@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,9 +15,19 @@ import android.widget.*
 import androidx.core.app.ActivityCompat
 import com.yadav.pawdoption.R
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 
 class UploadAnimalPosting : Fragment() {
+
+    var curFile: Uri? = null
+    val imageRef = Firebase.storage.reference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +60,9 @@ class UploadAnimalPosting : Fragment() {
             val selectedRadioButtonId = rgBreed.checkedRadioButtonId
             val selectedRadioButton = view.findViewById<RadioButton>(selectedRadioButtonId)
             val tiPetDescription = view.findViewById<TextInputEditText>(R.id.tiPetDescription)
+
+            // TODO: Upload image - Dynamically generate a file name
+            uploadImage("myImage")
         }
 
         return view
@@ -86,7 +100,27 @@ class UploadAnimalPosting : Fragment() {
 
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             val image = view?.findViewById<ImageView>(R.id.ivPetUpload)
-            image?.setImageURI(data?.data)
+
+            data?.data?.let {
+                curFile = it
+                image?.setImageURI(it)
+            }
+
+        }
+    }
+
+    private fun uploadImage(fileName: String) = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            curFile?.let {
+                imageRef.child("images/$fileName").putFile(it).await()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Successfully uploaded image", Toast.LENGTH_LONG).show()
+                }
+            }
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+            }
         }
     }
 
