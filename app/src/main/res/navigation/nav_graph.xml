@@ -46,12 +46,45 @@
     <fragment
         android:id="@+id/petListFragment"
         android:name="com.yadav.pawdoption.view.PetListFragment"
-        android:label="PetListFragment" />
+        android:label="PetListFragment" >
+        <action
+            android:id="@+id/action_petListFragment_to_uploadAnimalPosting"
+            app:destination="@id/uploadAnimalPosting" />
+    </fragment>
+    <fragment
+        android:id="@+id/myAppointment"
+        android:name="com.yadav.pawdoption.view.MyAppointment"
+        android:label="MyAppointment" />
+    <fragment
+        android:id="@+id/createVetAppointment"
+        android:name="com.yadav.pawdoption.view.CreateVetAppointment"
+        android:label="fragment_create_vet_appointment"
+        tools:layout="@layout/fragment_create_vet_appointment" >
+        <action
+            android:id="@+id/action_createVetAppointment_to_bookAppointment"
+            app:destination="@id/bookAppointment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookAppointment"
+        android:name="com.yadav.pawdoption.view.BookAppointment"
+        android:label="BookAppointment" >
+        <action
+            android:id="@+id/action_bookAppointment_to_createVetAppointment"
+            app:destination="@id/createVetAppointment" />
+    </fragment>
     <fragment
         android:id="@+id/adoptPetFragment"
         android:name="com.yadav.pawdoption.view.AdoptPetFragment"
         android:label="fragment_adopt_pet"
         tools:layout="@layout/fragment_adopt_pet" />
+    <fragment
+        android:id="@+id/uploadAnimalPosting"
+        android:name="com.yadav.pawdoption.view.UploadAnimalPosting"
+        android:label="UploadAnimalPosting" >
+        <action
+            android:id="@+id/action_uploadAnimalPosting_to_petListFragment"
+            app:destination="@id/petListFragment" />
+    </fragment>
     <!--    <fragment-->
 <!--        android:id="@+id/mapsFragment"-->
 <!--        android:name="com.yadav.pawdoption.view.MapsFragment"-->
