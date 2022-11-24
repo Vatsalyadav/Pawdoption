@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yadav.pawdoption.adapter.PendingAdoptionViewAdapter
-import com.yadav.pawdoption.persistence.PendingAdoptionDAO
+import com.yadav.pawdoption.persistence.PendingAdoptionDAOMock
 import com.yadav.pawdoption.databinding.FragmentPendingAdoptionsBinding
 import com.yadav.pawdoption.model.PendingAdoption
 
@@ -29,9 +29,9 @@ class PendingAdoptionFragment : Fragment() {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_pending_adoptions, container, false)
 
-        val pendingAdoptionDAO: PendingAdoptionDAO = PendingAdoptionDAO();
+        val pendingAdoptionDAOMock: PendingAdoptionDAOMock = PendingAdoptionDAOMock();
 
-        val pendingAdoptionList: MutableList<PendingAdoption> = pendingAdoptionDAO.getAdoptionList("1");
+        val pendingAdoptionList: MutableList<PendingAdoption> = pendingAdoptionDAOMock.getAdoptionList("1");
 
         val notesAdapter: RecyclerView.Adapter<PendingAdoptionViewAdapter.ViewHolder> = PendingAdoptionViewAdapter(pendingAdoptionList);
 
