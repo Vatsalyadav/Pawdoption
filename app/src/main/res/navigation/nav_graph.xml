@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/confirm_adoption_navigation"
-    app:startDestination="@id/uploadAnimalPosting">
+    app:startDestination="@id/petListFragment">
 
 <!--    pendingAdoptionFragment-->
 
@@ -40,7 +40,11 @@
     <fragment
         android:id="@+id/petListFragment"
         android:name="com.yadav.pawdoption.view.PetListFragment"
-        android:label="PetListFragment" />
+        android:label="PetListFragment" >
+        <action
+            android:id="@+id/action_petListFragment_to_uploadAnimalPosting"
+            app:destination="@id/uploadAnimalPosting" />
+    </fragment>
     <fragment
         android:id="@+id/myAppointment"
         android:name="com.yadav.pawdoption.view.MyAppointment"
@@ -70,7 +74,11 @@
     <fragment
         android:id="@+id/uploadAnimalPosting"
         android:name="com.yadav.pawdoption.view.UploadAnimalPosting"
-        android:label="UploadAnimalPosting" />
+        android:label="UploadAnimalPosting" >
+        <action
+            android:id="@+id/action_uploadAnimalPosting_to_petListFragment"
+            app:destination="@id/petListFragment" />
+    </fragment>
     <!--    <fragment-->
 <!--        android:id="@+id/mapsFragment"-->
 <!--        android:name="com.yadav.pawdoption.view.MapsFragment"-->
