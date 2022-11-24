@@ -62,6 +62,11 @@
             android:id="@+id/action_bookAppointment_to_createVetAppointment"
             app:destination="@id/createVetAppointment" />
     </fragment>
+    <fragment
+        android:id="@+id/adoptPetFragment"
+        android:name="com.yadav.pawdoption.view.AdoptPetFragment"
+        android:label="fragment_adopt_pet"
+        tools:layout="@layout/fragment_adopt_pet" />
     <!--    <fragment-->
 <!--        android:id="@+id/mapsFragment"-->
 <!--        android:name="com.yadav.pawdoption.view.MapsFragment"-->
