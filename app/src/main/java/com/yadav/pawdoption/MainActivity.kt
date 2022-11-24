@@ -35,6 +35,10 @@ class MainActivity : AppCompatActivity() {
                     Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.shelterMapFragment)
                     true
                 }
+                R.id.vet -> {
+                    Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.bookAppointment)
+                    true
+                }
 //                TODO: Add others too
                 else -> true
             }

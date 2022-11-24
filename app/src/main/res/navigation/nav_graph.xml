@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/confirm_adoption_navigation"
-    app:startDestination="@id/adoptPetFragment">
+    app:startDestination="@id/petListFragment">
 
 <!--    pendingAdoptionFragment-->
 
@@ -41,6 +41,27 @@
         android:id="@+id/petListFragment"
         android:name="com.yadav.pawdoption.view.PetListFragment"
         android:label="PetListFragment" />
+    <fragment
+        android:id="@+id/myAppointment"
+        android:name="com.yadav.pawdoption.view.MyAppointment"
+        android:label="MyAppointment" />
+    <fragment
+        android:id="@+id/createVetAppointment"
+        android:name="com.yadav.pawdoption.view.CreateVetAppointment"
+        android:label="fragment_create_vet_appointment"
+        tools:layout="@layout/fragment_create_vet_appointment" >
+        <action
+            android:id="@+id/action_createVetAppointment_to_bookAppointment"
+            app:destination="@id/bookAppointment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookAppointment"
+        android:name="com.yadav.pawdoption.view.BookAppointment"
+        android:label="BookAppointment" >
+        <action
+            android:id="@+id/action_bookAppointment_to_createVetAppointment"
+            app:destination="@id/createVetAppointment" />
+    </fragment>
     <fragment
         android:id="@+id/adoptPetFragment"
         android:name="com.yadav.pawdoption.view.AdoptPetFragment"
