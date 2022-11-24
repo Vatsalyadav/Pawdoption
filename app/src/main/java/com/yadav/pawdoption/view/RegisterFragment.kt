@@ -12,14 +12,26 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.yadav.pawdoption.adapter.PetListAdapter
 import com.yadav.pawdoption.databinding.FragmentRegisterBinding
+import com.yadav.pawdoption.model.User
+import com.yadav.pawdoption.model.UserType
+import com.yadav.pawdoption.persistence.SheltersDAO
+import com.yadav.pawdoption.persistence.UsersDAO
 import kotlinx.android.synthetic.main.fragment_register.*
+import java.lang.ref.Reference
 
 
 class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null
     private lateinit var  firebaseAuth : FirebaseAuth
+    private lateinit var databaseReference: DatabaseReference
+
+    private val usersDAO = UsersDAO()
+    private val sheltersDAO = SheltersDAO()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,30 +79,95 @@ class RegisterFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.registerBtn.setOnClickListener() {
-            val email = binding.emailEt.text.toString()
-            val pass = binding.passwordEt.text.toString()
-            val confirmPasswor = binding.passwordEt.text.toString()
 
 
-            if(email.isNotEmpty() && pass.isNotEmpty() && confirmPasswor.isNotEmpty()){
-                if(pass == confirmPasswor){
-                   firebaseAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener{
-                                  if(it.isSuccessful){
-                                      Toast.makeText(this.context,"Registered",Toast.LENGTH_SHORT).show()
-                                      findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-                                  }
-                       else{
-                           Toast.makeText(this.context,it.exception.toString(),Toast.LENGTH_SHORT).show()
-                       }
-                   }
+
+            if(linearLayout1.visibility == View.VISIBLE){  //pet owner
+
+                val email = binding.emailEt.text.toString()
+                val pass = binding.passwordEt.text.toString()
+                val confirmPasswor = binding.passwordEt.text.toString()
+                val Name = binding.firstNameEt.text.toString() + " " + binding.lastNameEt.text.toString()
+                val phoNumber = binding.phoneNumberEt.text.toString()
+                val address = binding.addressEt.text.toString()
+                val UserType = "petAdopter"
+
+
+                if(email.isNotEmpty() && pass.isNotEmpty() && confirmPasswor.isNotEmpty()){
+                    if(pass == confirmPasswor){
+                        firebaseAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener{
+                            if(it.isSuccessful){
+
+                                //enetr user data into the database
+
+                                val uid = firebaseAuth.currentUser?.uid
+                                databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+
+                                if(uid!=null){
+                                    val user = User(null,Name,address,phoNumber,null,null,null,null,null)
+                                    var hashMap : HashMap<String, String> = HashMap<String, String> ()
+                                    hashMap.put(uid,UserType)
+                                    val userType = UserType(hashMap)
+
+                                    databaseReference.child(uid).setValue(user).addOnCompleteListener{
+                                        if(it.isSuccessful){
+                                            databaseReference.child(uid).setValue(userType)
+                                            Toast.makeText(this.context,"Registered",Toast.LENGTH_SHORT).show()
+                                        }
+                                        else{
+                                            Toast.makeText(this.context,"was not able to create profile",Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                }
+                                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                            }
+                            else{
+                                Toast.makeText(this.context,it.exception.toString(),Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                    else{
+                        Toast.makeText(this.context,"Password not matching",Toast.LENGTH_SHORT).show()
+                    }
                 }
                 else{
-                    Toast.makeText(this.context,"Password not matching",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.context,"Empty field is not allowed",Toast.LENGTH_SHORT).show()
                 }
             }
+
             else{
-                Toast.makeText(this.context,"Empty field is not allowed",Toast.LENGTH_SHORT).show()
+                val email = binding.shelterEmailEt.text.toString()
+                val pass = binding.shelterPasswordEt.text.toString()
+                val confirmPasswor = binding.shelterRepasswordEt.text.toString()
+
+                val Name = binding.shelterNameEt.text.toString()
+                val phoNumber = binding.phoneNumberEt.text.toString()
+                val address = binding.addressEt.text.toString()
+                val UserType = "shelterOwner"
+
+
+
+                if(email.isNotEmpty() && pass.isNotEmpty() && confirmPasswor.isNotEmpty()){
+                    if(pass == confirmPasswor){
+                        firebaseAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener{
+                            if(it.isSuccessful){
+                                Toast.makeText(this.context,"Registered",Toast.LENGTH_SHORT).show()
+                                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                            }
+                            else{
+                                Toast.makeText(this.context,it.exception.toString(),Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                    else{
+                        Toast.makeText(this.context,"Password not matching",Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else{
+                    Toast.makeText(this.context,"Empty field is not allowed",Toast.LENGTH_SHORT).show()
+                }
             }
+
 
         }
 

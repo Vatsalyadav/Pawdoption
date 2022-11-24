@@ -69,5 +69,14 @@ class LoginFragment : Fragment() {
 
     }
 
+//    override fun onStart() {
+//        super.onStart()
+//
+//        if(firebaseAuth.currentUser!=null){
+//            findNavController().navigate(R.id.action_loginFragment_to_petListFragment2)
+//        }
+//
+//    }
+
 
 }
