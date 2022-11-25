@@ -12,7 +12,7 @@ object FirebaseDatabaseSingleton {
     private val sheltersReference = database.getReference("Shelters")
     private val usersReference = database.getReference("Users")
     private val userTypeReference = database.getReference("UserType")
-
+    private var mCurrentUserType = "PETOWNER"
     fun getSheltersReference(): DatabaseReference {
         return sheltersReference
     }
@@ -23,5 +23,13 @@ object FirebaseDatabaseSingleton {
 
     fun getUserTypeReference(): DatabaseReference {
         return userTypeReference
+    }
+
+    fun getCurrentUserType(): String {
+        return mCurrentUserType
+    }
+
+    fun setCurrentUserType(CurrentUserType : String) {
+        mCurrentUserType = CurrentUserType
     }
 }
