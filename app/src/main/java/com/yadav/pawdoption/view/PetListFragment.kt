@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.PetListAdapter
+import com.yadav.pawdoption.model.Shelter
+import com.yadav.pawdoption.model.ShelterPet
 import com.yadav.pawdoption.persistence.SheltersDAO
 
 class PetListFragment : Fragment() {
@@ -51,9 +53,21 @@ class PetListFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = petListAdapter
-        sheltersDAO.getShelters().observe(viewLifecycleOwner
+        sheltersDAO.getShelters().observe(
+            viewLifecycleOwner
         ) {
-            petListAdapter = PetListAdapter(requireContext(), it.get("2001")!!.pets)
+            val shelterPetList: MutableList<ShelterPet> = mutableListOf()
+            for (shelter in it) {
+                Log.e("PetList", "dsfds: " + shelter.value.pets)
+                for (pet in shelter.value.pets) {
+                    if (pet != null) {
+                        pet.shelterId = shelter.key
+                        pet.shelterName = shelter.value.name.toString()
+                        shelterPetList.add(pet)
+                    }
+                }
+            }
+            petListAdapter = PetListAdapter(requireContext(), shelterPetList)
             recyclerView.adapter = petListAdapter
             petListAdapter.notifyDataSetChanged()
         }
