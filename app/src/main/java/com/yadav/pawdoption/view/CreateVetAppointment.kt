@@ -6,12 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RadioButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.yadav.pawdoption.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.yadav.pawdoption.model.Veterinarian
+import com.yadav.pawdoption.persistence.AppointmentDAO
 
 
 class CreateVetAppointment : Fragment() {
@@ -50,7 +55,24 @@ class CreateVetAppointment : Fragment() {
             }
 
             // Call firebase
+            val appointmentDAO = AppointmentDAO()
+            // TODO: Dynamically pick shelter ID
 
+            val days = arrayListOf<String>()
+            for (i in cgDays.checkedChipIds) {
+                val chip = view.findViewById<Chip>(i)
+                if (chip.isChecked) {
+                    days.add(chip.text.toString())
+                }
+            }
+
+            val vet = Veterinarian(
+                name = vetName,
+                qualification = vetQualification,
+                days = days
+            )
+            appointmentDAO.createSchedule("2001", vet)
+            Toast.makeText(requireContext(), "Successfully added vet", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_createVetAppointment_to_bookAppointment)
         }
 

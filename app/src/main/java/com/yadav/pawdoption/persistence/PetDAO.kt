@@ -11,7 +11,7 @@ class PetDAO: IPetDAO {
         val petRef = sheltersReference.child(shelterId).child("pets")
         petRef.get().addOnSuccessListener {
             val pets = it.getValue<ArrayList<ShelterPet>>()
-            val petsSize = pets?.size
+            val petsSize = pets?.size ?: 0
             pet.id = petsSize.toString()
             petRef.child(petsSize.toString()).setValue(pet)
         }
