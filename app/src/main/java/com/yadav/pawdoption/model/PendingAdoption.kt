@@ -10,6 +10,7 @@ import kotlinx.android.parcel.Parcelize
 //@IgnoreExtraProperties
 data class PendingAdoption(
 
+    @SerializedName("id"                    ) var id                  : String? = null,
     @SerializedName("user_id"                    ) var userId                  : String?  = null,
     @SerializedName("pet_id"                     ) var petId                   : String?  = null,
     @SerializedName("timestamp"                  ) var timestamp               : String?  = null,

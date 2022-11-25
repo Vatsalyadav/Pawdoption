@@ -1,6 +1,7 @@
 package com.yadav.pawdoption.persistence
 
 import com.yadav.pawdoption.model.PendingAdoption
+import java.util.*
 
 
 class PendingAdoptionDAOMock : IPendingAdoptionDAO {
@@ -10,6 +11,7 @@ class PendingAdoptionDAOMock : IPendingAdoptionDAO {
         var adoptionList: MutableList<PendingAdoption> = mutableListOf();
 
         val pendingAdoption1: PendingAdoption = PendingAdoption(
+            UUID.randomUUID().toString(),
             "1",
             "1",
             "1",
@@ -21,6 +23,7 @@ class PendingAdoptionDAOMock : IPendingAdoptionDAO {
         );
 
         val pendingAdoption2: PendingAdoption = PendingAdoption(
+            UUID.randomUUID().toString(),
             "2",
             "1",
             "2",

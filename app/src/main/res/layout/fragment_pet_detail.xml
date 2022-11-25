@@ -37,7 +37,7 @@
         android:layout_height="255dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnPetDetailsAdopt"
+        app:layout_constraintBottom_toTopOf="@+id/llAdoptShareLike"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rlPetDetailsImage">
@@ -84,18 +84,110 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/btnPetDetailsAdopt"
+<!--    <LinearLayout-->
+<!--        android:id="@+id/llAdoptShareLike"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        android:layout_marginBottom="80dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent">-->
+<!--        <Button-->
+<!--            android:id="@+id/btnPetDetailsAdopt"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="5"-->
+<!--            android:gravity="center"-->
+<!--            android:paddingLeft="8dp"-->
+<!--            android:paddingTop="8dp"-->
+<!--            android:paddingRight="8dp"-->
+<!--            android:paddingBottom="3dp"-->
+
+<!--            android:text="@string/adopt" />-->
+
+
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/share_pet"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@drawable/ic_round_share_24" />-->
+
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/love_pet"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@drawable/ic_round_love_24" />-->
+<!--    </LinearLayout>-->
+
+    <LinearLayout
+        android:id="@+id/llAdoptShareLike"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="80dp"
-        android:text="@string/adopt"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginBottom="80dp"
+        app:layout_constraintStart_toStartOf="parent">
+        <Button
+            android:id="@+id/btnPetDetailsAdopt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="3dp"
+
+            android:text="@string/adopt" />
+
+
+        <ImageView
+            android:id="@+id/ivPetDetailsSharePet"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contextClickable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_round_share_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/ivPetDetailsLikePet"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_round_love_black_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </LinearLayout>
+<!--    <Button-->
+<!--        android:id="@+id/btnPetDetailsAdopt"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginBottom="80dp"-->
+<!--        android:text="@string/adopt"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

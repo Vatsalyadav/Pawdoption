@@ -28,11 +28,14 @@
             android:name="pendingAdoption"
             app:argType="com.yadav.pawdoption.model.PendingAdoption" />
         <argument
-            android:name="shelterPer"
+            android:name="shelterPet"
             app:argType="com.yadav.pawdoption.model.ShelterPet" />
         <argument
             android:name="user"
             app:argType="com.yadav.pawdoption.model.User" />
+        <argument
+            android:name="petImage"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/shelterMapFragment"
@@ -42,7 +45,11 @@
         android:id="@+id/petDetailFragment"
         android:name="com.yadav.pawdoption.view.PetDetailFragment"
         android:label="fragment_pet_detail"
-        tools:layout="@layout/fragment_pet_detail" />
+        tools:layout="@layout/fragment_pet_detail" >
+        <action
+            android:id="@+id/action_petDetailFragment_to_adoptPetFragment"
+            app:destination="@id/adoptPetFragment" />
+    </fragment>
     <fragment
         android:id="@+id/petListFragment"
         android:name="com.yadav.pawdoption.view.PetListFragment"
@@ -76,7 +83,14 @@
         android:id="@+id/adoptPetFragment"
         android:name="com.yadav.pawdoption.view.AdoptPetFragment"
         android:label="fragment_adopt_pet"
-        tools:layout="@layout/fragment_adopt_pet" />
+        tools:layout="@layout/fragment_adopt_pet" >
+        <argument
+            android:name="petId"
+            app:argType="string" />
+        <argument
+            android:name="shelterId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/uploadAnimalPosting"
         android:name="com.yadav.pawdoption.view.UploadAnimalPosting"
