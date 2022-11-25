@@ -13,16 +13,16 @@ class PendingAdoptionDAO : IPendingAdoptionDAO {
 
     val TAG = "PendingAdoptionDAO"
 
-    val pendingAdoptions = MutableLiveData<ArrayList<PendingAdoption>>();
+    val pendingAdoptions = MutableLiveData<HashMap<String, PendingAdoption>>();
     override fun getAdoptionList(shelterId: String): MutableList<PendingAdoption> {
         TODO("Not yet implemented")
     }
 
-    fun getAdoptionListTest(shelterId: String): MutableLiveData<ArrayList<PendingAdoption>> {
+    fun getAdoptionListTest(shelterId: String): MutableLiveData<HashMap<String, PendingAdoption>> {
         val shelterReference = FirebaseDatabaseSingleton.getSheltersReference()
         shelterReference.child(shelterId).child("pendingAdoptions").addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                pendingAdoptions.value = snapshot.getValue<ArrayList<PendingAdoption>>()
+                pendingAdoptions.value = snapshot.getValue<HashMap<String, PendingAdoption>>()
             }
 
             override fun onCancelled(error: DatabaseError) {

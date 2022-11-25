@@ -103,7 +103,7 @@
     </LinearLayout>
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/cbAgreeTnC"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/terms_agreement" />
@@ -112,5 +112,6 @@
         android:id="@+id/btnAdoptPetSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:enabled="false"
         android:text="Submit" />
 </LinearLayout>
