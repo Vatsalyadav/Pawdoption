@@ -26,9 +26,6 @@ data class User(
 
     @SerializedName("image")
     var image: String? = null,
-
-
-
 ) : Parcelable {
     @IgnoredOnParcel
     @SerializedName("pets")
