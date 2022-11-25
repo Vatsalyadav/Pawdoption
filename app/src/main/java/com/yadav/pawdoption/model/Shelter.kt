@@ -14,4 +14,5 @@ data class Shelter (
     @SerializedName("pets"        ) var pets        : ArrayList<ShelterPet> = arrayListOf(),
     @SerializedName("donations"   ) var donations   : ArrayList<ShelterDonation> = arrayListOf(),
     @SerializedName("veterinarians") var veterinarians   : ArrayList<Veterinarian> = arrayListOf(),
+    @SerializedName("pending_adoptions") var pendingAdoptions   : HashMap<String, PendingAdoption> = hashMapOf(),
 )

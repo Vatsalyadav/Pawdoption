@@ -56,28 +56,35 @@ class PendingAdoptionFragment : Fragment() {
         val mld = pendingAdoptionDAO.getAdoptionListTest("2001")
 
         mld.observe(viewLifecycleOwner) {
-            val pendingAdoptionList = it
-            val paList: MutableList<PendingAdoptionData> = mutableListOf()
-            for((key, value) in it){
-                val sheltersReference = FirebaseDatabaseSingleton.getSheltersReference()
-                var pet: ShelterPet? = null;
+//            val pendingAdoptionList = it
 
-                sheltersReference.child("2001").child("pets").child(value.petId!!).get().addOnSuccessListener {
-                    pet = it.getValue(ShelterPet::class.java)
+            if(it != null) {
+                val paList: MutableList<PendingAdoptionData> = mutableListOf()
+                for ((key, value) in it) {
+                    val sheltersReference = FirebaseDatabaseSingleton.getSheltersReference()
+                    var pet: ShelterPet? = null;
 
-                    var user: User? = null
-                    FirebaseDatabaseSingleton.getUsersReference().child(value.userId!!).get().addOnSuccessListener {
-                        user = it.getValue(User::class.java)
-                        val pendingAdoptionData: PendingAdoptionData = PendingAdoptionData(value, pet, user)
+                    sheltersReference.child("2001").child("pets").child(value.petId!!).get()
+                        .addOnSuccessListener {
+                            pet = it.getValue(ShelterPet::class.java)
 
-                        paList.add(pendingAdoptionData)
+                            var user: User? = null
+                            FirebaseDatabaseSingleton.getUsersReference().child(value.userId!!)
+                                .get().addOnSuccessListener {
+                                user = it.getValue(User::class.java)
+                                val pendingAdoptionData: PendingAdoptionData =
+                                    PendingAdoptionData(value, pet, user)
 
-                        pendingAdoptionAdapter = PendingAdoptionViewAdapter(requireContext(), paList)
-                        binding.rvPendingAdoptions.adapter = pendingAdoptionAdapter
-                        pendingAdoptionAdapter.notifyDataSetChanged()
-                    }
+                                paList.add(pendingAdoptionData)
+
+                                pendingAdoptionAdapter =
+                                    PendingAdoptionViewAdapter(requireContext(), paList)
+                                binding.rvPendingAdoptions.adapter = pendingAdoptionAdapter
+                                pendingAdoptionAdapter.notifyDataSetChanged()
+                            }
+                        }
+
                 }
-
             }
         }
 

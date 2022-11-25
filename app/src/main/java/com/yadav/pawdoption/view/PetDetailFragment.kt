@@ -23,8 +23,10 @@ import com.yadav.pawdoption.adapter.PetDetailImageCorousalAdapter
 import com.yadav.pawdoption.databinding.FragmentPetDetailBinding
 import com.yadav.pawdoption.model.PendingAdoption
 import com.yadav.pawdoption.model.Shelter
+import com.yadav.pawdoption.model.ShelterPet
 import com.yadav.pawdoption.model.UserLovedPet
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
+import com.yadav.pawdoption.persistence.SheltersDAO
 import me.relex.circleindicator.CircleIndicator
 import java.util.*
 import kotlin.collections.HashMap
@@ -39,6 +41,10 @@ class PetDetailFragment : Fragment() {
 
     var liked: String? = null;
 
+    var shelter: Shelter? = null;
+
+    var pet: ShelterPet? = null;
+
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -50,27 +56,63 @@ class PetDetailFragment : Fragment() {
 
         viewPager = binding.vpPetDetailsImage
 
+
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val images: MutableList<String> = mutableListOf()
-        images.add("https://firebasestorage.googleapis.com/v0/b/cosmic-kite-278709.appspot.com/o/Screen%20Shot%202022-10-14%20at%205.59.47%20PM.png?alt=media&token=7c161da6-dbe0-4885-8500-b77d24ea1114")
-        images.add("https://firebasestorage.googleapis.com/v0/b/cosmic-kite-278709.appspot.com/o/Screen%20Shot%202022-10-15%20at%206.07.25%20PM.png?alt=media&token=b6f38fa9-3144-4ebe-97f0-021c58a892b0")
+        //TODO shelter id hard code
+        FirebaseDatabaseSingleton.getSheltersReference().child("2001").get().addOnSuccessListener { shelterDataSnapshot ->
+            if(shelterDataSnapshot.getValue() != null){
+
+                shelter = shelterDataSnapshot.getValue(Shelter::class.java)
+
+                print(shelter)
+//                shelter = shelterDataSnapshot.getValue(Shelter::class.java)
+
+                shelter?.let { s ->
+                    //TODO pet id hardcode
+                    FirebaseDatabaseSingleton.getSheltersReference().child("2001")
+                        .child("pets").child("0").get()
+                        .addOnSuccessListener { petDataSnapshot ->
+                            if(petDataSnapshot.getValue() != null){
+                                 pet = petDataSnapshot.getValue<ShelterPet>()
+
+//                                val images: MutableList<String> = mutableListOf()
+//                                images.add("https://firebasestorage.googleapis.com/v0/b/cosmic-kite-278709.appspot.com/o/Screen%20Shot%202022-10-14%20at%205.59.47%20PM.png?alt=media&token=7c161da6-dbe0-4885-8500-b77d24ea1114")
+//                                images.add("https://firebasestorage.googleapis.com/v0/b/cosmic-kite-278709.appspot.com/o/Screen%20Shot%202022-10-15%20at%206.07.25%20PM.png?alt=media&token=b6f38fa9-3144-4ebe-97f0-021c58a892b0")
 
 
-        images?.let{
-            viewPagerAdapter = PetDetailImageCorousalAdapter(requireContext(), it)
-            viewPager.adapter = viewPagerAdapter
-            indicator = requireView().findViewById(R.id.inPetDetailsImage) as CircleIndicator
-            indicator.setViewPager(viewPager)
+                                pet?.imageURL?.let{
+                                    viewPagerAdapter = PetDetailImageCorousalAdapter(requireContext(), it)
+                                    viewPager.adapter = viewPagerAdapter
+                                    indicator = requireView().findViewById(R.id.inPetDetailsImage) as CircleIndicator
+                                    indicator.setViewPager(viewPager)
+                                }
+
+                                binding.apply {
+                                    tvPetDetailsPetName.text = pet?.name
+                                    tvPetDetailsPetBreed.text = pet?.breed
+                                    tvPetDetailsPetAge.text = pet?.age.toString() + " years old"
+                                    tvPetDetailsPetDescription.text = pet?.description
+                                    tvPetDetailsShelterName.text = shelter?.name
+                                    tvPetDetailsShelterAddress.text = shelter?.address
+                                    tvPetDetailsShelterDescription.text = shelter?.description
+                                }
+
+                                val mapFragment =
+                                    childFragmentManager.findFragmentById(R.id.mapPetDetailsShelterLocation) as SupportMapFragment?
+                                mapFragment?.getMapAsync(callback)
+                            }
+                        }
+                }
+            }
         }
 
-        val mapFragment =
-            childFragmentManager.findFragmentById(R.id.mapPetDetailsShelterLocation) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
+
 
         FirebaseDatabaseSingleton.getSheltersReference().child("2001").child("pendingAdoptions").addValueEventListener(object: ValueEventListener {
 
@@ -145,7 +187,7 @@ class PetDetailFragment : Fragment() {
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
-        val latLng = LatLng(44.65423, -63.625859)
+        val latLng = LatLng(shelter?.latitude!!, shelter?.longitude!!)
         val markerOptions = MarkerOptions().position(latLng).title("Shelter")
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))

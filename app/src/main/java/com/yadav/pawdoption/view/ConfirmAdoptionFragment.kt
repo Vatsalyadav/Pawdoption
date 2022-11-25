@@ -1,15 +1,16 @@
 package com.yadav.pawdoption.view
 
-import android.content.Intent
-import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
-import androidx.fragment.app.Fragment
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.squareup.picasso.Picasso
 import com.yadav.pawdoption.R
@@ -17,7 +18,11 @@ import com.yadav.pawdoption.databinding.FragmentConfirmAdoptionBinding
 import com.yadav.pawdoption.model.PendingAdoption
 import com.yadav.pawdoption.model.ShelterPet
 import com.yadav.pawdoption.model.User
-import kotlin.String
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import java.io.IOException
+
 
 class ConfirmAdoptionFragment : Fragment() {
 
@@ -77,27 +82,102 @@ class ConfirmAdoptionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         binding.btnConfirmAdopterApprove.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.putExtra(Intent.EXTRA_EMAIL, user?.email)
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Approval of adoption request")
-            intent.putExtra(Intent.EXTRA_TEXT, "Hi, " +
+//            val intent = Intent(Intent.ACTION_SEND)
+////            intent.putExtra(Intent.EXTRA_EMAIL, user?.email)
+//            val receiver = arrayOfNulls<String>(1)
+//            receiver[0] = user?.email
+//            intent.data = Uri.parse("mailto:test@gmail.com")
+//            intent.setType("message/rfc822")
+////            intent.putExtra(Intent.EXTRA_EMAIL, receiver)
+//            intent.putExtra(Intent.EXTRA_SUBJECT, "Approval of adoption request")
+//            intent.putExtra(Intent.EXTRA_TEXT, "Hi, " +
+//                    "Your request for the pet adoption is approved." +
+//                    "You can visit the shelter and complete the remaining procedure." +
+//                    "Thanks")
+//
+//            try {
+//                //start email intent
+//                startActivity(Intent.createChooser(intent, "Choose Email Client..."))
+//
+//                print("end")
+//            }
+//            catch (e: Exception){
+//                //if any thing goes wrong for example no email client application or any exception
+//                //get and show exception message
+//                Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+//            }
+            val SDK_INT = Build.VERSION.SDK_INT
+            if (SDK_INT > 8) {
+                val policy = ThreadPolicy.Builder()
+                    .permitAll().build()
+                StrictMode.setThreadPolicy(policy)
+                run("khushalgondaliya872@gmail.com", "Request Approval", "Hi, " +
                     "Your request for the pet adoption is approved." +
                     "You can visit the shelter and complete the remaining procedure." +
                     "Thanks")
-            intent.data = Uri.parse("mailto:")
-            intent.type = "text/plain"
-            try {
-                //start email intent
-                startActivity(Intent.createChooser(intent, "Choose Email Client..."))
             }
-            catch (e: Exception){
-                //if any thing goes wrong for example no email client application or any exception
-                //get and show exception message
-                Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+
+
+
+
+        }
+
+        binding.btnConfirmAdoptionDeny.setOnClickListener {
+
+            val SDK_INT = Build.VERSION.SDK_INT
+            if (SDK_INT > 8) {
+                val policy = ThreadPolicy.Builder()
+                    .permitAll().build()
+                StrictMode.setThreadPolicy(policy)
+                run("khushalgondaliya872@gmail.com", "Request denied", "Hi, " +
+                        "Your request for the pet adoption is denied." +
+                        "You can create a request again" +
+                        "Thanks")
             }
+
+
+
+
         }
 
     }
+
+
+
+
+    fun run(email: String, subject: String, body: String) {
+        val client = OkHttpClient()
+        val request = Request.Builder()
+            .url("https://ak4t4m6mngdpkuzv4f2rycjihi0opvik.lambda-url.us-east-1.on.aws/?receiver=" + email + "&subject=" + subject + "&body=" + body)
+            .build()
+
+        client.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+//            for ((name, value) in response.headers) {
+//                println("$name: $value")
+//            }
+//
+//            println(response.body!!.string())
+
+            binding.btnConfirmAdopterApprove.isEnabled = false
+            binding.btnConfirmAdoptionDeny.isEnabled = false
+
+            FirebaseDatabaseSingleton.getSheltersReference().child("2001")
+                .child("pendingAdoptions")
+                .child(pendingAdoption?.id!!)
+                .removeValue()
+
+            val approveToast = Toast.makeText(requireContext(), "Email sent ", Toast.LENGTH_SHORT)
+            approveToast.setGravity(Gravity.LEFT,200,200)
+            approveToast.show()
+
+            findNavController().navigate(R.id.action_confirmAdoptionFragment_to_pendingAdoptionFragment)
+        }
+    }
+
 
 }
