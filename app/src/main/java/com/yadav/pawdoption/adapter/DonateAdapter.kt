@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.model.Shelter
+import com.yadav.pawdoption.view.DonateListDirections
+import com.yadav.pawdoption.view.PendingAdoptionFragmentDirections
 
 // Code Reference: https://developer.android.com/develop/ui/views/layout/recyclerview#kotlin
 
@@ -43,7 +46,13 @@ class DonateAdapter(private val context: Context, private val shelterList: Array
         viewHolder.tvAddress.text = shelterList[position].address
         viewHolder.tvDescription.text = shelterList[position].description
         viewHolder.bDonate.setOnClickListener{
+            val navController = Navigation.findNavController(viewHolder.itemView)
 
+            val action = DonateListDirections.actionDonateListToDonateFragment(
+                shelterList[position]
+            )
+
+            navController!!.navigate(action)
         }
 
     }

@@ -87,7 +87,11 @@
         android:id="@+id/donateFragment"
         android:name="com.yadav.pawdoption.view.DonateFragment"
         android:label="fragment_donate"
-        tools:layout="@layout/fragment_donate" />
+        tools:layout="@layout/fragment_donate" >
+        <argument
+            android:name="shelter"
+            app:argType="com.yadav.pawdoption.model.Shelter" />
+    </fragment>
 
 
     <fragment
