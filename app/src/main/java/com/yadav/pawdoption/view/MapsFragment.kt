@@ -16,6 +16,8 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.yadav.pawdoption.R
@@ -59,7 +61,8 @@ class MapsFragment : Fragment() {
             }
 
             for (point in nearbyShelters) {
-                var mo = MarkerOptions().position(point).title("Here")
+                var mo = MarkerOptions().position(point).title("Here").icon(BitmapDescriptorFactory
+                    .defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                 googleMap.addMarker(mo)
             }
 
