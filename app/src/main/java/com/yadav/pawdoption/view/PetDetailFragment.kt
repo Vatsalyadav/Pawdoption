@@ -15,6 +15,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -43,7 +44,7 @@ class PetDetailFragment : Fragment() {
     var shelter: Shelter? = null;
     var pet: ShelterPet? = null;
 
-    var userId: String = "uid1"
+    var userId: String = FirebaseAuth.getInstance().currentUser?.uid ?: "uid1"
     var petId: String = "0"
     var shelterId: String = "2001"
 
