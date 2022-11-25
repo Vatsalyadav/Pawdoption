@@ -20,6 +20,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.model.ShelterPet
 import com.yadav.pawdoption.view.PetListFragmentDirections
@@ -78,6 +79,7 @@ class PetListAdapter(private val context: Context, private val petsList: Mutable
             .load(petsList[position].imageURL[0])
             .centerCrop()
             .placeholder(circularProgressDrawable)
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
             .into(viewHolder.petImageView);
 
         viewHolder.itemView.setOnClickListener {
