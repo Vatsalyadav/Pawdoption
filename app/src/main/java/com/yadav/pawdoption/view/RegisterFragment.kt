@@ -1,6 +1,4 @@
 package com.yadav.pawdoption.view
-import android.content.Intent
-import com.yadav.pawdoption.R
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,18 +9,18 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.yadav.pawdoption.adapter.PetListAdapter
+import com.hbb20.CountryCodePicker
+import com.yadav.pawdoption.R
 import com.yadav.pawdoption.databinding.FragmentRegisterBinding
+import com.yadav.pawdoption.model.Shelter
 import com.yadav.pawdoption.model.User
 import com.yadav.pawdoption.model.UserType
 import com.yadav.pawdoption.persistence.SheltersDAO
 import com.yadav.pawdoption.persistence.UsersDAO
 import kotlinx.android.synthetic.main.fragment_register.*
-import java.lang.ref.Reference
 
 
 class RegisterFragment : Fragment() {
@@ -33,7 +31,7 @@ class RegisterFragment : Fragment() {
 
     private val usersDAO = UsersDAO()
     private val sheltersDAO = SheltersDAO()
-
+    var ccp: CountryCodePicker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,7 +119,7 @@ class RegisterFragment : Fragment() {
                                     }
                                     databaseReference = FirebaseDatabase.getInstance().getReference("UserType")
 
-                                    databaseReference.setValue(userType).addOnCompleteListener {
+                                    databaseReference.child(userType.toString()).setValue(userType).addOnCompleteListener {
                                         if(it.isSuccessful){
                                             //  databaseReference.child(uid).setValue(userType)
                                             Log.d(UserType, "User Type succesfully added ");
@@ -155,7 +153,9 @@ class RegisterFragment : Fragment() {
 
                 val Name = binding.shelterNameEt.text.toString()
                 val phoNumber = binding.phoneNumberEt.text.toString()
-                val address = binding.addressEt.text.toString()
+                val address1 = binding.addressEt.text.toString()
+                val address2 = binding.address2Et.text.toString()
+                val shelterDesc = binding.shelterDescriptionEt.text.toString()
                 val UserType = "shelterOwner"
 
 
@@ -164,7 +164,40 @@ class RegisterFragment : Fragment() {
                     if(pass == confirmPasswor){
                         firebaseAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener{
                             if(it.isSuccessful){
-                                Toast.makeText(this.context,"Registered",Toast.LENGTH_SHORT).show()
+
+                                //enetr user data into the database
+
+                                val uid = firebaseAuth.currentUser?.uid
+                                databaseReference = FirebaseDatabase.getInstance().getReference("Shelters")
+
+                                if(uid!=null){
+                                    val shelter = Shelter(uid,Name,shelterDesc,address2,null,null)
+                                    var hashMap : HashMap<String, String> = HashMap<String, String> ()
+                                    hashMap.put(uid,UserType)
+                                    val userType = UserType(hashMap)
+
+                                    databaseReference.child(uid).setValue(shelter).addOnCompleteListener{
+                                        if(it.isSuccessful){
+                                            //  databaseReference.child(uid).setValue(userType)
+                                            Toast.makeText(this.context,"Registered",Toast.LENGTH_SHORT).show()
+                                        }
+                                        else{
+                                            Toast.makeText(this.context,"was not able to create profile",Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                    databaseReference = FirebaseDatabase.getInstance().getReference("UserType")
+
+                                    databaseReference.child(userType.toString()).setValue(userType).addOnCompleteListener {
+                                        if(it.isSuccessful){
+                                            //  databaseReference.child(uid).setValue(userType)
+                                            Log.d(UserType, "User Type succesfully added ");
+                                        }
+                                        else{
+                                            Log.d(UserType, "User Type not succesfully added ");
+                                        }
+
+                                    }
+                                }
                                 findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
                             }
                             else{
