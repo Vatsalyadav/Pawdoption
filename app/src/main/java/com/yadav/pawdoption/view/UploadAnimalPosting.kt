@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.findNavController
 import com.yadav.pawdoption.R
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.CoroutineScope
@@ -54,23 +56,92 @@ class UploadAnimalPosting : Fragment() {
             }
         }
 
+
+
         val btnSubmit = view.findViewById<Button>(R.id.btnAnimalPostingSubmit)
         btnSubmit.setOnClickListener {
+            // Pet name field reference
+            val tilPetName = view.findViewById<TextInputLayout>(R.id.tilPetName)
             val tiPetName = view.findViewById<TextInputEditText>(R.id.tiPetName)
+
+            // Pet age field reference
+            val tilPetAge = view.findViewById<TextInputLayout>(R.id.tilPetAge)
             val tiPetAge = view.findViewById<TextInputEditText>(R.id.tiPetAge)
 
+            // Radio group reference
             val rgBreed = view.findViewById<RadioGroup>(R.id.rgBreed)
             val selectedRadioButtonId = rgBreed.checkedRadioButtonId
             val selectedRadioButton = view.findViewById<RadioButton>(selectedRadioButtonId)
+
+            // Pet description field reference
             val tiPetDescription = view.findViewById<TextInputEditText>(R.id.tiPetDescription)
+            val tilPetDescription = view.findViewById<TextInputLayout>(R.id.tilPetDescription)
+
+            // Error text references
+            val tvErrorPhoto = view.findViewById<TextView>(R.id.tvErrorPhoto)
+            val tvErrorRadio = view.findViewById<TextView>(R.id.tvErrorRadio)
+
+            // Validate
+            val petName = tiPetName.text.toString()
+            val petAge = tiPetAge.text.toString()
+            val petDescription = tiPetDescription.text.toString()
+
+            if (!isValid(petName, tilPetName, petAge, tilPetAge, petDescription,
+                         tilPetDescription, tvErrorPhoto, tvErrorRadio, selectedRadioButtonId)) {
+                return@setOnClickListener
+            }
 
             // TODO: Upload image - Dynamically generate a file name
-            uploadImage("myImage")
+            // uploadImage("myImage")
 
             findNavController().navigate(R.id.action_uploadAnimalPosting_to_petListFragment)
         }
 
         return view
+    }
+
+    private fun isValid(petName: String, tilPetName: TextInputLayout,
+                        petAge: String, tilPetAge: TextInputLayout,
+                        petDescription: String, tilPetDescription: TextInputLayout,
+                        tvErrorPhoto: TextView, tvErrorRadio: TextView, checkedRadioButtonId: Int): Boolean {
+        var isValid = true
+
+        if (petName.equals("")) {
+            tilPetName.setError("Name cannot be empty")
+            isValid = false
+        } else {
+            tilPetName.setError(null)
+        }
+
+        if (petAge.equals("")) {
+            tilPetAge.setError("Age cannot be empty")
+            isValid = false
+        } else {
+            tilPetAge.setError(null)
+        }
+
+        if (petDescription.equals("")) {
+            tilPetDescription.setError("Description cannot be empty")
+            isValid = false
+        } else {
+            tilPetDescription.setError(null)
+        }
+
+        if (curFile == null) {
+            tvErrorPhoto.text = "Choose a photo"
+            isValid = false
+        } else {
+            tvErrorPhoto.text = ""
+        }
+
+        if (checkedRadioButtonId == -1) {
+            tvErrorRadio.text = "Choose a breed"
+            isValid = false
+        } else {
+            tvErrorRadio.text = ""
+        }
+
+        return isValid
     }
 
     private fun pickImageFromGallery() {
