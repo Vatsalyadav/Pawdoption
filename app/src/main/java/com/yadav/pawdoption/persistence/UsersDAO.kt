@@ -13,6 +13,7 @@ class UsersDAO : IUsersDAO {
     val TAG = "UsersDAO"
 
     private var users = MutableLiveData<HashMap<String, User>>()
+    private var usersType = ""
 
     override fun getUserList(): MutableLiveData<HashMap<String, User>> {
         val usersReference = FirebaseDatabaseSingleton.getUsersReference()
@@ -27,5 +28,20 @@ class UsersDAO : IUsersDAO {
 
         })
         return users
+    }
+
+    override fun getUsersTypeById(uid: String): String {
+        val usersReference = FirebaseDatabaseSingleton.getUserTypeReference()
+        usersReference.child(uid).addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                usersType = snapshot.value as String
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+
+        })
+        return usersType
     }
 }
