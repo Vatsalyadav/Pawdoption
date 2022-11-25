@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/confirm_adoption_navigation"
-    app:startDestination="@id/mapsFragment">
+    app:startDestination="@id/donateList">
 
 <!--    pendingAdoptionFragment-->
 
@@ -28,10 +28,7 @@
             android:name="PendingAdoption"
             app:argType="com.yadav.pawdoption.model.PendingAdoption" />
     </fragment>
-    <fragment
-        android:id="@+id/shelterMapFragment"
-        android:name="com.yadav.pawdoption.view.ShelterMapFragment"
-        android:label="ShelterMapFragment" />
+
     <fragment
         android:id="@+id/petDetailFragment"
         android:name="com.yadav.pawdoption.view.PetDetailFragment"
@@ -46,9 +43,10 @@
         android:name="com.yadav.pawdoption.view.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
-    <!--    <fragment-->
-<!--        android:id="@+id/mapsFragment"-->
-<!--        android:name="com.yadav.pawdoption.view.MapsFragment"-->
-<!--        android:label="fragment_maps"-->
-<!--        tools:layout="@layout/fragment_maps" />-->
+    <fragment
+        android:id="@+id/donateList"
+        android:name="com.yadav.pawdoption.view.DonateList"
+        android:label="fragment_donate_list"
+        tools:layout="@layout/fragment_donate_list" />
+
 </navigation>

@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.persistence.SheltersDAO
+import kotlinx.android.synthetic.main.fragment_maps.*
 
 
 class MapsFragment : Fragment() {
@@ -30,31 +30,35 @@ class MapsFragment : Fragment() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val permissionCode = 101
 
-
     private val callback = OnMapReadyCallback { googleMap ->
+
         val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
 
-        sheltersDAO.getShelters().observe(viewLifecycleOwner){
+        sheltersDAO.getShelters().observe(viewLifecycleOwner) {
             var nearbyShelters: ArrayList<LatLng> = arrayListOf()
             var keys = it.keys
-            for (key in keys){
+            for (key in keys) {
                 var lat = it.get(key)!!.latitude
                 var long = it.get(key)!!.longitude
 
                 var distance: FloatArray = FloatArray(100)
 
                 if (lat != null && long != null) {
-                    Location.distanceBetween(currentLocation.latitude,currentLocation.longitude,lat,long,distance)
-                    println("***********************************************************************************")
-                    println(distance[0])
-                    println("***********************************************************************************")
-                    if(distance[0] < 10000){
+                    Location.distanceBetween(
+                        currentLocation.latitude,
+                        currentLocation.longitude,
+                        lat,
+                        long,
+                        distance
+                    )
+
+                    if (distance[0] < 10000) {
                         nearbyShelters.add(LatLng(lat, long))
                     }
                 }
             }
 
-            for(point in nearbyShelters){
+            for (point in nearbyShelters) {
                 var mo = MarkerOptions().position(point).title("Here")
                 googleMap.addMarker(mo)
             }
@@ -65,6 +69,7 @@ class MapsFragment : Fragment() {
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
         googleMap.addMarker(markerOptions)
+
     }
 
 
@@ -73,8 +78,6 @@ class MapsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         val view = inflater.inflate(R.layout.fragment_maps, container, false)
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(this.requireActivity())
@@ -118,7 +121,7 @@ class MapsFragment : Fragment() {
 
 
                 val mapFragment =
-                    childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+                    childFragmentManager.findFragmentById(R.id.mapShelterList) as SupportMapFragment?
                 mapFragment?.getMapAsync(callback)
             }
         }
