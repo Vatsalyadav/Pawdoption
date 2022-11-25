@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.ViewPager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -48,6 +49,8 @@ class PetDetailFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    val args: PetDetailFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,7 +60,8 @@ class PetDetailFragment : Fragment() {
 
         viewPager = binding.vpPetDetailsImage
 
-
+        shelterId = args.shelterId
+        petId = args.petId
 
         return binding.root
     }

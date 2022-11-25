@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/confirm_adoption_navigation"
-    app:startDestination="@id/petDetailFragment">
+    app:startDestination="@id/petListFragment">
 
 <!--    pendingAdoptionFragment-->
 
@@ -135,6 +135,9 @@
         <argument
             android:name="shelterId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_adoptPetFragment_to_petListFragment"
+            app:destination="@id/petListFragment" />
     </fragment>
     <fragment
         android:id="@+id/uploadAnimalPosting"
