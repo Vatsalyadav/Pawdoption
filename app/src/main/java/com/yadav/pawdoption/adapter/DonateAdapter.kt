@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.yadav.pawdoption.R
@@ -19,12 +20,13 @@ class DonateAdapter(private val context: Context, private val shelterList: Array
         val tvName: TextView
         val tvAddress: TextView
         val tvDescription: TextView
-
+        val bDonate: Button
 
         init {
             tvName = view.findViewById(R.id.tvShelterName)
             tvAddress = view.findViewById(R.id.tvShelterAddress)
             tvDescription = view.findViewById(R.id.tvShelterDescription)
+            bDonate = view.findViewById(R.id.donate_button)
         }
     }
 
@@ -40,7 +42,9 @@ class DonateAdapter(private val context: Context, private val shelterList: Array
         viewHolder.tvName.text = shelterList[position].name
         viewHolder.tvAddress.text = shelterList[position].address
         viewHolder.tvDescription.text = shelterList[position].description
+        viewHolder.bDonate.setOnClickListener{
 
+        }
 
     }
 

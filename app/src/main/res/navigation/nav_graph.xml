@@ -47,6 +47,15 @@
         android:id="@+id/donateList"
         android:name="com.yadav.pawdoption.view.DonateList"
         android:label="fragment_donate_list"
-        tools:layout="@layout/fragment_donate_list" />
+        tools:layout="@layout/fragment_donate_list" >
+        <action
+            android:id="@+id/action_donateList_to_donateFragment"
+            app:destination="@id/donateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/donateFragment"
+        android:name="com.yadav.pawdoption.view.DonateFragment"
+        android:label="fragment_donate"
+        tools:layout="@layout/fragment_donate" />
 
 </navigation>
