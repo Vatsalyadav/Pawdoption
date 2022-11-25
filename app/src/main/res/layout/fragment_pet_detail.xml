@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/rlPetDetailsImage"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="250dp"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,7 +18,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vpPetDetailsImage"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="250dp"
             android:layout_alignParentTop="true"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -34,7 +34,7 @@
     <ScrollView
         android:id="@+id/svPetDetailsDetailsAndMap"
         android:layout_width="match_parent"
-        android:layout_height="255dp"
+        android:layout_height="350dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/llAdoptShareLike"
@@ -49,7 +49,7 @@
 
             <TextView
                 android:id="@+id/tvPetDetailsPetName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:text="Pet Name"
@@ -57,13 +57,13 @@
 
             <TextView
                 android:id="@+id/tvPetDetailsPetBreed"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pet Name"/>
 
             <TextView
                 android:id="@+id/tvPetDetailsPetAge"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pet Name"/>
 
@@ -77,7 +77,7 @@
 
             <TextView
                 android:id="@+id/tvPetDetailsShelterName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:text="Shelter Name"
@@ -85,7 +85,7 @@
 
             <TextView
                 android:id="@+id/tvPetDetailsShelterAddress"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mobile Number"/>
 
@@ -104,49 +104,6 @@
         </LinearLayout>
     </ScrollView>
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/llAdoptShareLike"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.498"-->
-<!--        android:layout_marginBottom="80dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
-<!--        <Button-->
-<!--            android:id="@+id/btnPetDetailsAdopt"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="5"-->
-<!--            android:gravity="center"-->
-<!--            android:paddingLeft="8dp"-->
-<!--            android:paddingTop="8dp"-->
-<!--            android:paddingRight="8dp"-->
-<!--            android:paddingBottom="3dp"-->
-
-<!--            android:text="@string/adopt" />-->
-
-
-<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/share_pet"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:scaleType="fitCenter"-->
-<!--            android:src="@drawable/ic_round_share_24" />-->
-
-<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/love_pet"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:scaleType="fitCenter"-->
-<!--            android:src="@drawable/ic_round_love_24" />-->
-<!--    </LinearLayout>-->
-
     <LinearLayout
         android:id="@+id/llAdoptShareLike"
         android:layout_width="match_parent"
@@ -162,7 +119,7 @@
         <Button
             android:id="@+id/btnPetDetailsAdopt"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="5"
             android:gravity="center"
             android:paddingLeft="8dp"
@@ -176,7 +133,7 @@
         <ImageView
             android:id="@+id/ivPetDetailsSharePet"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="36dp"
             android:layout_weight="1"
             android:clickable="true"
             android:contextClickable="true"
@@ -187,25 +144,13 @@
         <ImageView
             android:id="@+id/ivPetDetailsLikePet"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="36dp"
             android:layout_weight="1"
             android:clickable="true"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_round_love_black_24"
             tools:ignore="SpeakableTextPresentCheck" />
     </LinearLayout>
-<!--    <Button-->
-<!--        android:id="@+id/btnPetDetailsAdopt"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:layout_marginBottom="80dp"-->
-<!--        android:text="@string/adopt"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.498"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
 
 

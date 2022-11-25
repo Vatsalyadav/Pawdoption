@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.databinding.FragmentLoginBinding
 import com.yadav.pawdoption.databinding.FragmentRegisterBinding
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import kotlinx.android.synthetic.main.fragment_register.*
 
 
@@ -74,14 +75,27 @@ class LoginFragment : Fragment() {
 
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//
-//        if(firebaseAuth.currentUser!=null){
+    override fun onStart() {
+        super.onStart()
+
+        firebaseAuth = FirebaseAuth.getInstance()
+        if(firebaseAuth.currentUser!=null){
+
+            val uid = firebaseAuth.currentUser?.uid.toString()
+
+            FirebaseDatabaseSingleton.getUserTypeReference().child(uid).get().addOnSuccessListener {
+                if(it.getValue() != null){
+                    val type = it.getValue()
+
+                    if(type == "petAdopter"){
+                        findNavController().navigate(R.id.action_loginFragment_to_petListFragment2)
+                    }
+                }
+            }
 //            findNavController().navigate(R.id.action_loginFragment_to_petListFragment2)
-//        }
-//
-//    }
+        }
+
+    }
 
 
 }
