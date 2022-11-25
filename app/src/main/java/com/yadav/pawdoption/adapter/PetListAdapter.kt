@@ -6,12 +6,16 @@
 package com.yadav.pawdoption.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -76,10 +80,25 @@ class PetListAdapter(private val context: Context, private val petsList: Mutable
             .placeholder(circularProgressDrawable)
             .into(viewHolder.petImageView);
 
-        viewHolder.itemView.setOnClickListener{
+        viewHolder.itemView.setOnClickListener {
             val navController = Navigation.findNavController(viewHolder.itemView)
-            val action = PetListFragmentDirections.actionPetListFragmentToPetDetailFragment(petsList[position].shelterId, petsList[position].id!!)
+            val action = PetListFragmentDirections.actionPetListFragmentToPetDetailFragment(
+                petsList[position].shelterId,
+                petsList[position].id!!
+            )
             navController!!.navigate(action)
+        }
+
+
+        viewHolder.petShareImage.setOnClickListener { view ->
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "I found a pet!")
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            context.startActivity(shareIntent)
         }
 
     }
