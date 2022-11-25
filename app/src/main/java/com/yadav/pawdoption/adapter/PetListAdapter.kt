@@ -13,7 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.model.ShelterPet
 
@@ -61,7 +61,7 @@ class PetListAdapter(private val context: Context, private val petsList: Mutable
         viewHolder.petBreedTextView.text = petsList[position].breed
         viewHolder.petDescTextView.text = petsList[position].description
 
-        Glide
+        Picasso
             .with(context)
             .load(petsList[position].imageURL[0])
             .centerCrop()

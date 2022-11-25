@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/confirm_adoption_navigation"
-    app:startDestination="@id/pendingAdoptionFragment">
+    app:startDestination="@id/donateList">
+
 <!--    pendingAdoptionFragment-->
 
     <fragment
@@ -15,6 +16,9 @@
             android:id="@+id/action_pendingAdoptionFragment_to_confirmAdoptionFragment"
             app:destination="@id/confirmAdoptionFragment" />
     </fragment>
+
+
+    <!--    Confirm Adoption-->
     <fragment
         android:id="@+id/confirmAdoptionFragment"
         android:name="com.yadav.pawdoption.view.ConfirmAdoptionFragment"
@@ -36,10 +40,9 @@
             android:name="petImage"
             app:argType="string" />
     </fragment>
-    <fragment
-        android:id="@+id/shelterMapFragment"
-        android:name="com.yadav.pawdoption.view.ShelterMapFragment"
-        android:label="ShelterMapFragment" />
+
+
+    <!--    Pet Details-->
     <fragment
         android:id="@+id/petDetailFragment"
         android:name="com.yadav.pawdoption.view.PetDetailFragment"
@@ -49,6 +52,8 @@
             android:id="@+id/action_petDetailFragment_to_adoptPetFragment"
             app:destination="@id/adoptPetFragment" />
     </fragment>
+
+    <!--    Pet List-->
     <fragment
         android:id="@+id/petListFragment"
         android:name="com.yadav.pawdoption.view.PetListFragment"
@@ -57,6 +62,34 @@
             android:id="@+id/action_petListFragment_to_uploadAnimalPosting"
             app:destination="@id/uploadAnimalPosting" />
     </fragment>
+
+    <!--    Maps -->
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.yadav.pawdoption.view.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
+
+
+    <!--    Donation List -->
+    <fragment
+        android:id="@+id/donateList"
+        android:name="com.yadav.pawdoption.view.DonateList"
+        android:label="fragment_donate_list"
+        tools:layout="@layout/fragment_donate_list" >
+        <action
+            android:id="@+id/action_donateList_to_donateFragment"
+            app:destination="@id/donateFragment" />
+    </fragment>
+
+    <!--    Donate fragment-->
+    <fragment
+        android:id="@+id/donateFragment"
+        android:name="com.yadav.pawdoption.view.DonateFragment"
+        android:label="fragment_donate"
+        tools:layout="@layout/fragment_donate" />
+
+
     <fragment
         android:id="@+id/myAppointment"
         android:name="com.yadav.pawdoption.view.MyAppointment"
@@ -98,9 +131,5 @@
             android:id="@+id/action_uploadAnimalPosting_to_petListFragment"
             app:destination="@id/petListFragment" />
     </fragment>
-    <!--    <fragment-->
-<!--        android:id="@+id/mapsFragment"-->
-<!--        android:name="com.yadav.pawdoption.view.MapsFragment"-->
-<!--        android:label="fragment_maps"-->
-<!--        tools:layout="@layout/fragment_maps" />-->
+
 </navigation>
