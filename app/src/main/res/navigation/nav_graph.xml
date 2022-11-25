@@ -51,6 +51,12 @@
         <action
             android:id="@+id/action_petDetailFragment_to_adoptPetFragment"
             app:destination="@id/adoptPetFragment" />
+        <argument
+            android:name="shelterId"
+            app:argType="string" />
+        <argument
+            android:name="petId"
+            app:argType="string" />
     </fragment>
 
     <!--    Pet List-->
@@ -61,6 +67,9 @@
         <action
             android:id="@+id/action_petListFragment_to_uploadAnimalPosting"
             app:destination="@id/uploadAnimalPosting" />
+        <action
+            android:id="@+id/action_petListFragment_to_petDetailFragment"
+            app:destination="@id/petDetailFragment" />
     </fragment>
 
     <!--    Maps -->
@@ -87,7 +96,11 @@
         android:id="@+id/donateFragment"
         android:name="com.yadav.pawdoption.view.DonateFragment"
         android:label="fragment_donate"
-        tools:layout="@layout/fragment_donate" />
+        tools:layout="@layout/fragment_donate" >
+        <argument
+            android:name="shelter"
+            app:argType="com.yadav.pawdoption.model.Shelter" />
+    </fragment>
 
 
     <fragment
