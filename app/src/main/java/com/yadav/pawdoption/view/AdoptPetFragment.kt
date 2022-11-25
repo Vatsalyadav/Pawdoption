@@ -9,6 +9,7 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.ktx.Firebase
 import com.yadav.pawdoption.R
@@ -75,6 +76,8 @@ class AdoptPetFragment : Fragment() {
 //                val myToast = Toast.makeText(applicationContext,"toast message with gravity",Toast.LENGTH_SHORT)
                 myToast.setGravity(Gravity.LEFT,200,200)
                 myToast.show()
+
+                findNavController().navigate(R.id.action_adoptPetFragment_to_petListFragment)
             }
         }
 

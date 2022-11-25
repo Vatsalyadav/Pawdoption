@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.databinding.FragmentLoginBinding
 import com.yadav.pawdoption.databinding.FragmentRegisterBinding
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import kotlinx.android.synthetic.main.fragment_register.*
 
 
@@ -23,7 +24,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private lateinit var databaseReference: DatabaseReference
 
-    private lateinit var  firebaseAuth : FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -70,49 +71,33 @@ class LoginFragment : Fragment() {
         }
 
 
-        binding.forgetPassword.setOnClickListener{
+        binding.forgetPassword.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_forgetPasswordFragment)
         }
 
 
     }
 
-    public override fun onStart() {
+    override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
+
         firebaseAuth = FirebaseAuth.getInstance()
-        val currentUser = firebaseAuth.currentUser
-        if(currentUser != null){
+        if (firebaseAuth.currentUser != null) {
 
+            val uid = firebaseAuth.currentUser?.uid.toString()
 
-            var uid = currentUser.uid
-            databaseReference = FirebaseDatabase.getInstance().getReference("UserType")
-
-            databaseReference.child("userType").child(uid).get().addOnSuccessListener {
-                if(it.getValue()!=null){
+            FirebaseDatabaseSingleton.getUserTypeReference().child(uid).get().addOnSuccessListener {
+                if (it.getValue() != null) {
                     val type = it.getValue()
-                    if(type == "petAdopter"){
+
+                    if (type == "petAdopter") {
                         findNavController().navigate(R.id.action_loginFragment_to_petListFragment2)
                     }
-                    else{
-                        findNavController().navigate(R.id.action_loginFragment_to_adoptPetFragment)
-                    }
-
-                    print(type)
                 }
             }
-
-        }
-    }
-
-//    override fun onStart() {
-//        super.onStart()
-//
-//        if(firebaseAuth.currentUser!=null){
 //            findNavController().navigate(R.id.action_loginFragment_to_petListFragment2)
-//        }
-//
-//    }
+        }
 
-
+    }
 }
+
