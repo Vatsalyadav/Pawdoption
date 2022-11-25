@@ -1,21 +1,17 @@
 package com.yadav.pawdoption.view
 import android.os.Bundle
 import android.util.Log
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.getValue
 import com.hbb20.CountryCodePicker
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.databinding.FragmentRegisterBinding
@@ -100,7 +96,7 @@ class RegisterFragment : Fragment() {
                 val Name = binding.firstNameEt.text.toString() + " " + binding.lastNameEt.text.toString()
                 val phoNumber = binding.phoneNumberEt.text.toString()
                 val address = binding.addressEt.text.toString()
-                val UserType = "petAdopter"
+                val mUserType = "petAdopter"
 
 //                binding.passwordEt.setOnFocusChangeListener{
 //                        _,focused->
@@ -138,7 +134,7 @@ class RegisterFragment : Fragment() {
                                 if(uid!=null){
                                     val user = User(null,Name,address,phoNumber)
                                     var hashMap : HashMap<String, String> = HashMap<String, String> ()
-                                     hashMap.put(uid,UserType)
+                                     hashMap.put(uid,mUserType)
                                     val userType = UserType(hashMap)
 
                                     databaseReference.child(uid).setValue(user).addOnCompleteListener{
@@ -152,13 +148,13 @@ class RegisterFragment : Fragment() {
                                     }
                                     databaseReference = FirebaseDatabase.getInstance().getReference("UserType")
 
-                                    databaseReference.child(userType.toString()).setValue(userType).addOnCompleteListener {
+                                    databaseReference.child(uid).setValue(mUserType).addOnCompleteListener {
                                         if(it.isSuccessful){
                                             //  databaseReference.child(uid).setValue(userType)
-                                            Log.d(UserType, "User Type succesfully added ");
+                                            Log.d(mUserType, "User Type succesfully added ");
                                         }
                                         else{
-                                            Log.d(UserType, "User Type not succesfully added ");
+                                            Log.d(mUserType, "User Type not succesfully added ");
                                         }
 
                                     }
