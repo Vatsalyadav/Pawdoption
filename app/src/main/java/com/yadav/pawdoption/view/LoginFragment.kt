@@ -87,10 +87,11 @@ class LoginFragment : Fragment() {
                 if(it.getValue() != null){
                     val type = it.getValue()
 
-                    print(type)
+                    if(type == "petAdopter"){
+                        findNavController().navigate(R.id.action_loginFragment_to_petListFragment2)
+                    }
                 }
             }
-            print(uid)
 //            findNavController().navigate(R.id.action_loginFragment_to_petListFragment2)
         }
 
