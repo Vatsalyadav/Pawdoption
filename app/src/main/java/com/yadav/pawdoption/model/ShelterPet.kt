@@ -15,8 +15,8 @@ data class ShelterPet(
     @SerializedName("breed"       ) var breed: String? = null,
     @SerializedName("description" ) var description: String? = null,
 
-
-    var shelterName: String = "Default Shelter Name YOLO"
+    var shelterName: String = "Shelter Name",
+    var shelterId: String = ""
 ): Parcelable {
     @IgnoredOnParcel
     @SerializedName("imageURL"    ) var imageURL: ArrayList<String> = arrayListOf()

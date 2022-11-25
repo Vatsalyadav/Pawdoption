@@ -12,10 +12,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.bumptech.glide.Glide
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.model.ShelterPet
+import com.yadav.pawdoption.view.PetListFragmentDirections
+
 
 // Code Reference: https://developer.android.com/develop/ui/views/layout/recyclerview#kotlin
 
@@ -55,23 +59,28 @@ class PetListAdapter(private val context: Context, private val petsList: Mutable
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        // https://stackoverflow.com/a/35306315
+        val circularProgressDrawable = CircularProgressDrawable(context)
+        circularProgressDrawable.strokeWidth = 5f
+        circularProgressDrawable.centerRadius = 30f
+        circularProgressDrawable.start()
 
         viewHolder.petNameTextView.text = petsList[position].name
         viewHolder.shelterNameTextView.text = petsList[position].shelterName
         viewHolder.petBreedTextView.text = petsList[position].breed
         viewHolder.petDescTextView.text = petsList[position].description
 
-        Picasso
-            .with(context)
+        Glide.with(context)
             .load(petsList[position].imageURL[0])
             .centerCrop()
-//            .placeholder(R.drawable.loading_spinner)
+            .placeholder(circularProgressDrawable)
             .into(viewHolder.petImageView);
 
-//        viewHolder.listItemParent = view.findViewById(R.id.list_item_parent)
-//        viewHolder.petLoveImage = view.findViewById(R.id.love_pet)
-//        viewHolder.petShareImage = view.findViewById(R.id.share_pet)
-//        viewHolder.viewDetailsTextView = view.findViewById(R.id.view_details)
+        viewHolder.itemView.setOnClickListener{
+            val navController = Navigation.findNavController(viewHolder.itemView)
+            val action = PetListFragmentDirections.actionPetListFragmentToPetDetailFragment(petsList[position].shelterId, petsList[position].id!!)
+            navController!!.navigate(action)
+        }
 
     }
 
