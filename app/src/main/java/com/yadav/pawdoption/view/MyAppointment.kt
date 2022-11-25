@@ -21,6 +21,8 @@ class MyAppointment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_my_appointment, container, false)
 
+        activity?.title = "My Appointment"
+
         /** Get recycler view reference **/
         val rvMyAppointments = view.findViewById<RecyclerView>(R.id.rvMyAppointments)
         val adapter = MyAppointmentAdapter(myAppointmentList)

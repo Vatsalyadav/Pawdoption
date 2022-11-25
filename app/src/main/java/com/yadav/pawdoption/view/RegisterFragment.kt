@@ -2,6 +2,7 @@ package com.yadav.pawdoption.view
 import android.content.Intent
 import com.yadav.pawdoption.R
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -104,19 +105,31 @@ class RegisterFragment : Fragment() {
                                 databaseReference = FirebaseDatabase.getInstance().getReference("Users")
 
                                 if(uid!=null){
-                                    val user = User(null,Name,address,phoNumber,null,null,null,null,null)
+                                    val user = User(null,Name,address,phoNumber)
                                     var hashMap : HashMap<String, String> = HashMap<String, String> ()
-                                    hashMap.put(uid,UserType)
+                                     hashMap.put(uid,UserType)
                                     val userType = UserType(hashMap)
 
                                     databaseReference.child(uid).setValue(user).addOnCompleteListener{
                                         if(it.isSuccessful){
-                                            databaseReference.child(uid).setValue(userType)
+                                          //  databaseReference.child(uid).setValue(userType)
                                             Toast.makeText(this.context,"Registered",Toast.LENGTH_SHORT).show()
                                         }
                                         else{
                                             Toast.makeText(this.context,"was not able to create profile",Toast.LENGTH_SHORT).show()
                                         }
+                                    }
+                                    databaseReference = FirebaseDatabase.getInstance().getReference("UserType")
+
+                                    databaseReference.setValue(userType).addOnCompleteListener {
+                                        if(it.isSuccessful){
+                                            //  databaseReference.child(uid).setValue(userType)
+                                            Log.d(UserType, "User Type succesfully added ");
+                                        }
+                                        else{
+                                            Log.d(UserType, "User Type not succesfully added ");
+                                        }
+
                                     }
                                 }
                                 findNavController().navigate(R.id.action_registerFragment_to_loginFragment)

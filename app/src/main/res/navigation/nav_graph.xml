@@ -25,8 +25,14 @@
             android:id="@+id/action_confirmAdoptionFragment_to_pendingAdoptionFragment"
             app:destination="@id/pendingAdoptionFragment" />
         <argument
-            android:name="PendingAdoption"
+            android:name="pendingAdoption"
             app:argType="com.yadav.pawdoption.model.PendingAdoption" />
+        <argument
+            android:name="shelterPer"
+            app:argType="com.yadav.pawdoption.model.ShelterPet" />
+        <argument
+            android:name="user"
+            app:argType="com.yadav.pawdoption.model.User" />
     </fragment>
     <fragment
         android:id="@+id/shelterMapFragment"
@@ -40,7 +46,11 @@
     <fragment
         android:id="@+id/petListFragment"
         android:name="com.yadav.pawdoption.view.PetListFragment"
-        android:label="PetListFragment" />
+        android:label="PetListFragment" >
+        <action
+            android:id="@+id/action_petListFragment_to_uploadAnimalPosting"
+            app:destination="@id/uploadAnimalPosting" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.yadav.pawdoption.view.RegisterFragment"
@@ -61,6 +71,9 @@
         <action
             android:id="@+id/action_loginFragment_to_petListFragment2"
             app:destination="@id/petListFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgetPasswordFragment"
+            app:destination="@id/forgetPasswordFragment" />
     </fragment>
 <!--        android:id="@+id/myAppointment"-->
 <!--        android:name="com.yadav.pawdoption.view.MyAppointment"-->
@@ -90,7 +103,20 @@
     <fragment
         android:id="@+id/uploadAnimalPosting"
         android:name="com.yadav.pawdoption.view.UploadAnimalPosting"
-        android:label="UploadAnimalPosting" />
+        android:label="UploadAnimalPosting" >
+        <action
+            android:id="@+id/action_uploadAnimalPosting_to_petListFragment"
+            app:destination="@id/petListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPasswordFragment"
+        android:name="com.yadav.pawdoption.view.ForgetPasswordFragment"
+        android:label="fragment_forget_password"
+        tools:layout="@layout/fragment_forget_password" >
+        <action
+            android:id="@+id/action_forgetPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <!--    <fragment-->
 <!--        android:id="@+id/mapsFragment"-->
 <!--        android:name="com.yadav.pawdoption.view.MapsFragment"-->

@@ -67,6 +67,11 @@ class LoginFragment : Fragment() {
         }
 
 
+        binding.forgetPassword.setOnClickListener{
+            findNavController().navigate(R.id.action_loginFragment_to_forgetPasswordFragment)
+        }
+
+
     }
 
 //    override fun onStart() {

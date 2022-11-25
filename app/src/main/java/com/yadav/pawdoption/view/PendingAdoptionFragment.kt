@@ -8,19 +8,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yadav.pawdoption.adapter.PendingAdoptionViewAdapter
-import com.yadav.pawdoption.persistence.PendingAdoptionDAOMock
 import com.yadav.pawdoption.databinding.FragmentPendingAdoptionsBinding
+import com.yadav.pawdoption.dataclass.PendingAdoptionData
+import com.yadav.pawdoption.persistence.PendingAdoptionDAOMock
 import com.yadav.pawdoption.model.PendingAdoption
+import com.yadav.pawdoption.model.ShelterPet
+import com.yadav.pawdoption.model.User
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
+import com.yadav.pawdoption.persistence.PendingAdoptionDAO
+import com.yadav.pawdoption.persistence.SheltersDAO
 
 class PendingAdoptionFragment : Fragment() {
 
     var _binding: FragmentPendingAdoptionsBinding? = null
 
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,24 +31,55 @@ class PendingAdoptionFragment : Fragment() {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_pending_adoptions, container, false)
 
+        _binding = FragmentPendingAdoptionsBinding.inflate(inflater, container, false)
+
+
+
         val pendingAdoptionDAOMock: PendingAdoptionDAOMock = PendingAdoptionDAOMock();
 
-        val pendingAdoptionList: MutableList<PendingAdoption> = pendingAdoptionDAOMock.getAdoptionList("1");
+        var pendingAdoptionList: MutableList<PendingAdoption> = pendingAdoptionDAOMock.getAdoptionList("1");
 
-        val notesAdapter: RecyclerView.Adapter<PendingAdoptionViewAdapter.ViewHolder> = PendingAdoptionViewAdapter(pendingAdoptionList);
-
-
-
-
-        _binding = FragmentPendingAdoptionsBinding.inflate(inflater, container, false)
+        var pendingAdoptionAdapter: RecyclerView.Adapter<PendingAdoptionViewAdapter.ViewHolder> = PendingAdoptionViewAdapter(
+            mutableListOf());
 
         _binding?.apply {
             rvPendingAdoptions.apply{
                 layoutManager= LinearLayoutManager(requireActivity())
-                adapter=notesAdapter
+                adapter=pendingAdoptionAdapter
             }
         }
 
+        val pendingAdoptionDAO = PendingAdoptionDAO();
+
+//        val mld2 = SheltersDAO().getShelters()
+
+        val mld = pendingAdoptionDAO.getAdoptionListTest("2001")
+
+        mld.observe(viewLifecycleOwner) {
+            val pendingAdoptionList = it
+            val paList: MutableList<PendingAdoptionData> = mutableListOf()
+            for(value in it){
+                val sheltersReference = FirebaseDatabaseSingleton.getSheltersReference()
+                var pet: ShelterPet? = null;
+
+                sheltersReference.child("2001").child("pets").child(value.petId!!).get().addOnSuccessListener {
+                    pet = it.getValue(ShelterPet::class.java)
+
+                    var user: User? = null
+                    FirebaseDatabaseSingleton.getUsersReference().child(value.userId!!).get().addOnSuccessListener {
+                        user = it.getValue(User::class.java)
+                        val pendingAdoptionData: PendingAdoptionData = PendingAdoptionData(value, pet, user)
+
+                        paList.add(pendingAdoptionData)
+
+                        pendingAdoptionAdapter = PendingAdoptionViewAdapter(paList)
+                        binding.rvPendingAdoptions.adapter = pendingAdoptionAdapter
+                        pendingAdoptionAdapter.notifyDataSetChanged()
+                    }
+                }
+
+            }
+        }
 
         return binding.root
 

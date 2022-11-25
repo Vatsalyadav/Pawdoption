@@ -11,8 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.PetListAdapter
 import com.yadav.pawdoption.persistence.SheltersDAO
@@ -33,6 +35,13 @@ class PetListFragment : Fragment() {
 //        (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         setupRecyclerView(view)
+
+        val fabAddPet = view.findViewById<FloatingActionButton>(R.id.fabAddPet)
+        // TODO: Diplay FAB based on the user type
+        fabAddPet.setOnClickListener {
+            findNavController().navigate(R.id.action_petListFragment_to_uploadAnimalPosting)
+        }
+
         return view
     }
 

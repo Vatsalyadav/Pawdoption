@@ -85,6 +85,7 @@
 
             <CheckBox
                 style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                android:id="@+id/remember_me"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -95,6 +96,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/forget_password"
                 android:layout_alignParentEnd="true"
                 android:backgroundTint="@color/teal_200"
                 android:text="@string/forgetPassword"

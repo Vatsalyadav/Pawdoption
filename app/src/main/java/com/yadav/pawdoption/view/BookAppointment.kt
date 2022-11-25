@@ -21,6 +21,8 @@ class BookAppointment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_book_appointment, container, false)
 
+        activity?.title = "Book Appointment"
+
         val tlDays = view.findViewById<TabLayout>(R.id.tlDays)
         tlDays!!.addTab(tlDays!!.newTab().setText("Monday"))
         tlDays!!.addTab(tlDays!!.newTab().setText("Tuesday"))
