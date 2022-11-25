@@ -48,7 +48,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvConfirmAdoptionPetName"
+                android:id="@+id/tvPetDetailsPetName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -56,24 +56,44 @@
                 android:textSize="20dp"/>
 
             <TextView
-                android:id="@+id/tvConfirmAdoptionPetBreed"
+                android:id="@+id/tvPetDetailsPetBreed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pet Name"/>
 
             <TextView
-                android:id="@+id/tvPetDetaisPetAge"
+                android:id="@+id/tvPetDetailsPetAge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pet Name"/>
 
             <TextView
-                android:id="@+id/tvConfirmAdoptionPetDescription"
+                android:id="@+id/tvPetDetailsPetDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:minHeight="30dp"
                 android:text="Pet Description" />
+
+            <TextView
+                android:id="@+id/tvPetDetailsShelterName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Shelter Name"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/tvPetDetailsShelterAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mobile Number"/>
+
+            <TextView
+                android:id="@+id/tvPetDetailsShelterDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address" />
 
             <fragment
                 android:id="@+id/mapPetDetailsShelterLocation"
