@@ -20,6 +20,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.yadav.pawdoption.model.ShelterPet
+import com.yadav.pawdoption.persistence.PetDAO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -92,7 +94,14 @@ class UploadAnimalPosting : Fragment() {
             }
 
             // TODO: Upload image - Dynamically generate a file name
-            // uploadImage("myImage")
+            // TODO: Dynamically pick the shelter ID
+            val pet = ShelterPet(
+                name = petName,
+                age = petAge.toInt(),
+                breed = selectedRadioButton.text.toString(),
+                description = petDescription,
+            )
+            writeToDatabase("myImage", "2001", pet)
 
             findNavController().navigate(R.id.action_uploadAnimalPosting_to_petListFragment)
         }
@@ -185,12 +194,15 @@ class UploadAnimalPosting : Fragment() {
         }
     }
 
-    private fun uploadImage(fileName: String) = CoroutineScope(Dispatchers.IO).launch {
+    private fun writeToDatabase(fileName: String, shelterId: String, pet: ShelterPet) = CoroutineScope(Dispatchers.IO).launch {
         try {
             curFile?.let {
-                imageRef.child("images/$fileName").putFile(it).await()
+                val downloadUrl = imageRef.child("images/$fileName").putFile(it).await().storage.downloadUrl.await()
+                pet.imageURL.add(downloadUrl.toString())
+                val petDAO = PetDAO()
+                petDAO.postPet(shelterId, pet)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "Successfully uploaded image", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Successfully added pet", Toast.LENGTH_LONG).show()
                 }
             }
         } catch (e: Exception) {
