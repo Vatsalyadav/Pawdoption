@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.shelters -> {
-                    Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.shelterMapFragment)
+                    Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.mapsFragment)
                     true
                 }
                 R.id.vet -> {
