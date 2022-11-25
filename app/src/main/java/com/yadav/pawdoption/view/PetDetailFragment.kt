@@ -38,12 +38,13 @@ class PetDetailFragment : Fragment() {
     lateinit var indicator: CircleIndicator
 
     var _binding: FragmentPetDetailBinding? = null
-
     var liked: String? = null;
-
     var shelter: Shelter? = null;
-
     var pet: ShelterPet? = null;
+
+    var userId: String = "uid1"
+    var petId: String = "0"
+    var shelterId: String = "2001"
 
     private val binding get() = _binding!!
 
@@ -65,27 +66,18 @@ class PetDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //TODO shelter id hard code
-        FirebaseDatabaseSingleton.getSheltersReference().child("2001").get().addOnSuccessListener { shelterDataSnapshot ->
+        FirebaseDatabaseSingleton.getSheltersReference().child(shelterId).get().addOnSuccessListener { shelterDataSnapshot ->
             if(shelterDataSnapshot.getValue() != null){
 
                 shelter = shelterDataSnapshot.getValue(Shelter::class.java)
 
-                print(shelter)
-//                shelter = shelterDataSnapshot.getValue(Shelter::class.java)
-
                 shelter?.let { s ->
                     //TODO pet id hardcode
-                    FirebaseDatabaseSingleton.getSheltersReference().child("2001")
-                        .child("pets").child("0").get()
+                    FirebaseDatabaseSingleton.getSheltersReference().child(shelterId)
+                        .child("pets").child(petId).get()
                         .addOnSuccessListener { petDataSnapshot ->
                             if(petDataSnapshot.getValue() != null){
-                                 pet = petDataSnapshot.getValue<ShelterPet>()
-
-//                                val images: MutableList<String> = mutableListOf()
-//                                images.add("https://firebasestorage.googleapis.com/v0/b/cosmic-kite-278709.appspot.com/o/Screen%20Shot%202022-10-14%20at%205.59.47%20PM.png?alt=media&token=7c161da6-dbe0-4885-8500-b77d24ea1114")
-//                                images.add("https://firebasestorage.googleapis.com/v0/b/cosmic-kite-278709.appspot.com/o/Screen%20Shot%202022-10-15%20at%206.07.25%20PM.png?alt=media&token=b6f38fa9-3144-4ebe-97f0-021c58a892b0")
-
-
+                                pet = petDataSnapshot.getValue<ShelterPet>()
                                 pet?.imageURL?.let{
                                     viewPagerAdapter = PetDetailImageCorousalAdapter(requireContext(), it)
                                     viewPager.adapter = viewPagerAdapter
@@ -114,7 +106,7 @@ class PetDetailFragment : Fragment() {
 
 
 
-        FirebaseDatabaseSingleton.getSheltersReference().child("2001").child("pendingAdoptions").addValueEventListener(object: ValueEventListener {
+        FirebaseDatabaseSingleton.getSheltersReference().child(shelterId).child("pendingAdoptions").addValueEventListener(object: ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot?.getValue() != null) {
@@ -123,7 +115,7 @@ class PetDetailFragment : Fragment() {
                     for ((key, value) in paList) {
 
                         //TODO static user id
-                        if (value.get("userId").equals("uid1") && value.get("petId").equals("0")) {
+                        if (value.get("userId").equals(userId) && value.get("petId").equals(petId)) {
                             binding.btnPetDetailsAdopt.isEnabled = false
                         }
                     }
@@ -136,17 +128,15 @@ class PetDetailFragment : Fragment() {
 
         })
 
-        val userRef = FirebaseDatabaseSingleton.getUsersReference().child("uid1")
+        val userRef = FirebaseDatabaseSingleton.getUsersReference().child(userId)
 
         userRef.child("lovedPets").get().addOnSuccessListener {
             if(it.getValue() != null) {
-                val paList: HashMap<String, HashMap<String, String>> =
-                    it.getValue() as HashMap<String, HashMap<String, String>>
-                for ((key, value) in paList) {
 
-                    //TODO static user id
-                    if (value.get("shelterId").equals("2001") && value.get("petId").equals("0")) {
-                        liked = value.get("id")
+                for(ls in it.children){
+                    val lovedPet: UserLovedPet? = ls.getValue(UserLovedPet::class.java)
+                    if(lovedPet?.shelterId!!.equals(shelter) && lovedPet?.petId.equals(petId)){
+                        liked = lovedPet?.id
                         binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_24)
                     }
                 }
@@ -163,7 +153,7 @@ class PetDetailFragment : Fragment() {
         binding.ivPetDetailsLikePet.setOnClickListener {
             if (liked.isNullOrBlank()) {
                 val userLovedPet: UserLovedPet =
-                    UserLovedPet(UUID.randomUUID().toString(), "0", "2001")
+                    UserLovedPet(UUID.randomUUID().toString(), petId, shelterId)
                 userRef.child("lovedPets").child(userLovedPet.id!!).setValue(userLovedPet);
                 liked = userLovedPet.id
                 binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_24)
@@ -180,7 +170,7 @@ class PetDetailFragment : Fragment() {
 
 
             //TODO replace the static data here
-            val action = PetDetailFragmentDirections.actionPetDetailFragmentToAdoptPetFragment("0", "2001")
+            val action = PetDetailFragmentDirections.actionPetDetailFragmentToAdoptPetFragment(petId, shelterId)
 
             findNavController().navigate(action)
         }
