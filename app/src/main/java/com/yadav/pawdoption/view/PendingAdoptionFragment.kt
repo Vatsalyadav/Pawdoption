@@ -39,7 +39,7 @@ class PendingAdoptionFragment : Fragment() {
 
         var pendingAdoptionList: MutableList<PendingAdoption> = pendingAdoptionDAOMock.getAdoptionList("1");
 
-        var pendingAdoptionAdapter: RecyclerView.Adapter<PendingAdoptionViewAdapter.ViewHolder> = PendingAdoptionViewAdapter(
+        var pendingAdoptionAdapter: RecyclerView.Adapter<PendingAdoptionViewAdapter.ViewHolder> = PendingAdoptionViewAdapter(requireContext(),
             mutableListOf());
 
         _binding?.apply {
@@ -58,7 +58,7 @@ class PendingAdoptionFragment : Fragment() {
         mld.observe(viewLifecycleOwner) {
             val pendingAdoptionList = it
             val paList: MutableList<PendingAdoptionData> = mutableListOf()
-            for(value in it){
+            for((key, value) in it){
                 val sheltersReference = FirebaseDatabaseSingleton.getSheltersReference()
                 var pet: ShelterPet? = null;
 
@@ -72,7 +72,7 @@ class PendingAdoptionFragment : Fragment() {
 
                         paList.add(pendingAdoptionData)
 
-                        pendingAdoptionAdapter = PendingAdoptionViewAdapter(paList)
+                        pendingAdoptionAdapter = PendingAdoptionViewAdapter(requireContext(), paList)
                         binding.rvPendingAdoptions.adapter = pendingAdoptionAdapter
                         pendingAdoptionAdapter.notifyDataSetChanged()
                     }
