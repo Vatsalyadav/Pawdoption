@@ -10,6 +10,8 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.databinding.FragmentLoginBinding
 import com.yadav.pawdoption.databinding.FragmentRegisterBinding
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_register.*
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
+    private lateinit var databaseReference: DatabaseReference
 
     private lateinit var  firebaseAuth : FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +75,34 @@ class LoginFragment : Fragment() {
         }
 
 
+    }
+
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        firebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = firebaseAuth.currentUser
+        if(currentUser != null){
+
+
+            var uid = currentUser.uid
+            databaseReference = FirebaseDatabase.getInstance().getReference("UserType")
+
+            databaseReference.child("userType").child(uid).get().addOnSuccessListener {
+                if(it.getValue()!=null){
+                    val type = it.getValue()
+                    if(type == "petAdopter"){
+                        findNavController().navigate(R.id.action_loginFragment_to_petListFragment2)
+                    }
+                    else{
+                        findNavController().navigate(R.id.action_loginFragment_to_adoptPetFragment)
+                    }
+
+                    print(type)
+                }
+            }
+
+        }
     }
 
 //    override fun onStart() {

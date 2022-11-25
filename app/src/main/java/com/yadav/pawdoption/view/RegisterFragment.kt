@@ -100,7 +100,7 @@ class RegisterFragment : Fragment() {
                 val Name = binding.firstNameEt.text.toString() + " " + binding.lastNameEt.text.toString()
                 val phoNumber = binding.phoneNumberEt.text.toString()
                 val address = binding.addressEt.text.toString()
-                val UserType = "petAdopter"
+                val userType = "petAdopter"
 
 //                binding.passwordEt.setOnFocusChangeListener{
 //                        _,focused->
@@ -137,9 +137,6 @@ class RegisterFragment : Fragment() {
 
                                 if(uid!=null){
                                     val user = User(null,Name,address,phoNumber)
-                                    var hashMap : HashMap<String, String> = HashMap<String, String> ()
-                                     hashMap.put(uid,UserType)
-                                    val userType = UserType(hashMap)
 
                                     databaseReference.child(uid).setValue(user).addOnCompleteListener{
                                         if(it.isSuccessful){
@@ -152,13 +149,13 @@ class RegisterFragment : Fragment() {
                                     }
                                     databaseReference = FirebaseDatabase.getInstance().getReference("UserType")
 
-                                    databaseReference.child(userType.toString()).setValue(userType).addOnCompleteListener {
+                                    databaseReference.child(uid).setValue(userType).addOnCompleteListener {
                                         if(it.isSuccessful){
                                             //  databaseReference.child(uid).setValue(userType)
-                                            Log.d(UserType, "User Type succesfully added ");
+                                            Log.d(userType, "User Type succesfully added ");
                                         }
                                         else{
-                                            Log.d(UserType, "User Type not succesfully added ");
+                                            Log.d(userType, "User Type not succesfully added ");
                                         }
 
                                     }
@@ -250,25 +247,7 @@ class RegisterFragment : Fragment() {
 
     }
 
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = firebaseAuth.currentUser
-        if(currentUser != null){
-            var uid = currentUser.uid
-            databaseReference = FirebaseDatabase.getInstance().getReference("UserType")
 
-            databaseReference.child("userType").child(uid).get().addOnSuccessListener {
-                if(it.getValue()!=null){
-                    val type = it.getValue()
-
-                    print(type)
-
-                }
-            }
-
-        }
-    }
 
 
 
