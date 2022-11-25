@@ -6,6 +6,7 @@
 package com.yadav.pawdoption.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,10 +58,14 @@ class PetListFragment : Fragment() {
         ) {
             val shelterPetList: MutableList<ShelterPet> = mutableListOf()
             for (shelter in it) {
-                shelterPetList.addAll(shelter.value.pets.onEach {
-                    it.shelterId = shelter.key
-                    it.shelterName = shelter.value.name.toString()
-                })
+                Log.e("PetList", "dsfds: " + shelter.value.pets)
+                for (pet in shelter.value.pets) {
+                    if (pet != null) {
+                        pet.shelterId = shelter.key
+                        pet.shelterName = shelter.value.name.toString()
+                        shelterPetList.add(pet)
+                    }
+                }
             }
             petListAdapter = PetListAdapter(requireContext(), shelterPetList)
             recyclerView.adapter = petListAdapter
