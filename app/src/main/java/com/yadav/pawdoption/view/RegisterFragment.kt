@@ -15,6 +15,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.getValue
 import com.hbb20.CountryCodePicker
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.databinding.FragmentRegisterBinding
@@ -249,6 +250,25 @@ class RegisterFragment : Fragment() {
 
     }
 
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = firebaseAuth.currentUser
+        if(currentUser != null){
+            var uid = currentUser.uid
+            databaseReference = FirebaseDatabase.getInstance().getReference("UserType")
+
+            databaseReference.child("userType").child(uid).get().addOnSuccessListener {
+                if(it.getValue()!=null){
+                    val type = it.getValue()
+
+                    print(type)
+
+                }
+            }
+
+        }
+    }
 
 
 
