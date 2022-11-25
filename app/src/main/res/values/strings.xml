@@ -5,6 +5,7 @@
     <string name="adopter_details">Adopter Details</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="required">Required</string>
     <string name="name">Name</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="age">Age</string>
@@ -31,5 +32,26 @@
     <string name="approve">Approve</string>
     <string name="reject">Reject</string>
 
+    <string name="login">Login</string>
+    <string name="enter_email">Email</string>
+    <string name="enter_password">Password</string>
+    <string name="rememberMe">Remember Me</string>
+    <string name="forgetPassword">Forget Password</string>
+    <string name="createAccount">Create Account</string>
+    <string name="register">Register</string>
+
+    <string name="shelterName">ShelterName</string>
+    <string name="country">Country</string>
+    <string name="city">Country</string>
+    <string name="zipCode">Zip Code</string>
+    <string name="shelterdescription">shelterDescription</string>
+
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="phoneNumber">Phone Number</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="rePassword">Retype Password</string>
+    <string name="signUp">Sign Up</string>
 
 </resources>
