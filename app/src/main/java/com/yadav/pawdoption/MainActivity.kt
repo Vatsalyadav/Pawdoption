@@ -1,29 +1,46 @@
 package com.yadav.pawdoption
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
-import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.yadav.pawdoption.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.yadav.pawdoption.persistence.UsersDAO
 
-
+// https://guides.codepath.com/android/Bottom-Navigation-Views
+// https://stackoverflow.com/questions/53902494/navigation-component-cannot-find-navcontroller
+// https://firebase.google.com/docs/auth/android/start#check_current_auth_state
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var appBarConfiguration: AppBarConfiguration
-
+    private lateinit var auth: FirebaseAuth
+    private val usersDAO = UsersDAO()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setBottomNavigation()
 
     }
 
-    // https://guides.codepath.com/android/Bottom-Navigation-Views
-    //    https://stackoverflow.com/questions/53902494/navigation-component-cannot-find-navcontroller
-    private fun setBottomNavigation() {
+    public override fun onStart() {
+        super.onStart()
+        auth = Firebase.auth
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        Log.e("Main", " "+auth.currentUser?.uid)
+        if(currentUser != null){
+            val userType = usersDAO.getUsersTypeById(currentUser.uid)
+            Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.petListFragment)
+            setBottomNavigation(userType)
+        }
+    }
+
+    private fun setBottomNavigation(userType: String) {
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_nav)
+        bottomNavigationView.visibility = View.VISIBLE
         bottomNavigationView.selectedItemId = R.id.pets
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
