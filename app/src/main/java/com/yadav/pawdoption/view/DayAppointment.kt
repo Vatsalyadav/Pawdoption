@@ -46,7 +46,8 @@ class DayAppointment : Fragment() {
                             shelterName = shelter.value.name.toString(),
                             vetName = vet.name.toString(),
                             vetQualification = vet.qualification.toString(),
-                            vetId = vet.id.toString()
+                            vetId = vet.id.toString(),
+                            shelterId = shelter.value.id.toString()
                         ))
                     }
                 }

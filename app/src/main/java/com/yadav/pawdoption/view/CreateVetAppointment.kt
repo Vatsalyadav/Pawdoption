@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.yadav.pawdoption.model.Veterinarian
 import com.yadav.pawdoption.persistence.AppointmentDAO
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 
 
 class CreateVetAppointment : Fragment() {
@@ -56,7 +57,6 @@ class CreateVetAppointment : Fragment() {
 
             // Call firebase
             val appointmentDAO = AppointmentDAO()
-            // TODO: Dynamically pick shelter ID
 
             val days = arrayListOf<String>()
             for (i in cgDays.checkedChipIds) {
@@ -71,7 +71,7 @@ class CreateVetAppointment : Fragment() {
                 qualification = vetQualification,
                 days = days
             )
-            appointmentDAO.createSchedule("2001", vet)
+            appointmentDAO.createSchedule(FirebaseDatabaseSingleton.getCurrentUid(), vet)
             Toast.makeText(requireContext(), "Successfully added vet", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_createVetAppointment_to_bookAppointment)
         }

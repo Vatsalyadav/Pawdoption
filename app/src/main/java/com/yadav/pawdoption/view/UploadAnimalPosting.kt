@@ -21,6 +21,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.yadav.pawdoption.model.ShelterPet
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.PetDAO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -94,15 +95,13 @@ class UploadAnimalPosting : Fragment() {
                 return@setOnClickListener
             }
 
-            // TODO: Upload image - Dynamically generate a file name
-            // TODO: Dynamically pick the shelter ID
             val pet = ShelterPet(
                 name = petName,
                 age = petAge.toInt(),
                 breed = selectedRadioButton.text.toString(),
                 description = petDescription,
             )
-            writeToDatabase("myImage", "2001", pet)
+            writeToDatabase("pet_${Instant.now()}", FirebaseDatabaseSingleton.getCurrentUid(), pet)
 
             findNavController().navigate(R.id.action_uploadAnimalPosting_to_petListFragment)
         }
@@ -198,7 +197,7 @@ class UploadAnimalPosting : Fragment() {
     private fun writeToDatabase(fileName: String, shelterId: String, pet: ShelterPet) = CoroutineScope(Dispatchers.IO).launch {
         try {
             curFile?.let {
-                val downloadUrl = imageRef.child("images/"+Instant.now()).putFile(it).await().storage.downloadUrl.await()
+                val downloadUrl = imageRef.child("images/$fileName").putFile(it).await().storage.downloadUrl.await()
                 pet.imageURL.add(downloadUrl.toString())
                 val petDAO = PetDAO()
                 petDAO.postPet(shelterId, pet)
