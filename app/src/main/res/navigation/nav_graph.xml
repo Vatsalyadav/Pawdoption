@@ -126,6 +126,9 @@
         <action
             android:id="@+id/action_loginFragment_to_forgetPasswordFragment"
             app:destination="@id/forgetPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_adoptPetFragment"
+            app:destination="@id/adoptPetFragment" />
     </fragment>
 <!--        android:id="@+id/myAppointment"-->
 <!--        android:name="com.yadav.pawdoption.view.MyAppointment"-->
@@ -177,6 +180,15 @@
         tools:layout="@layout/fragment_forget_password" >
         <action
             android:id="@+id/action_forgetPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.yadav.pawdoption.view.UserProfileFragment"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" >
+        <action
+            android:id="@+id/action_userProfileFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
 </navigation>

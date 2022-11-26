@@ -10,6 +10,8 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.databinding.FragmentLoginBinding
 import com.yadav.pawdoption.databinding.FragmentRegisterBinding
@@ -20,8 +22,9 @@ import kotlinx.android.synthetic.main.fragment_register.*
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
+    private lateinit var databaseReference: DatabaseReference
 
-    private lateinit var  firebaseAuth : FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -68,10 +71,12 @@ class LoginFragment : Fragment() {
         }
 
 
-        binding.forgetPassword.setOnClickListener{
+        binding.forgetPassword.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_forgetPasswordFragment)
         }
 
     }
 
+
 }
+
