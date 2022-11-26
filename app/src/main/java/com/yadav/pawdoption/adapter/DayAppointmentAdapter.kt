@@ -15,6 +15,7 @@ import com.yadav.pawdoption.R
 import com.yadav.pawdoption.model.Appointment
 import com.yadav.pawdoption.model.BookedSlot
 import com.yadav.pawdoption.persistence.AppointmentDAO
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.PetDAO
 
 
@@ -69,8 +70,7 @@ class DayAppointmentAdapter(
                         day = day,
                         time = timeSlot.text.toString(),
                     )
-                    // TODO: Dynamically pick userId
-                    appointmentDAO.createMyAppointment("Bt71CUS4nFRI5dNKdXSSN94Hdlf1", appointment)
+                    appointmentDAO.createMyAppointment(FirebaseDatabaseSingleton.getCurrentUid(), appointment)
                     Toast.makeText(holder.btnBookAppointment.context, "Slot Booked Successfully", Toast.LENGTH_LONG).show()
                 }
                 .show()
