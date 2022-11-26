@@ -5,4 +5,5 @@ data class DayAppointment(
     val shelterName: String,
     val vetName: String,
     val vetQualification: String,
+    val vetId: String,
 )

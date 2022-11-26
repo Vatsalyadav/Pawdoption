@@ -7,10 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.yadav.pawdoption.model.MyAppointment
 import com.yadav.pawdoption.R
+import com.yadav.pawdoption.model.Appointment
 
 /** Adapter class for notes containing logic for manipulating my appointment in the recycler view */
 class MyAppointmentAdapter(
-    private var myAppointments: List<MyAppointment>
+    private var myAppointments: List<Appointment>
 ) : RecyclerView.Adapter<MyAppointmentAdapter.MyAppointmentViewHolder>() {
 
     /** Inner view holder class for note **/
@@ -26,7 +27,7 @@ class MyAppointmentAdapter(
         holder.itemView.apply {
             maTvShelterDoctor.text = "${myAppointments[position].shelterName} - ${myAppointments[position].vetName}"
             maTvQualification.text = myAppointments[position].vetQualification
-            maTvDate.text = myAppointments[position].date
+            maTvDate.text = myAppointments[position].day
             maTvTime.text = myAppointments[position].time
         }
     }

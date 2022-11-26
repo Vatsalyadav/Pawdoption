@@ -7,7 +7,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
 <androidx.cardview.widget.CardView
     android:id="@+id/cvPetDetailsImageCorousal"
     android:layout_width="match_parent"
-    android:layout_height="350dp"
+    android:layout_height="250dp"
     app:cardCornerRadius="10dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"

@@ -2,13 +2,13 @@
     <item
         android:id="@+id/shelters"
         android:enabled="true"
-        android:icon="@drawable/animalshelter"
-        android:title="Shelter"/>
+        android:icon="@drawable/ic_donations"
+        android:title="Donations"/>
     <item
         android:id="@+id/loved"
         android:enabled="true"
-        android:icon="@drawable/ic_round_love_black_24"
-        android:title="Love"/>
+        android:icon="@drawable/ic_pending"
+        android:title="Adoptions"/>
     <item
         android:id="@+id/pets"
         android:enabled="true"
@@ -18,7 +18,7 @@
         android:id="@+id/vet"
         android:enabled="true"
         android:icon="@drawable/vaccines"
-        android:title="Doctor"/>
+        android:title="Vet"/>
     <item
         android:id="@+id/profile"
         android:enabled="true"

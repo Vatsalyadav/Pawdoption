@@ -19,6 +19,7 @@ import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.PetListAdapter
 import com.yadav.pawdoption.model.Shelter
 import com.yadav.pawdoption.model.ShelterPet
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.SheltersDAO
 
 class PetListFragment : Fragment() {
@@ -34,15 +35,15 @@ class PetListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_pet_list, container, false)
 
         activity?.title = "Pets"
-//        (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
         setupRecyclerView(view)
 
         val fabAddPet = view.findViewById<FloatingActionButton>(R.id.fabAddPet)
-        // TODO: Diplay FAB based on the user type
-        fabAddPet.setOnClickListener {
-            findNavController().navigate(R.id.action_petListFragment_to_uploadAnimalPosting)
-        }
+        if (FirebaseDatabaseSingleton.getCurrentUserType().equals("PETADOPTER"))
+            fabAddPet.visibility = View.GONE
+        else
+            fabAddPet.setOnClickListener {
+                findNavController().navigate(R.id.action_petListFragment_to_uploadAnimalPosting)
+            }
 
         return view
     }
@@ -56,20 +57,44 @@ class PetListFragment : Fragment() {
         sheltersDAO.getShelters().observe(
             viewLifecycleOwner
         ) {
-            val shelterPetList: MutableList<ShelterPet> = mutableListOf()
-            for (shelter in it) {
-                Log.e("PetList", "dsfds: " + shelter.value.pets)
-                for (pet in shelter.value.pets) {
-                    if (pet != null) {
-                        pet.shelterId = shelter.key
-                        pet.shelterName = shelter.value.name.toString()
-                        shelterPetList.add(pet)
-                    }
-                }
-            }
-            petListAdapter = PetListAdapter(requireContext(), shelterPetList)
+
+            if (FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER"))
+                petListAdapter = PetListAdapter(requireContext(), getAllPets(it))
+            else
+                petListAdapter = PetListAdapter(requireContext(), getCurrentShelterPets(it))
             recyclerView.adapter = petListAdapter
             petListAdapter.notifyDataSetChanged()
         }
+    }
+
+    private fun getCurrentShelterPets(it: HashMap<String, Shelter>): MutableList<ShelterPet> {
+        val currentShelterPetList: MutableList<ShelterPet> = mutableListOf()
+        if (it.get(FirebaseDatabaseSingleton.getCurrentUid())?.pets!=null) {
+            for (pet in it.get(FirebaseDatabaseSingleton.getCurrentUid())?.pets!!) {
+                if (pet != null) {
+                    pet.shelterId =
+                        it.get(FirebaseDatabaseSingleton.getCurrentUid())!!.id.toString()
+                    pet.shelterName =
+                        it.get(FirebaseDatabaseSingleton.getCurrentUid())!!.id.toString()
+                    currentShelterPetList.add(pet)
+                }
+            }
+        }
+        return currentShelterPetList
+    }
+
+    private fun getAllPets(it: HashMap<String, Shelter>): MutableList<ShelterPet> {
+        val allPetList: MutableList<ShelterPet> = mutableListOf()
+        Log.e("mainac", it.toString())
+        for (shelter in it) {
+            for (pet in shelter.value.pets) {
+                if (pet != null) {
+                    pet.shelterId = shelter.key
+                    pet.shelterName = shelter.value.name.toString()
+                    allPetList.add(pet)
+                }
+            }
+        }
+        return allPetList
     }
 }

@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".view.PetDetailFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp"
     tools:context=".view.PetDetailFragment">
 
 
@@ -31,29 +39,29 @@
     </RelativeLayout>
 
 
-    <ScrollView
-        android:id="@+id/svPetDetailsDetailsAndMap"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/llAdoptShareLike"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rlPetDetailsImage">
+<!--    <ScrollView-->
+<!--        android:id="@+id/svPetDetailsDetailsAndMap"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="350dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        >-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/llAdoptShareLike"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rlPetDetailsImage">
 
             <TextView
                 android:id="@+id/tvPetDetailsPetName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:text="Pet Name"
-                android:textSize="20dp"/>
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
 
             <TextView
                 android:id="@+id/tvPetDetailsPetBreed"
@@ -71,17 +79,14 @@
                 android:id="@+id/tvPetDetailsPetDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:minHeight="30dp"
                 android:text="Pet Description" />
 
             <TextView
                 android:id="@+id/tvPetDetailsShelterName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:text="Shelter Name"
-                android:textSize="20dp"/>
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
 
             <TextView
                 android:id="@+id/tvPetDetailsShelterAddress"
@@ -93,16 +98,17 @@
                 android:id="@+id/tvPetDetailsShelterDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
                 android:text="Address" />
 
             <fragment
                 android:id="@+id/mapPetDetailsShelterLocation"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="240dp" />
+                android:layout_height="220dp" />
 
         </LinearLayout>
-    </ScrollView>
+<!--    </ScrollView>-->
 
     <LinearLayout
         android:id="@+id/llAdoptShareLike"
@@ -156,3 +162,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
