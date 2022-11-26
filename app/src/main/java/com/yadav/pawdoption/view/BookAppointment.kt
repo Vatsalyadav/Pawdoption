@@ -55,11 +55,13 @@ class BookAppointment : Fragment() {
         val fabAdd = view.findViewById<FloatingActionButton>(R.id.fabAdd)
         if (FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER"))
             fabAdd.visibility = View.GONE
-        else
-        /** Navigate to the second fragment on clicking on the next button **/
+        else {
+            fabAdd.visibility = View.VISIBLE
+            /** Navigate to the second fragment on clicking on the next button **/
             fabAdd.setOnClickListener {
                 findNavController().navigate(R.id.action_bookAppointment_to_createVetAppointment)
             }
+        }
 
         return view
     }
