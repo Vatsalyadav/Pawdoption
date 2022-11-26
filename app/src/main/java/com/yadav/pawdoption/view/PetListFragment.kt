@@ -52,10 +52,6 @@ class PetListFragment : Fragment() {
         )
         if (FirebaseDatabaseSingleton.getCurrentUser() == null) {
             FirebaseDatabaseSingleton.setCurrentUser()
-            Log.e(
-                "PetListFrag",
-                "FirebaseDatabaseSingleton.getCurrentUser()" + FirebaseDatabaseSingleton.getCurrentUid()
-            )
             usersDAO.setCurrentUserTypeByUid(FirebaseDatabaseSingleton.getCurrentUid())
             usersDAO.getCurrentUserTypeByUid().observe(viewLifecycleOwner) {
                 Log.e("PetListFrag", "usersDAO.getCurrentUserTypeByUid() updated")
@@ -68,6 +64,16 @@ class PetListFragment : Fragment() {
                     }
                 }
                 setBottomNavigation(it)
+            }
+        }
+        else {
+            if (FirebaseDatabaseSingleton.getCurrentUserType()  == "petAdopter")
+                fabAddPet.visibility = View.GONE
+            else {
+                fabAddPet.visibility = View.VISIBLE
+                fabAddPet.setOnClickListener {
+                    findNavController().navigate(R.id.action_petListFragment_to_uploadAnimalPosting)
+                }
             }
         }
         return view
@@ -123,7 +129,7 @@ class PetListFragment : Fragment() {
         return allPetList
     }
 
-    fun setBottomNavigation(userType: String) {
+    private fun setBottomNavigation(userType: String) {
         Log.e("MainActivity", "userType: " + userType)
         bottomNavigationView = if (userType == "petAdopter")
             activity?.findViewById(R.id.bottom_nav_pet_owner)!!
