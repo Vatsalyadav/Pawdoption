@@ -35,7 +35,7 @@ class DayAppointment : Fragment() {
     }
 
     private fun setupRecyclerView(view: View, map: HashMap<Int, String>) {
-        dayAppointmentAdapter = DayAppointmentAdapter(mutableListOf())
+        dayAppointmentAdapter = DayAppointmentAdapter(mutableListOf(), map[this.arguments?.getInt("position")]!!)
         linearLayoutManager = LinearLayoutManager(activity)
         val recyclerView: RecyclerView = view.findViewById(R.id.rvDayAppointments)
         recyclerView.layoutManager = linearLayoutManager
@@ -49,13 +49,14 @@ class DayAppointment : Fragment() {
                         dayAppointments.add(com.yadav.pawdoption.model.DayAppointment(
                             shelterName = shelter.value.name.toString(),
                             vetName = vet.name.toString(),
-                            vetQualification = vet.qualification.toString()
+                            vetQualification = vet.qualification.toString(),
+                            vetId = vet.id.toString()
                         ))
                     }
                 }
             }
 
-            dayAppointmentAdapter = DayAppointmentAdapter(dayAppointments)
+            dayAppointmentAdapter = DayAppointmentAdapter(dayAppointments, map[this.arguments?.getInt("position")]!!)
             recyclerView.adapter = dayAppointmentAdapter
             dayAppointmentAdapter.notifyDataSetChanged()
         }

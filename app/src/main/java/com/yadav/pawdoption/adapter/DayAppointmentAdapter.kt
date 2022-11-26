@@ -7,14 +7,19 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
 import com.yadav.pawdoption.model.DayAppointment
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yadav.pawdoption.R
+import com.yadav.pawdoption.model.BookedSlot
+import com.yadav.pawdoption.persistence.AppointmentDAO
+import com.yadav.pawdoption.persistence.PetDAO
 
 
 class DayAppointmentAdapter(
-    private var dayAppointments: List<DayAppointment>
+    private var dayAppointments: List<DayAppointment>,
+    private var day: String
 ) : RecyclerView.Adapter<DayAppointmentAdapter.DayAppointmentViewHolder>() {
 
     inner class DayAppointmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -48,6 +53,14 @@ class DayAppointmentAdapter(
                 .setNegativeButton("Decline") { dialog, which ->
                 }
                 .setPositiveButton("Accept") { dialog, which ->
+                    val appointmentDAO = AppointmentDAO()
+                    val timeSlot = holder.itemView.findViewById<Chip>(holder.cgTimeSlot.checkedChipId)
+                    val bookedSlot = BookedSlot(
+                        day = day,
+                        timeSlot = timeSlot.text.toString(),
+                    )
+                    // TODO: Dynamically pick shelter ID
+                    appointmentDAO.bookAppointment("2001", dayAppointments[position].vetId, bookedSlot)
                     Toast.makeText(holder.btnBookAppointment.context, "Slot Booked Successfully", Toast.LENGTH_LONG).show()
                 }
                 .show()
