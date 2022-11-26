@@ -32,7 +32,7 @@ data class User(
     var pets: ArrayList<UserPet>? = null
 
     @IgnoredOnParcel
-    @SerializedName("appointment")
+    @SerializedName("appointments")
     var appointments: ArrayList<Appointment>? = null
 
     @IgnoredOnParcel
