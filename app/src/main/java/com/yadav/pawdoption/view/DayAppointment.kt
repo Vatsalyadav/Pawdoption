@@ -1,20 +1,16 @@
 package com.yadav.pawdoption.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.tabs.TabLayout
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.DayAppointmentAdapter
-import com.yadav.pawdoption.adapter.PetListAdapter
 import com.yadav.pawdoption.model.DayAppointment
 import com.yadav.pawdoption.persistence.SheltersDAO
-import com.yadav.pawdoption.persistence.dayAppointmentList
 
 
 class DayAppointment : Fragment() {
