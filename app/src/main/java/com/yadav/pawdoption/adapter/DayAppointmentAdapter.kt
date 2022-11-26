@@ -12,6 +12,7 @@ import com.yadav.pawdoption.model.DayAppointment
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yadav.pawdoption.R
+import com.yadav.pawdoption.model.Appointment
 import com.yadav.pawdoption.model.BookedSlot
 import com.yadav.pawdoption.persistence.AppointmentDAO
 import com.yadav.pawdoption.persistence.PetDAO
@@ -61,6 +62,15 @@ class DayAppointmentAdapter(
                     )
                     // TODO: Dynamically pick shelter ID
                     appointmentDAO.bookAppointment("2001", dayAppointments[position].vetId, bookedSlot)
+                    val appointment = Appointment(
+                        shelterName = dayAppointments[position].shelterName,
+                        vetName = dayAppointments[position].vetName,
+                        vetQualification = dayAppointments[position].vetQualification,
+                        day = day,
+                        time = timeSlot.text.toString(),
+                    )
+                    // TODO: Dynamically pick userId
+                    appointmentDAO.createMyAppointment("Bt71CUS4nFRI5dNKdXSSN94Hdlf1", appointment)
                     Toast.makeText(holder.btnBookAppointment.context, "Slot Booked Successfully", Toast.LENGTH_LONG).show()
                 }
                 .show()

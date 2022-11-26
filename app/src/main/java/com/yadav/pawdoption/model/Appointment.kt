@@ -5,16 +5,15 @@ import com.google.gson.annotations.SerializedName
 
 data class Appointment (
 
-    @SerializedName("id")
-    var id : String? = null,
-
-    @SerializedName("shelter_id")
-    var shelterId : String? = null,
-
+    @SerializedName("shelterName")
+    val shelterName: String,
+    @SerializedName("vetName")
+    val vetName: String,
+    @SerializedName("vetQualification")
+    val vetQualification: String,
+    @SerializedName("day")
+    val day: String,
     @SerializedName("time")
-    var time : String? = null,
-
-    @SerializedName("vet_id")
-    var vetId : String? = null
+    val time: String
 
 )
