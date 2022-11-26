@@ -6,14 +6,14 @@ import com.google.gson.annotations.SerializedName
 data class Appointment (
 
     @SerializedName("shelterName")
-    val shelterName: String,
+    val shelterName: String? = null,
     @SerializedName("vetName")
-    val vetName: String,
+    val vetName: String? = null,
     @SerializedName("vetQualification")
-    val vetQualification: String,
+    val vetQualification: String? = null,
     @SerializedName("day")
-    val day: String,
+    val day: String? = null,
     @SerializedName("time")
-    val time: String
+    val time: String? = null
 
 )
