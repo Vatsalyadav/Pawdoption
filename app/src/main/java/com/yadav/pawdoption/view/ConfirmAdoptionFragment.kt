@@ -33,6 +33,8 @@ class ConfirmAdoptionFragment : Fragment() {
     var user: User? = null;
     var image: String? = null;
 
+    var shelterId: String = FirebaseDatabaseSingleton.getCurrentUid()
+
     val args: ConfirmAdoptionFragmentArgs by navArgs()
 
     private val binding get() = _binding!!
@@ -167,7 +169,7 @@ class ConfirmAdoptionFragment : Fragment() {
             binding.btnConfirmAdopterApprove.isEnabled = false
             binding.btnConfirmAdoptionDeny.isEnabled = false
 
-            FirebaseDatabaseSingleton.getSheltersReference().child("2001")
+            FirebaseDatabaseSingleton.getSheltersReference().child(shelterId)
                 .child("pendingAdoptions")
                 .child(pendingAdoption?.id!!)
                 .removeValue()
