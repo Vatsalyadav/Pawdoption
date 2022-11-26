@@ -25,7 +25,7 @@ class SheltersDAO : ISheltersDAO {
         val sheltersReference = FirebaseDatabaseSingleton.getSheltersReference()
         sheltersReference.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                shelters.value = snapshot.getValue<HashMap<String,Shelter>>()
+                    shelters.value = snapshot.getValue<HashMap<String,Shelter>>()
             }
 
             override fun onCancelled(error: DatabaseError) {

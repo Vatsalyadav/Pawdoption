@@ -63,6 +63,11 @@ class MainActivity : AppCompatActivity() {
                         .navigate(R.id.bookAppointment)
                     true
                 }
+                R.id.pending -> {
+                    Navigation.findNavController(this, R.id.nav_host_fragment)
+                        .navigate(R.id.pendingAdoptionFragment)
+                    true
+                }
 //                TODO: Add others too
                 else -> true
             }
