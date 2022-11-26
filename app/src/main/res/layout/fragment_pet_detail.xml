@@ -60,9 +60,8 @@
                 android:id="@+id/tvPetDetailsPetName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:text="Pet Name"
-                android:textSize="20dp"/>
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
 
             <TextView
                 android:id="@+id/tvPetDetailsPetBreed"
@@ -80,17 +79,14 @@
                 android:id="@+id/tvPetDetailsPetDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:minHeight="30dp"
                 android:text="Pet Description" />
 
             <TextView
                 android:id="@+id/tvPetDetailsShelterName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:text="Shelter Name"
-                android:textSize="20dp"/>
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
 
             <TextView
                 android:id="@+id/tvPetDetailsShelterAddress"
@@ -102,13 +98,14 @@
                 android:id="@+id/tvPetDetailsShelterDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
                 android:text="Address" />
 
             <fragment
                 android:id="@+id/mapPetDetailsShelterLocation"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="240dp" />
+                android:layout_height="220dp" />
 
         </LinearLayout>
 <!--    </ScrollView>-->
