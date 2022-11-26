@@ -35,8 +35,8 @@ class UsersDAO : IUsersDAO {
         usersReference.child(uid).addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 usersType = snapshot.value as String
+                FirebaseDatabaseSingleton.setCurrentUserType(usersType)
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.w(TAG, "Failed to read value.", error.toException())
             }

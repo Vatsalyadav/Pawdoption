@@ -75,6 +75,7 @@ class PetListAdapter(private val context: Context, private val petsList: Mutable
         viewHolder.petBreedTextView.text = petsList[position].breed
         viewHolder.petDescTextView.text = petsList[position].description
 
+        Log.e(petsList[position].name, petsList[position].imageURL[0])
         Glide.with(context)
             .load(petsList[position].imageURL[0])
             .centerCrop()

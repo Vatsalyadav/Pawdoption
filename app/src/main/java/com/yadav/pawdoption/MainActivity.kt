@@ -8,6 +8,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.UsersDAO
 
 // https://guides.codepath.com/android/Bottom-Navigation-Views
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
+            FirebaseDatabaseSingleton.setCurrentUid(currentUser.uid)
             val userType = usersDAO.getUsersTypeById(currentUser.uid)
             Navigation.findNavController(this, R.id.nav_host_fragment)
                 .navigate(R.id.petListFragment)
