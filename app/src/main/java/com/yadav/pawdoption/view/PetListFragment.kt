@@ -11,21 +11,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.yadav.pawdoption.MainActivity
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.PetListAdapter
 import com.yadav.pawdoption.model.Shelter
 import com.yadav.pawdoption.model.ShelterPet
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.SheltersDAO
+import com.yadav.pawdoption.persistence.UsersDAO
+
 
 class PetListFragment : Fragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var petListAdapter: PetListAdapter
     private val sheltersDAO = SheltersDAO()
+    private val usersDAO = UsersDAO()
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,13 +45,23 @@ class PetListFragment : Fragment() {
         setupRecyclerView(view)
 
         val fabAddPet = view.findViewById<FloatingActionButton>(R.id.fabAddPet)
-        if (FirebaseDatabaseSingleton.getCurrentUserType().equals("PETADOPTER"))
+        if (FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER"))
             fabAddPet.visibility = View.GONE
         else
             fabAddPet.setOnClickListener {
                 findNavController().navigate(R.id.action_petListFragment_to_uploadAnimalPosting)
             }
 
+        Log.e("PetListFrag", "FirebaseDatabaseSingleton.getCurrentUser() = "+FirebaseDatabaseSingleton.getCurrentUser())
+        if (FirebaseDatabaseSingleton.getCurrentUser() == null) {
+            FirebaseDatabaseSingleton.setCurrentUser()
+            Log.e("PetListFrag", "FirebaseDatabaseSingleton.getCurrentUser()" + FirebaseDatabaseSingleton.getCurrentUid())
+            usersDAO.setCurrentUserTypeByUid(FirebaseDatabaseSingleton.getCurrentUid())
+            usersDAO.getCurrentUserTypeByUid().observe(viewLifecycleOwner) {
+                Log.e("PetListFrag","usersDAO.getCurrentUserTypeByUid() updated")
+                setBottomNavigation(it)
+            }
+        }
         return view
     }
 
@@ -69,7 +86,7 @@ class PetListFragment : Fragment() {
 
     private fun getCurrentShelterPets(it: HashMap<String, Shelter>): MutableList<ShelterPet> {
         val currentShelterPetList: MutableList<ShelterPet> = mutableListOf()
-        if (it.get(FirebaseDatabaseSingleton.getCurrentUid())?.pets!=null) {
+        if (it.get(FirebaseDatabaseSingleton.getCurrentUid())?.pets != null) {
             for (pet in it.get(FirebaseDatabaseSingleton.getCurrentUid())?.pets!!) {
                 if (pet != null) {
                     pet.shelterId =
@@ -97,4 +114,37 @@ class PetListFragment : Fragment() {
         }
         return allPetList
     }
+
+    fun setBottomNavigation(userType: String) {
+        Log.e("MainActivity", "userType: "+userType)
+        bottomNavigationView = if (userType == "petAdopter")
+            activity?.findViewById(R.id.bottom_nav_pet_owner)!!
+        else
+            activity?.findViewById(R.id.bottom_nav_shelter)!!
+        bottomNavigationView.visibility = View.VISIBLE
+        bottomNavigationView.selectedItemId = R.id.pets
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.pets -> {
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.petListFragment)
+                    true
+                }
+                R.id.shelters -> {
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.mapsFragment)
+                    true
+                }
+                R.id.vet -> {
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.bookAppointment)
+                    true
+                }
+//                TODO: Add others too
+                else -> true
+            }
+
+        }
+    }
+
 }
