@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pawdoption"
         tools:targetApi="31">
-
+        <activity
+            android:name=".view.UploadPet"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
