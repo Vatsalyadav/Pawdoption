@@ -41,5 +41,5 @@ data class User(
 
     @IgnoredOnParcel
     @SerializedName("donations")
-    var donations: HashMap<String,UserDonation>? = null
+    var donations: HashMap<String,UserDonation>? = hashMapOf()
 }

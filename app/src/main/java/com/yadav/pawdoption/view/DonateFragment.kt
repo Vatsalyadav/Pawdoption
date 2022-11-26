@@ -12,8 +12,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.findFragment
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.model.Shelter
+import com.yadav.pawdoption.model.ShelterDonation
 import com.yadav.pawdoption.model.UserDonation
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import kotlinx.android.synthetic.main.sheltercard.view.*
@@ -63,12 +66,20 @@ class DonateFragment : Fragment() {
 
         bDonate.setOnClickListener {
             var userDonation : UserDonation = UserDonation(UUID.randomUUID().toString(),shelter.id,
-                view.findViewById<EditText>(R.id.etComment).text.toString(),
-                view.findViewById<EditText>(R.id.etAmount).text.toString().toDouble(),
+                view.findViewById<TextInputEditText>(R.id.ttComment).text.toString(),
+                view.findViewById<TextInputEditText>(R.id.ttAmount).text.toString().toDouble(),
+                LocalDateTime.now().toString())
+
+            var shelterDonation : ShelterDonation = ShelterDonation(userDonation.id,currentUser,
+                view.findViewById<TextInputEditText>(R.id.ttComment).text.toString(),
+                view.findViewById<TextInputEditText>(R.id.ttAmount).text.toString().toDouble(),
                 LocalDateTime.now().toString())
 
             FirebaseDatabaseSingleton.getUsersReference().child(currentUser).child("donations")
                 .child(userDonation.id!!).setValue(userDonation)
+
+            FirebaseDatabaseSingleton.getSheltersReference().child(shelter.id!!).child("donations")
+                .child(userDonation.id!!).setValue(shelterDonation)
 
         }
 
