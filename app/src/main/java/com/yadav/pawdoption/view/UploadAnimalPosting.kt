@@ -27,6 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.time.Instant
 
 
 class UploadAnimalPosting : Fragment() {
@@ -197,7 +198,7 @@ class UploadAnimalPosting : Fragment() {
     private fun writeToDatabase(fileName: String, shelterId: String, pet: ShelterPet) = CoroutineScope(Dispatchers.IO).launch {
         try {
             curFile?.let {
-                val downloadUrl = imageRef.child("images/$fileName").putFile(it).await().storage.downloadUrl.await()
+                val downloadUrl = imageRef.child("images/"+Instant.now()).putFile(it).await().storage.downloadUrl.await()
                 pet.imageURL.add(downloadUrl.toString())
                 val petDAO = PetDAO()
                 petDAO.postPet(shelterId, pet)

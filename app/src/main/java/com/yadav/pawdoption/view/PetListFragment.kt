@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.PetListAdapter
-import com.yadav.pawdoption.model.Shelter
 import com.yadav.pawdoption.model.ShelterPet
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.SheltersDAO
 
 class PetListFragment : Fragment() {
@@ -34,15 +34,15 @@ class PetListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_pet_list, container, false)
 
         activity?.title = "Pets"
-//        (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
         setupRecyclerView(view)
 
         val fabAddPet = view.findViewById<FloatingActionButton>(R.id.fabAddPet)
-        // TODO: Diplay FAB based on the user type
-        fabAddPet.setOnClickListener {
-            findNavController().navigate(R.id.action_petListFragment_to_uploadAnimalPosting)
-        }
+        if (FirebaseDatabaseSingleton.getCurrentUserType().equals("PETADOPTER"))
+            fabAddPet.visibility = View.GONE
+        else
+            fabAddPet.setOnClickListener {
+                findNavController().navigate(R.id.action_petListFragment_to_uploadAnimalPosting)
+            }
 
         return view
     }

@@ -1,15 +1,14 @@
 package com.yadav.pawdoption
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.UsersDAO
 
 // https://guides.codepath.com/android/Bottom-Navigation-Views
@@ -19,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private val usersDAO = UsersDAO()
+    private lateinit var bottomNavigationView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,30 +30,37 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-        Log.e("Main", " "+auth.currentUser?.uid)
-        if(currentUser != null){
+        if (currentUser != null) {
+            FirebaseDatabaseSingleton.setCurrentUid(currentUser.uid)
             val userType = usersDAO.getUsersTypeById(currentUser.uid)
-            Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.petListFragment)
+            Navigation.findNavController(this, R.id.nav_host_fragment)
+                .navigate(R.id.petListFragment)
             setBottomNavigation(userType)
         }
     }
 
     private fun setBottomNavigation(userType: String) {
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_nav)
+        if (userType.uppercase().equals("PETADOPTER"))
+            bottomNavigationView = findViewById(R.id.bottom_nav_pet_owner)
+        else
+            bottomNavigationView = findViewById(R.id.bottom_nav_shelter)
         bottomNavigationView.visibility = View.VISIBLE
         bottomNavigationView.selectedItemId = R.id.pets
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.pets -> {
-                    Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.petListFragment)
+                    Navigation.findNavController(this, R.id.nav_host_fragment)
+                        .navigate(R.id.petListFragment)
                     true
                 }
                 R.id.shelters -> {
-                    Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.mapsFragment)
+                    Navigation.findNavController(this, R.id.nav_host_fragment)
+                        .navigate(R.id.mapsFragment)
                     true
                 }
                 R.id.vet -> {
-                    Navigation.findNavController(this,R.id.nav_host_fragment).navigate(R.id.bookAppointment)
+                    Navigation.findNavController(this, R.id.nav_host_fragment)
+                        .navigate(R.id.bookAppointment)
                     true
                 }
 //                TODO: Add others too
@@ -62,6 +69,5 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-
 
 }
