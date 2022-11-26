@@ -5,6 +5,7 @@
  */
 package com.yadav.pawdoption.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,12 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.yadav.pawdoption.MainActivity
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.PetListAdapter
 import com.yadav.pawdoption.model.Shelter
@@ -59,17 +58,26 @@ class PetListFragment : Fragment() {
             usersDAO.setCurrentUserTypeByUid(FirebaseDatabaseSingleton.getCurrentUid())
             usersDAO.getCurrentUserTypeByUid().observe(viewLifecycleOwner) {
                 Log.e("PetListFrag", "usersDAO.getCurrentUserTypeByUid() updated")
-                if (it  == "petAdopter")
-                    fabAddPet.visibility = View.GONE
-                else {
-                    fabAddPet.visibility = View.VISIBLE
-                    fabAddPet.setOnClickListener {
-                        findNavController().navigate(R.id.action_petListFragment_to_uploadAnimalPosting)
-                    }
-                }
+//                if (it.equals("petAdopter"))
+//                    fabAddPet.visibility = View.GONE
+//                else {
+//                    fabAddPet.visibility = View.VISIBLE
+//                }
                 setBottomNavigation(it)
             }
         }
+
+        if (FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER"))
+            fabAddPet.visibility = View.GONE
+        else {
+            fabAddPet.visibility = View.VISIBLE
+        }
+
+        fabAddPet.setOnClickListener {
+            val intent = Intent(requireContext(), UploadPet::class.java)
+            startActivity(intent);
+        }
+
         return view
     }
 
