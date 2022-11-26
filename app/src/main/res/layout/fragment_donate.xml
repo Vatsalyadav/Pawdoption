@@ -51,30 +51,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-<!--        <TextView-->
-<!--            android:id="@+id/tvAmount"-->
-<!--            android:layout_width="335dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/tvDonateTitle"-->
-<!--            android:layout_marginStart="23dp"-->
-<!--            android:text="Amount"-->
-<!--            app:layout_constraintStart_toStartOf="parent" />-->
-
-
-<!--        <EditText-->
-<!--            android:id="@+id/ptAmount"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/tvAmount"-->
-<!--            android:layout_marginStart="23dp"-->
-<!--            android:layout_marginEnd="28dp"-->
-<!--            android:inputType="number"-->
-<!--            android:hint="Enter amount"-->
-<!--            android:textSize="15dp"-->
-<!--            tools:layout_editor_absoluteX="61dp"-->
-<!--            tools:layout_editor_absoluteY="239dp" />-->
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etAmount"
             android:layout_width="match_parent"

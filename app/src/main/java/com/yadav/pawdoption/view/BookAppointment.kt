@@ -11,6 +11,7 @@ import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.DynamicAppointmentsAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 
 
 class BookAppointment : Fragment() {
@@ -52,10 +53,13 @@ class BookAppointment : Fragment() {
 
         /** Get reference of the FAB **/
         val fabAdd = view.findViewById<FloatingActionButton>(R.id.fabAdd)
+        if (FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER"))
+            fabAdd.visibility = View.GONE
+        else
         /** Navigate to the second fragment on clicking on the next button **/
-        fabAdd.setOnClickListener {
-            findNavController().navigate(R.id.action_bookAppointment_to_createVetAppointment)
-        }
+            fabAdd.setOnClickListener {
+                findNavController().navigate(R.id.action_bookAppointment_to_createVetAppointment)
+            }
 
         return view
     }

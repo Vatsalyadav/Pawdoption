@@ -24,6 +24,8 @@ class PendingAdoptionFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    var shelterID: String = FirebaseDatabaseSingleton.getCurrentUid()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,7 +55,7 @@ class PendingAdoptionFragment : Fragment() {
 
 //        val mld2 = SheltersDAO().getShelters()
 
-        val mld = pendingAdoptionDAO.getAdoptionListTest("2001")
+        val mld = pendingAdoptionDAO.getAdoptionListTest(shelterID)
 
         mld.observe(viewLifecycleOwner) {
 //            val pendingAdoptionList = it
@@ -64,7 +66,7 @@ class PendingAdoptionFragment : Fragment() {
                     val sheltersReference = FirebaseDatabaseSingleton.getSheltersReference()
                     var pet: ShelterPet? = null;
 
-                    sheltersReference.child("2001").child("pets").child(value.petId!!).get()
+                    sheltersReference.child(shelterID).child("pets").child(value.petId!!).get()
                         .addOnSuccessListener {
                             pet = it.getValue(ShelterPet::class.java)
 
