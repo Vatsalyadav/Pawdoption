@@ -1,6 +1,7 @@
 package com.yadav.pawdoption
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
@@ -32,18 +33,22 @@ class MainActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             FirebaseDatabaseSingleton.setCurrentUid(currentUser.uid)
-            val userType = usersDAO.getUsersTypeById(currentUser.uid)
+            usersDAO.setCurrentUserTypeByUid(currentUser.uid)
             Navigation.findNavController(this, R.id.nav_host_fragment)
                 .navigate(R.id.petListFragment)
-            setBottomNavigation(userType)
+            usersDAO.getCurrentUserTypeByUid().observe(this) {
+                Log.e("MainActivity","usersDAO.getCurrentUserTypeByUid() updated")
+                setBottomNavigation(it)
+            }
         }
     }
 
-    private fun setBottomNavigation(userType: String) {
-        if (userType.uppercase().equals("PETADOPTER"))
-            bottomNavigationView = findViewById(R.id.bottom_nav_pet_owner)
+    fun setBottomNavigation(userType: String) {
+        Log.e("MainActivity", "userType: "+userType)
+        bottomNavigationView = if (userType == "petAdopter")
+            findViewById(R.id.bottom_nav_pet_owner)
         else
-            bottomNavigationView = findViewById(R.id.bottom_nav_shelter)
+            findViewById(R.id.bottom_nav_shelter)
         bottomNavigationView.visibility = View.VISIBLE
         bottomNavigationView.selectedItemId = R.id.pets
         bottomNavigationView.setOnItemSelectedListener { item ->
