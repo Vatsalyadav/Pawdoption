@@ -106,7 +106,7 @@ class UserProfileFragment : Fragment() {
 
 
                                     binding.viewMyDonations.setOnClickListener() {
-                                        if(user.donations == null){
+                                        if(user.donations?.isEmpty() == true){
                                             Toast.makeText(requireActivity(),"You have not made any donations",Toast.LENGTH_SHORT).show()
                                         }
                                         else {
@@ -114,7 +114,7 @@ class UserProfileFragment : Fragment() {
                                                 requireActivity(),
                                                 R.id.nav_host_fragment
                                             )
-                                                .navigate(R.id.myAppointment)
+                                                .navigate(R.id.userDonations)
                                         }
 
                                 }
@@ -131,9 +131,9 @@ class UserProfileFragment : Fragment() {
                                         }
                                 }
 
-                                binding.viewMyDonations.setOnClickListener() {
-                                    Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.userDonations)
-                                }
+//                                binding.viewMyDonations.setOnClickListener() {
+//                                    Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.userDonations)
+//                                }
 
                                 //Display newly updated name and email
 
