@@ -246,25 +246,7 @@ class RegisterFragment : Fragment() {
 
     }
 
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = firebaseAuth.currentUser
-        if(currentUser != null){
-            var uid = currentUser.uid
-            databaseReference = FirebaseDatabase.getInstance().getReference("UserType")
 
-            databaseReference.child("userType").child(uid).get().addOnSuccessListener {
-                if(it.getValue()!=null){
-                    val type = it.getValue()
-
-                    print(type)
-
-                }
-            }
-
-        }
-    }
 
 
 

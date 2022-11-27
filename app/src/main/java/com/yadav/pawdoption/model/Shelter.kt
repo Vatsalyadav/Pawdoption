@@ -20,7 +20,7 @@ data class Shelter (
     @SerializedName("pets"        ) var pets        : ArrayList<ShelterPet> = arrayListOf()
 
     @IgnoredOnParcel
-    @SerializedName("donations"   ) var donations   : ArrayList<ShelterDonation> = arrayListOf()
+    @SerializedName("donations"   ) var donations   : HashMap<String,ShelterDonation> = hashMapOf()
 
     @IgnoredOnParcel
     @SerializedName("veterinarians") var veterinarians   : ArrayList<Veterinarian> = arrayListOf()

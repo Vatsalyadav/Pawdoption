@@ -6,4 +6,5 @@ data class DayAppointment(
     val vetName: String,
     val vetQualification: String,
     val vetId: String,
+    val shelterId: String
 )
