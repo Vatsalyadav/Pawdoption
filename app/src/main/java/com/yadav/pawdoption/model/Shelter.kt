@@ -1,3 +1,5 @@
+//https://stackoverflow.com/questions/51380056/android-expected-a-list-while-deserializing-but-got-a-class-java-util-hashmap
+//https://stackoverflow.com/questions/61758963/how-to-ignore-fields-when-using-parcelize-annotation-in-kotlin
 package com.yadav.pawdoption.model
 
 import android.os.Parcelable
