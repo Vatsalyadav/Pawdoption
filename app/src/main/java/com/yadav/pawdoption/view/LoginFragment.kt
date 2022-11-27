@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -74,6 +76,12 @@ class LoginFragment : Fragment() {
         binding.forgetPassword.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_forgetPasswordFragment)
         }
+
+//        requireActivity().getOnBackPressedDispatcher().addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+//           override fun handleOnBackPressed(){
+//              super.OnBack
+//           }
+//        });
 
     }
 
