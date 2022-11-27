@@ -3,6 +3,7 @@ package com.yadav.pawdoption
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
     }
 
     public override fun onStart() {
@@ -40,6 +43,10 @@ class MainActivity : AppCompatActivity() {
                 Log.e("MainActivity","usersDAO.getCurrentUserTypeByUid() updated")
                 setBottomNavigation(it)
             }
+        }
+        else{
+            Navigation.findNavController(this, R.id.nav_host_fragment)
+                .navigate(R.id.loginFragment)
         }
     }
 
@@ -84,6 +91,14 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+
+    override fun onBackPressed() {
+//        val radioGroup = view.findViewById(R.id.radio) as RadioGroup
+        super.onBackPressed()
+//        finishAffinity()
+//        finish()
     }
 
 }

@@ -5,20 +5,28 @@
  */
 package com.yadav.pawdoption.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.ktx.Firebase
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.PetListAdapter
+import com.yadav.pawdoption.databinding.FragmentUserProfileBinding
 import com.yadav.pawdoption.model.Shelter
 import com.yadav.pawdoption.model.ShelterPet
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
@@ -33,6 +41,14 @@ class PetListFragment : Fragment() {
     private val usersDAO = UsersDAO()
     private lateinit var bottomNavigationView: BottomNavigationView
 
+
+    private var _binding: FragmentUserProfileBinding? = null
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseAuth: FirebaseAuth
+
+    private val binding get() = _binding!!
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -78,6 +94,11 @@ class PetListFragment : Fragment() {
             startActivity(intent);
         }
 
+        var b = view.findViewById<Button>(R.id.sign_out_button).setOnClickListener {
+            Firebase.auth.signOut()
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.loginFragment)
+        }
         return view
     }
 
