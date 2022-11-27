@@ -34,6 +34,10 @@ class UsersDAO : IUsersDAO {
         val usersReference = FirebaseDatabaseSingleton.getUserTypeReference()
         usersReference.child(uid).addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+
+                if(snapshot.value == null){
+                    usersType.value = "PetAdopter"
+                }
                 usersType.value = snapshot.value as String
                 Log.e("UsersDAO", "UserType: "+usersType)
                 FirebaseDatabaseSingleton.setCurrentUserType(snapshot.value as String)

@@ -5,22 +5,19 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
-import androidx.navigation.fragment.findNavController
-import com.yadav.pawdoption.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.yadav.pawdoption.MainActivity
+import com.yadav.pawdoption.R
 import com.yadav.pawdoption.model.ShelterPet
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.PetDAO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,26 +26,21 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.time.Instant
 
-
-class UploadAnimalPosting : Fragment() {
-
+class UploadPet : AppCompatActivity() {
     var curFile: Uri? = null
     val imageRef = Firebase.storage.reference
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_upload_animal_posting, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_upload_pet)
 
-        activity?.title = "Pet Posting"
+        setTitle("Pet Posting")
 
-        val btnUploadPhoto = view.findViewById<Button>(R.id.btnUploadPhoto)
+        val btnUploadPhoto = findViewById<Button>(R.id.btnUploadPhoto)
         btnUploadPhoto.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                        PackageManager.PERMISSION_DENIED) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                    PackageManager.PERMISSION_DENIED) {
                     val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
                     requestPermissions(permissions, PERMISSION_CODE)
                 } else {
@@ -61,28 +53,28 @@ class UploadAnimalPosting : Fragment() {
 
 
 
-        val btnSubmit = view.findViewById<Button>(R.id.btnAnimalPostingSubmit)
+        val btnSubmit = findViewById<Button>(R.id.btnAnimalPostingSubmit)
         btnSubmit.setOnClickListener {
             // Pet name field reference
-            val tilPetName = view.findViewById<TextInputLayout>(R.id.tilPetName)
-            val tiPetName = view.findViewById<TextInputEditText>(R.id.tiPetName)
+            val tilPetName = findViewById<TextInputLayout>(R.id.tilPetName)
+            val tiPetName = findViewById<TextInputEditText>(R.id.tiPetName)
 
             // Pet age field reference
-            val tilPetAge = view.findViewById<TextInputLayout>(R.id.tilPetAge)
-            val tiPetAge = view.findViewById<TextInputEditText>(R.id.tiPetAge)
+            val tilPetAge = findViewById<TextInputLayout>(R.id.tilPetAge)
+            val tiPetAge = findViewById<TextInputEditText>(R.id.tiPetAge)
 
             // Radio group reference
-            val rgBreed = view.findViewById<RadioGroup>(R.id.rgBreed)
+            val rgBreed = findViewById<RadioGroup>(R.id.rgBreed)
             val selectedRadioButtonId = rgBreed.checkedRadioButtonId
-            val selectedRadioButton = view.findViewById<RadioButton>(selectedRadioButtonId)
+            val selectedRadioButton = findViewById<RadioButton>(selectedRadioButtonId)
 
             // Pet description field reference
-            val tiPetDescription = view.findViewById<TextInputEditText>(R.id.tiPetDescription)
-            val tilPetDescription = view.findViewById<TextInputLayout>(R.id.tilPetDescription)
+            val tiPetDescription = findViewById<TextInputEditText>(R.id.tiPetDescription)
+            val tilPetDescription = findViewById<TextInputLayout>(R.id.tilPetDescription)
 
             // Error text references
-            val tvErrorPhoto = view.findViewById<TextView>(R.id.tvErrorPhoto)
-            val tvErrorRadio = view.findViewById<TextView>(R.id.tvErrorRadio)
+            val tvErrorPhoto = findViewById<TextView>(R.id.tvErrorPhoto)
+            val tvErrorRadio = findViewById<TextView>(R.id.tvErrorRadio)
 
             // Validate
             val petName = tiPetName.text.toString()
@@ -90,24 +82,24 @@ class UploadAnimalPosting : Fragment() {
             val petDescription = tiPetDescription.text.toString()
 
             if (!isValid(petName, tilPetName, petAge, tilPetAge, petDescription,
-                         tilPetDescription, tvErrorPhoto, tvErrorRadio, selectedRadioButtonId)) {
+                    tilPetDescription, tvErrorPhoto, tvErrorRadio, selectedRadioButtonId)) {
                 return@setOnClickListener
             }
 
-            // TODO: Upload image - Dynamically generate a file name
-            // TODO: Dynamically pick the shelter ID
             val pet = ShelterPet(
                 name = petName,
                 age = petAge.toInt(),
                 breed = selectedRadioButton.text.toString(),
                 description = petDescription,
             )
-            writeToDatabase("myImage", "2001", pet)
+            writeToDatabase("pet_${Instant.now()}", FirebaseDatabaseSingleton.getCurrentUid(), pet)
 
-            findNavController().navigate(R.id.action_uploadAnimalPosting_to_petListFragment)
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent);
+            finish()
         }
 
-        return view
+
     }
 
     private fun isValid(petName: String, tilPetName: TextInputLayout,
@@ -170,12 +162,13 @@ class UploadAnimalPosting : Fragment() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_CODE -> {
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     pickImageFromGallery()
                 } else {
-                    Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -185,7 +178,7 @@ class UploadAnimalPosting : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            val image = view?.findViewById<ImageView>(R.id.ivPetUpload)
+            val image = findViewById<ImageView>(R.id.ivPetUpload)
 
             data?.data?.let {
                 curFile = it
@@ -195,22 +188,22 @@ class UploadAnimalPosting : Fragment() {
         }
     }
 
-    private fun writeToDatabase(fileName: String, shelterId: String, pet: ShelterPet) = CoroutineScope(Dispatchers.IO).launch {
+    private fun writeToDatabase(fileName: String, shelterId: String, pet: ShelterPet) = CoroutineScope(
+        Dispatchers.IO).launch {
         try {
             curFile?.let {
-                val downloadUrl = imageRef.child("images/"+Instant.now()).putFile(it).await().storage.downloadUrl.await()
+                val downloadUrl = imageRef.child("images/$fileName").putFile(it).await().storage.downloadUrl.await()
                 pet.imageURL.add(downloadUrl.toString())
                 val petDAO = PetDAO()
                 petDAO.postPet(shelterId, pet)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "Successfully added pet", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "Successfully added pet", Toast.LENGTH_LONG).show()
                 }
             }
         } catch (e: Exception) {
             withContext(Dispatchers.Main) {
-                Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
             }
         }
     }
-
 }

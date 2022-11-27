@@ -5,11 +5,15 @@
  */
 package com.yadav.pawdoption.view
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -17,9 +21,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.yadav.pawdoption.MainActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.ktx.Firebase
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.PetListAdapter
+import com.yadav.pawdoption.databinding.FragmentUserProfileBinding
 import com.yadav.pawdoption.model.Shelter
 import com.yadav.pawdoption.model.ShelterPet
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
@@ -33,7 +41,15 @@ class PetListFragment : Fragment() {
     private val sheltersDAO = SheltersDAO()
     private val usersDAO = UsersDAO()
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var searchView: SearchView
+    private var petsList: MutableList<ShelterPet> = mutableListOf()
 
+    //added button but was removed
+    private var _binding: FragmentUserProfileBinding? = null
+
+    private val binding get() = _binding!!
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,6 +58,22 @@ class PetListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_pet_list, container, false)
 
         activity?.title = "Pets"
+
+        searchView = view.findViewById(R.id.searchView)
+        searchView.clearFocus()
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    filterList(newText)
+                }
+                return false
+            }
+        })
+
         setupRecyclerView(view)
 
         val fabAddPet = view.findViewById<FloatingActionButton>(R.id.fabAddPet)
@@ -52,31 +84,50 @@ class PetListFragment : Fragment() {
         )
         if (FirebaseDatabaseSingleton.getCurrentUser() == null) {
             FirebaseDatabaseSingleton.setCurrentUser()
+            Log.e(
+                "PetListFrag",
+                "FirebaseDatabaseSingleton.getCurrentUser()" + FirebaseDatabaseSingleton.getCurrentUid()
+            )
             usersDAO.setCurrentUserTypeByUid(FirebaseDatabaseSingleton.getCurrentUid())
             usersDAO.getCurrentUserTypeByUid().observe(viewLifecycleOwner) {
                 Log.e("PetListFrag", "usersDAO.getCurrentUserTypeByUid() updated")
-                if (it  == "petAdopter")
-                    fabAddPet.visibility = View.GONE
-                else {
-                    fabAddPet.visibility = View.VISIBLE
-                    fabAddPet.setOnClickListener {
-                        findNavController().navigate(R.id.action_petListFragment_to_uploadAnimalPosting)
-                    }
-                }
+//                if (it.equals("petAdopter"))
+//                    fabAddPet.visibility = View.GONE
+//                else {
+//                    fabAddPet.visibility = View.VISIBLE
+//                }
                 setBottomNavigation(it)
             }
         }
+
+        if (FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER"))
+            fabAddPet.visibility = View.GONE
         else {
-            if (FirebaseDatabaseSingleton.getCurrentUserType()  == "petAdopter")
-                fabAddPet.visibility = View.GONE
-            else {
-                fabAddPet.visibility = View.VISIBLE
-                fabAddPet.setOnClickListener {
-                    findNavController().navigate(R.id.action_petListFragment_to_uploadAnimalPosting)
-                }
+            fabAddPet.visibility = View.VISIBLE
+        }
+
+        fabAddPet.setOnClickListener {
+            val intent = Intent(requireContext(), UploadPet::class.java)
+            startActivity(intent);
+        }
+
+//        var b = view.findViewById<Button>(R.id.sign_out_button).setOnClickListener {
+//            Firebase.auth.signOut()
+//            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+//                .navigate(R.id.loginFragment)
+//        }
+        return view
+    }
+
+    private fun filterList(text: String) {
+        var filteredList: MutableList<ShelterPet> = mutableListOf()
+        for (pet in petsList) {
+            if (pet.breed?.lowercase()?.contains(text.lowercase()) == true) {
+                filteredList.add(pet)
             }
         }
-        return view
+
+        petListAdapter.setFilteredList(filteredList)
     }
 
     private fun setupRecyclerView(view: View) {
@@ -90,9 +141,11 @@ class PetListFragment : Fragment() {
         ) {
 
             if (FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER"))
-                petListAdapter = PetListAdapter(requireContext(), getAllPets(it))
+                petsList = getAllPets(it)
             else
-                petListAdapter = PetListAdapter(requireContext(), getCurrentShelterPets(it))
+                petsList = getCurrentShelterPets(it)
+
+            petListAdapter = PetListAdapter(requireContext(), petsList)
             recyclerView.adapter = petListAdapter
             petListAdapter.notifyDataSetChanged()
         }
@@ -129,7 +182,7 @@ class PetListFragment : Fragment() {
         return allPetList
     }
 
-    private fun setBottomNavigation(userType: String) {
+    fun setBottomNavigation(userType: String) {
         Log.e("MainActivity", "userType: " + userType)
         bottomNavigationView = if (userType == "petAdopter")
             activity?.findViewById(R.id.bottom_nav_pet_owner)!!
@@ -152,6 +205,12 @@ class PetListFragment : Fragment() {
                 R.id.vet -> {
                     Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
                         .navigate(R.id.bookAppointment)
+                    true
+                }
+
+                R.id.profile -> {
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.userProfileFragment)
                     true
                 }
 //                TODO: Add others too
