@@ -38,7 +38,7 @@ data class User(
 
     @IgnoredOnParcel
     @SerializedName("lovedPets")
-    var lovedPets: ArrayList<UserLovedPet>? = null
+    var lovedPets: HashMap<String,UserLovedPet>? = null
 
     @IgnoredOnParcel
     @SerializedName("donations")
