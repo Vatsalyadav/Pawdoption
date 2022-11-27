@@ -180,4 +180,8 @@
         android:name="com.yadav.pawdoption.view.UserProfileFragment"
         android:label="fragment_user_profile"
         tools:layout="@layout/fragment_user_profile" />
+    <fragment
+        android:id="@+id/myAppointment"
+        android:name="com.yadav.pawdoption.view.MyAppointment"
+        android:label="MyAppointment" />
 </navigation>

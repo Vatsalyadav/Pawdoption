@@ -177,6 +177,12 @@ class PetListFragment : Fragment() {
                         .navigate(R.id.bookAppointment)
                     true
                 }
+
+                R.id.profile -> {
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.userProfileFragment)
+                    true
+                }
 //                TODO: Add others too
                 else -> true
             }

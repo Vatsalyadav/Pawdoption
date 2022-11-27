@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.vet -> {
                     Navigation.findNavController(this, R.id.nav_host_fragment)
-                        .navigate(R.id.bookAppointment)
+                        .navigate(R.id.userProfileFragment)
                     true
                 }
                 R.id.profile -> {

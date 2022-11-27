@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:padding="30dp"
+    android:paddingTop="10dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:layout_marginBottom="80dp"
     tools:context=".view.UserProfileFragment">
 
     <LinearLayout
@@ -17,28 +20,155 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:text="User Profile"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="40sp"></TextView>
-
+            android:textSize="40sp"
+            android:gravity="center"></TextView>
 
         <LinearLayout
+            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="40dp"
             android:orientation="vertical">
 
             <TextView
-                style="@style/Widget.MaterialComponents.TextView"
                 android:id="@+id/userEmail"
+                style="@style/Widget.MaterialComponents.TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="TextView"
+                android:gravity="center"
+                android:textSize="24sp"
                 app:boxStrokeColor="@color/black"
-                app:boxStrokeWidthFocused="2dp"
-                android:text="TextView" />
+                app:boxStrokeWidthFocused="12dp" />
 
+            <TextView
+                android:id="@+id/userName"
+                style="@style/Widget.MaterialComponents.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="24sp"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidthFocused="2dp" />
+
+            <TextView
+                android:id="@+id/userAddress"
+                style="@style/Widget.MaterialComponents.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:gravity="center"
+                android:textSize="24sp"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidthFocused="2dp" />
+
+            <Button
+                android:id="@+id/view_my_donations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/teal_700"
+                android:text="View My Donations"
+                android:textColor="@color/black"
+                app:iconTint="#009688">
+
+            </Button>
+
+            <Button
+                android:id="@+id/view_my_appointments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/teal_700"
+                android:text="View My Appointments"
+                android:textColor="@color/black"
+                app:iconTint="#009688">
+
+            </Button>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/shelterEmail"
+                style="@style/Widget.MaterialComponents.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:gravity="center"
+                android:textSize="24sp"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidthFocused="2dp" />
+
+            <TextView
+                android:id="@+id/shelterName"
+                style="@style/Widget.MaterialComponents.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="24sp"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidthFocused="2dp" />
+
+            <TextView
+                android:id="@+id/shelterAddress"
+                style="@style/Widget.MaterialComponents.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="24sp"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidthFocused="2dp" />
+
+            <TextView
+                android:id="@+id/shelterDescription"
+                style="@style/Widget.MaterialComponents.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:gravity="center"
+                android:textSize="24sp"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidthFocused="2dp" />
+
+            <Button
+                android:id="@+id/view_donations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/teal_700"
+                android:text="View All Donations"
+                android:textColor="@color/black"
+                app:iconTint="#009688">
+
+            </Button>
+
+            <Button
+                android:id="@+id/view_appointments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/teal_700"
+                android:text="View All Appointments"
+                android:textColor="@color/black"
+                app:iconTint="#009688">
+
+            </Button>
 
 
         </LinearLayout>
