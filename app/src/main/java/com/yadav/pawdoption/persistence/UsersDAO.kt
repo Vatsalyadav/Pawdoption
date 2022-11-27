@@ -35,10 +35,13 @@ class UsersDAO : IUsersDAO {
         val usersReference = FirebaseDatabaseSingleton.getUserTypeReference()
         usersReference.child(uid).addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-//                usersType.value = snapshot.value as String
-                usersType.value = "petAdopter"
+
+                if(snapshot.value == null){
+                    usersType.value = "PetAdopter"
+                }
+                usersType.value = snapshot.value as String
                 Log.e("UsersDAO", "UserType: "+usersType)
-                FirebaseDatabaseSingleton.setCurrentUserType(usersType.value!!)
+                FirebaseDatabaseSingleton.setCurrentUserType(snapshot.value as String)
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.w(TAG, "Failed to read value.", error.toException())
