@@ -198,13 +198,18 @@ class PetListFragment : Fragment() {
                 }
                 R.id.vet -> {
                     Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-                        .navigate(R.id.bookAppointment)
+                        .navigate(R.id.createVetAppointment)
                     true
                 }
-
                 R.id.profile -> {
                     Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
                         .navigate(R.id.userProfileFragment)
+                    true
+                }
+
+                R.id.pending -> {
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.pendingAdoptionFragment)
                     true
                 }
 //                TODO: Add others too
