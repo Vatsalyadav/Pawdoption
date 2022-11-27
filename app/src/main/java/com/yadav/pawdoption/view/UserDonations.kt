@@ -9,13 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.UserDonationsAdapter
-import com.yadav.pawdoption.model.User
 import com.yadav.pawdoption.model.UserDonation
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.UsersDAO
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class UserDonations : Fragment() {
@@ -38,22 +34,22 @@ class UserDonations : Fragment() {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = userDonationsAdapter
 
-        var donations: ArrayList<UserDonation> =  arrayListOf()
+        var donations: ArrayList<UserDonation> = arrayListOf()
 
-        userDAO.getUserList().observe(viewLifecycleOwner){
+        userDAO.getUserList().observe(viewLifecycleOwner) {
             var keys = it.keys
 
-            for(key in keys){
+            for (key in keys) {
 
-                if(currentUser == it.get(key)!!.id){
+                if (currentUser == it.get(key)!!.id) {
                     var donationKeys = it.get(key)!!.donations!!.keys
-                    for(dk in donationKeys){
+                    for (dk in donationKeys) {
                         donations.add(it.get(key)!!.donations!!.get(dk)!!)
                     }
                 }
             }
 
-            userDonationsAdapter = UserDonationsAdapter(requireContext(),donations)
+            userDonationsAdapter = UserDonationsAdapter(requireContext(), donations)
             recyclerView.adapter = userDonationsAdapter
             userDonationsAdapter.notifyDataSetChanged()
         }
