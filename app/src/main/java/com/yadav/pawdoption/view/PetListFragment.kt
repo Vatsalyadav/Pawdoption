@@ -44,7 +44,7 @@ class PetListFragment : Fragment() {
     private lateinit var searchView: SearchView
     private var petsList: MutableList<ShelterPet> = mutableListOf()
 
-
+    //added button but was removed
     private var _binding: FragmentUserProfileBinding? = null
 
     private val binding get() = _binding!!
