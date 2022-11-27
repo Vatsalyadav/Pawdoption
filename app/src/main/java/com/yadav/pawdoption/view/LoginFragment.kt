@@ -22,6 +22,7 @@ import com.yadav.pawdoption.databinding.FragmentRegisterBinding
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import kotlinx.android.synthetic.main.fragment_register.*
 
+//https://firebase.google.com/docs/database
 
 class LoginFragment : Fragment() {
 
@@ -51,12 +52,14 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
+        //procedure to login to the Pawadoption application
         binding.loginBtn.setOnClickListener {
             val email = binding.loginEmailEt.text.toString()
             val pass = binding.loginPasswordEt.text.toString()
 
             firebaseAuth = FirebaseAuth.getInstance()
             if (email.isNotEmpty() && pass.isNotEmpty()) {
+                //firebase authentication with email and password
                 firebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
                     if (it.isSuccessful) {
                         Toast.makeText(this.context, "Login Successful", Toast.LENGTH_SHORT).show()
@@ -72,6 +75,7 @@ class LoginFragment : Fragment() {
             }
 
         }
+
 
 
         binding.forgetPassword.setOnClickListener {

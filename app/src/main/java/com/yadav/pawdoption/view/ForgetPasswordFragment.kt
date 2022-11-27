@@ -12,7 +12,7 @@ import com.yadav.pawdoption.R
 import com.yadav.pawdoption.databinding.FragmentForgetPasswordBinding
 import com.yadav.pawdoption.databinding.FragmentLoginBinding
 
-
+//https://firebase.google.com/docs/database
 class ForgetPasswordFragment : Fragment() {
     private var _binding: FragmentForgetPasswordBinding? = null
 
