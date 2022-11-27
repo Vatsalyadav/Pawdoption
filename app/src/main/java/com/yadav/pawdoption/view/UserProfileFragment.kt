@@ -142,7 +142,7 @@ class UserProfileFragment : Fragment() {
 
                                 binding.viewDonations.setOnClickListener() {
                                     Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-                                        .navigate(R.id.myAppointment)
+                                        .navigate(R.id.shelterAllDonations)
                                 }
                                 //Display newly updated name and email
 

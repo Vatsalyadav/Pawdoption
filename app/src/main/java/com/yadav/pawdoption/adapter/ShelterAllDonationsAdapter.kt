@@ -27,7 +27,7 @@ class ShelterAllDonationsAdapter(private val context: Context, private val shelt
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.fragment_shelter_all_donations, viewGroup, false)
+            .inflate(R.layout.shelter_all_donations_card, viewGroup, false)
 
         return ViewHolder(view)
     }
