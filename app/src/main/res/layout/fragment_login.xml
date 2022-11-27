@@ -102,7 +102,7 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/teal_700"
             android:text="@string/login"
-            android:textColor="@color/black"
+
             app:iconTint="#009688">
 
         </Button>
@@ -114,9 +114,8 @@
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/green"
             android:text="New User"
-            android:textColor="#131212"
             android:onClick="call_register"
             >
 

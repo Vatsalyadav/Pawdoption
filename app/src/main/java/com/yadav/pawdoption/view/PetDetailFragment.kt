@@ -62,6 +62,10 @@ class PetDetailFragment : Fragment() {
 
         _binding = FragmentPetDetailBinding.inflate(inflater, container, false)
 
+        if(FirebaseDatabaseSingleton.getCurrentUserType() == "shelterOwner"){
+            binding.btnPetDetailsAdopt.visibility = View.GONE
+        }
+
         viewPager = binding.vpPetDetailsImage
 
         shelterId = args.shelterId
@@ -113,6 +117,7 @@ class PetDetailFragment : Fragment() {
 
 
         PendingAdoptionDAO().getAdoptionList(shelterId).observe(viewLifecycleOwner){ snapShot ->
+            if(snapShot!=null)
             for ((key, value) in snapShot ) {
 
                 if (value.userId.equals(userId) && value.petId.equals(petId)) {
@@ -227,6 +232,7 @@ class PetDetailFragment : Fragment() {
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
+
         val latLng = LatLng(shelter?.latitude!!, shelter?.longitude!!)
         val markerOptions = MarkerOptions().position(latLng).title("Shelter")
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))

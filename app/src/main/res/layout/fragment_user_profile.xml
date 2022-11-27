@@ -34,38 +34,105 @@
             android:layout_marginTop="40dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/userEmail"
-                style="@style/Widget.MaterialComponents.TextView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                android:gravity="center"
-                android:textSize="24sp"
-                app:boxStrokeColor="@color/black"
-                app:boxStrokeWidthFocused="12dp" />
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/fixedEmail"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Email: "
+                    android:textStyle="bold"
+                    android:layout_weight="2"
+                    android:textSize="24sp"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp" />
 
-            <TextView
-                android:id="@+id/userName"
-                style="@style/Widget.MaterialComponents.TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="TextView"
-                android:textSize="24sp"
-                app:boxStrokeColor="@color/black"
-                app:boxStrokeWidthFocused="2dp" />
+                <TextView
+                    android:id="@+id/userEmail"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp"
+                    android:layout_weight="2"/>
 
-            <TextView
-                android:id="@+id/userAddress"
-                style="@style/Widget.MaterialComponents.TextView"
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                android:gravity="center"
-                android:textSize="24sp"
-                app:boxStrokeColor="@color/black"
-                app:boxStrokeWidthFocused="2dp" />
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/fixedName"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="NAME: "
+                    android:textStyle="bold"
+                    android:layout_weight="2"
+                    android:textSize="24sp"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp" />
+
+                <TextView
+                    android:id="@+id/userName"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:layout_weight="2"
+                    android:textSize="24sp"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/fixedAddress"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="ADDRESS: "
+                    android:textStyle="bold"
+                    android:layout_weight="2"
+                    android:textSize="24sp"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp" />
+
+                <TextView
+                    android:id="@+id/userAddress"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp"
+                    android:layout_weight="2"/>
+
+            </LinearLayout>
+
+
+
+
+
 
             <Button
                 android:id="@+id/view_my_donations"
@@ -103,38 +170,104 @@
             android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/shelterEmail"
-                style="@style/Widget.MaterialComponents.TextView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                android:gravity="center"
-                android:textSize="24sp"
-                app:boxStrokeColor="@color/black"
-                app:boxStrokeWidthFocused="2dp" />
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/fsEmail"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Email: "
+                    android:textStyle="bold"
+                    android:layout_weight="2"
+                    android:textSize="24sp"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp" />
 
-            <TextView
-                android:id="@+id/shelterName"
-                style="@style/Widget.MaterialComponents.TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="TextView"
-                android:textSize="24sp"
-                app:boxStrokeColor="@color/black"
-                app:boxStrokeWidthFocused="2dp" />
+                <TextView
+                    android:id="@+id/shelterEmail"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textSize="24sp"
+                    android:layout_weight="2"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp" />
 
-            <TextView
-                android:id="@+id/shelterAddress"
-                style="@style/Widget.MaterialComponents.TextView"
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="TextView"
-                android:textSize="24sp"
-                app:boxStrokeColor="@color/black"
-                app:boxStrokeWidthFocused="2dp" />
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/fsName"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Name: "
+                    android:textStyle="bold"
+                    android:layout_weight="2"
+                    android:textSize="24sp"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp" />
+
+                <TextView
+                    android:id="@+id/shelterName"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textSize="24sp"
+                    android:layout_weight="2"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/fsAddress"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Address: "
+                    android:textStyle="bold"
+                    android:layout_weight="2"
+                    android:textSize="24sp"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp" />
+
+                <TextView
+                    android:id="@+id/shelterAddress"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textSize="24sp"
+                    android:layout_weight="2"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidthFocused="2dp" />
+
+            </LinearLayout>
+
+
+
 
             <TextView
                 android:id="@+id/shelterDescription"
@@ -143,7 +276,7 @@
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:gravity="center"
-                android:textSize="24sp"
+                android:textSize="15dp"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp" />
 

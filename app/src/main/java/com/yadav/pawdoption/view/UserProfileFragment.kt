@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
@@ -29,6 +30,7 @@ import kotlinx.android.synthetic.main.fragment_register.*
 
 class UserProfileFragment : Fragment() {
 
+    private lateinit var bottomNavigationView: BottomNavigationView
     private var _binding: FragmentUserProfileBinding? = null
     private lateinit var databaseReference: DatabaseReference
     private var userName = MutableLiveData<HashMap<String, String>>()
@@ -48,7 +50,7 @@ class UserProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
-
+        activity?.title = "Profile"
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,7 +61,15 @@ class UserProfileFragment : Fragment() {
 
 
         binding.logoutBtn.setOnClickListener{
+
+            bottomNavigationView = if (userType == "petAdopter")
+                activity?.findViewById(R.id.bottom_nav_pet_owner)!!
+            else
+                activity?.findViewById(R.id.bottom_nav_shelter)!!
+            bottomNavigationView.visibility = View.GONE
+
             firebaseAuth.signOut()
+
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
                 .navigate(R.id.loginFragment)
         }
@@ -99,9 +109,9 @@ class UserProfileFragment : Fragment() {
                                     return
                                 }
                                 Log.e("user","User data is changed!"+user.name)
-                                binding.userEmail.setText("Logged in as : " + currentUser.email.toString())
-                                binding.userName.setText("Name : " + user.name)
-                                binding.userAddress.setText("Address :" + user.address )
+                                binding.userEmail.setText(currentUser.email.toString())
+                                binding.userName.setText(user.name)
+                                binding.userAddress.setText(user.address )
 
 
 
@@ -159,10 +169,10 @@ class UserProfileFragment : Fragment() {
                                     return
                                 }
                                 Log.e("user","User data is changed!"+shelter.name)
-                                binding.shelterEmail.setText("Logged in as : " + currentUser.email.toString())
-                                binding.shelterName.setText("Name : "+shelter.name)
-                                binding.shelterAddress.setText("Address : " + shelter.address)
-                                binding.shelterDescription.setText("Description : " + shelter.description)
+                                binding.shelterEmail.setText(currentUser.email.toString())
+                                binding.shelterName.setText(shelter.name)
+                                binding.shelterAddress.setText(shelter.address)
+                                binding.shelterDescription.setText(shelter.description)
 
 
 

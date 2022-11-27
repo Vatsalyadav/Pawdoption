@@ -33,6 +33,8 @@ class ShelterAllDonations : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_shelter_all_donations, container, false)
+
+        activity?.title = "All Donations"
         shelterAllDonationsAdapter = ShelterAllDonationsAdapter(requireContext(), arrayListOf())
         linearLayoutManager = LinearLayoutManager(activity)
         val recyclerView: RecyclerView = view.findViewById(R.id.rvShelterAllDonations)

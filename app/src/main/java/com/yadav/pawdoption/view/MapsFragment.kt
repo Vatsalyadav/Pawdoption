@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -18,7 +17,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -35,11 +33,15 @@ class MapsFragment : Fragment() {
     private val permissionCode = 101
     lateinit var btnMakeDonation: Button
 
+
+    /**
+     *  Callback to set markers on the map according to current user location and available shelters.
+     * */
     private val callback = OnMapReadyCallback { googleMap ->
 
         val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
 
-        sheltersDAO.getShelters().observe(viewLifecycleOwner) {
+            sheltersDAO.getShelters().observe(viewLifecycleOwner) {
             var nearbyShelters: ArrayList<LatLng> = arrayListOf()
             var keys = it.keys
             for (key in keys) {
@@ -87,7 +89,7 @@ class MapsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_maps, container, false)
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(this.requireActivity())
-        fetchLocation()
+        getCurrentLocation()
         return view
     }
 
@@ -102,8 +104,12 @@ class MapsFragment : Fragment() {
 
     }
 
+
+    /**
+     *  Function to get current location of the user.
+     * */
     @SuppressLint("MissingPermission")
-    private fun fetchLocation() {
+    private fun getCurrentLocation() {
         if ((ActivityCompat.checkSelfPermission(
                 this.requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -129,13 +135,6 @@ class MapsFragment : Fragment() {
         task.addOnSuccessListener { location ->
             if (location != null) {
                 currentLocation = location
-                Toast.makeText(
-                    this.requireContext(),
-                    currentLocation.latitude.toString() + "" + currentLocation.longitude.toString(),
-                    Toast.LENGTH_SHORT
-                ).show()
-
-
                 val mapFragment =
                     childFragmentManager.findFragmentById(R.id.mapShelterList) as SupportMapFragment?
                 mapFragment?.getMapAsync(callback)
@@ -143,7 +142,9 @@ class MapsFragment : Fragment() {
         }
     }
 
-
+    /**
+     *  Function to check if location permission given or not.
+     * */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String?>,
@@ -155,7 +156,7 @@ class MapsFragment : Fragment() {
             permissionCode -> if (grantResults.isNotEmpty() && grantResults[0] ==
                 PackageManager.PERMISSION_GRANTED
             ) {
-                fetchLocation()
+                getCurrentLocation()
             }
         }
     }

@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.findFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -76,6 +77,9 @@ class DonateFragment : Fragment() {
 
             FirebaseDatabaseSingleton.getSheltersReference().child(shelter.id!!).child("donations")
                 .child(userDonation.id!!).setValue(shelterDonation)
+
+
+            findNavController().navigate(R.id.userDonations)
 
         }
 

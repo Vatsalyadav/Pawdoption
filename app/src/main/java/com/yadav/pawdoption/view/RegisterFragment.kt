@@ -297,8 +297,8 @@ class RegisterFragment : Fragment() {
                 var flag =0
                 val Name = binding.shelterNameEt.text.toString()
                 val phoNumber = binding.phoneNumberEt.text.toString()
-                val address1 = binding.addressEt.text.toString()
-                val address2 = binding.address2Et.text.toString()
+                val address1 = binding.shelterAddressEt.text.toString()
+                val address2 = binding.shelterAddress2Et.text.toString()
                 val shelterDesc = binding.shelterDescriptionEt.text.toString()
                 val userType = "shelterOwner"
 
@@ -369,6 +369,8 @@ class RegisterFragment : Fragment() {
                                   //  var hashMap : HashMap<String, String> = HashMap<String, String> ()
                                     //hashMap.put(uid,UserType)
                                     //val userType = UserType(hashMap)
+                                    shelter.latitude = 44.650111
+                                    shelter.longitude = -63.59525
 
                                     databaseReference.child(uid).setValue(shelter).addOnCompleteListener{
                                         if(it.isSuccessful){

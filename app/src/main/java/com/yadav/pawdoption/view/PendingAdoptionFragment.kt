@@ -65,8 +65,8 @@ class PendingAdoptionFragment : Fragment() {
                     var pet: ShelterPet? = null;
 
                         // Changed to the DAO
-                        PetDAO().getPet(shelterID, value.petId!!).addOnSuccessListener {
-                            pet = it.getValue(ShelterPet::class.java)
+                        PetDAO().getPet(value.petId!!, shelterID).addOnSuccessListener { p ->
+                            pet = p.getValue(ShelterPet::class.java)
 
                             var user: User? = null
 

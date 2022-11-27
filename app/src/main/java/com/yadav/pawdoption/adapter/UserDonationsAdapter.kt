@@ -44,8 +44,8 @@ class UserDonationsAdapter(private val context: Context, private val userdonatio
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         viewHolder.tvDonateAmount.text = userdonations[position].amount.toString() + " CAD"
-        viewHolder.tvDonatedToShelter.text = userdonations[position].shelterID
-        viewHolder.tvDonationTimeStamp.text = userdonations[position].timestamp
+        viewHolder.tvDonatedToShelter.text = userdonations[position].comment
+        viewHolder.tvDonationTimeStamp.text = userdonations[position].timestamp!!.split("T")[0]
 
 
     }

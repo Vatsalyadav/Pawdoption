@@ -88,6 +88,16 @@ class MainActivity : AppCompatActivity() {
                         .navigate(R.id.pendingAdoptionFragment)
                     true
                 }
+                R.id.donations -> {
+                    Navigation.findNavController(this, R.id.nav_host_fragment)
+                        .navigate(R.id.shelterAllDonations)
+                    true
+                }
+                R.id.loved -> {
+                    Navigation.findNavController(this, R.id.nav_host_fragment)
+                        .navigate(R.id.userDonations)
+                    true
+                }
 //                TODO: Add others too
                 else -> true
             }
