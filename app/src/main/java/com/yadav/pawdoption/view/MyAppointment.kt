@@ -42,10 +42,18 @@ class MyAppointment : Fragment() {
         userssDAO.getUserList().observe(
             viewLifecycleOwner
         ) {
-            val appointments = it.get(FirebaseDatabaseSingleton.getCurrentUid())?.appointments as List<Appointment>
-            myAppointmentAdapter = MyAppointmentAdapter(appointments)
-            recyclerView.adapter = myAppointmentAdapter
-            myAppointmentAdapter.notifyDataSetChanged()
+            val appointments = it.get(FirebaseDatabaseSingleton.getCurrentUid())?.appointments
+
+            if(appointments != null){
+                myAppointmentAdapter = MyAppointmentAdapter(appointments as List<Appointment>)
+                recyclerView.adapter = myAppointmentAdapter
+                myAppointmentAdapter.notifyDataSetChanged()
+            } else {
+                myAppointmentAdapter = MyAppointmentAdapter(mutableListOf())
+                recyclerView.adapter = myAppointmentAdapter
+                myAppointmentAdapter.notifyDataSetChanged()
+            }
+
         }
     }
 }
