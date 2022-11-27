@@ -150,7 +150,7 @@ class PetDetailFragment : Fragment() {
 
             if (!it.isNullOrEmpty()) {
                 for ((key, lovedPet) in it) {
-                    if (lovedPet?.shelterId!!.equals(shelter) && lovedPet?.petId.equals(petId)) {
+                    if (lovedPet?.shelterId!!.equals(shelterId) && lovedPet?.petId.equals(petId)) {
                         liked = lovedPet?.id
                         binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_24)
                     }
