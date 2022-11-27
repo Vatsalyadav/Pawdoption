@@ -1,3 +1,4 @@
+//https://firebase.google.com/docs/database/android/read-and-write
 package com.yadav.pawdoption.persistence
 
 import android.util.Log
@@ -14,11 +15,9 @@ class PendingAdoptionDAO : IPendingAdoptionDAO {
     val TAG = "PendingAdoptionDAO"
 
     val pendingAdoptions = MutableLiveData<HashMap<String, PendingAdoption>>();
-    override fun getAdoptionList(shelterId: String): MutableList<PendingAdoption> {
-        TODO("Not yet implemented")
-    }
 
-    fun getAdoptionListTest(shelterId: String): MutableLiveData<HashMap<String, PendingAdoption>> {
+
+    override fun getAdoptionList(shelterId: String): MutableLiveData<HashMap<String, PendingAdoption>> {
         val shelterReference = FirebaseDatabaseSingleton.getSheltersReference()
         shelterReference.child(shelterId).child("pendingAdoptions").addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -31,8 +30,22 @@ class PendingAdoptionDAO : IPendingAdoptionDAO {
 
         })
 
-        print(pendingAdoptions)
         return pendingAdoptions
+    }
+
+    override fun deletePendingAdoption(id: String, shelterId: String){
+
+        FirebaseDatabaseSingleton.getSheltersReference().child(shelterId)
+            .child("pendingAdoptions")
+            .child(id)
+            .removeValue()
+    }
+
+    override fun addPendingAdoption(shelterId: String, pendingAdoption: PendingAdoption){
+
+        val shelterRef = FirebaseDatabaseSingleton.getSheltersReference().child(shelterId)
+
+        shelterRef.child("pendingAdoptions").child(pendingAdoption.id!!).setValue(pendingAdoption)
     }
 
 }
