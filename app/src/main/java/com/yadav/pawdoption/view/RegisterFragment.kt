@@ -29,6 +29,9 @@ class RegisterFragment : Fragment() {
     private lateinit var  firebaseAuth : FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
 
+
+    private lateinit var pass : String
+
     private val usersDAO = UsersDAO()
     private val sheltersDAO = SheltersDAO()
     var ccp: CountryCodePicker? = null
@@ -55,6 +58,27 @@ class RegisterFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
+//        binding.passwordEt.setOnFocusChangeListener{
+//                _,focused->
+//            if(!focused){
+//                pass = binding.passwordEt.text.toString()
+//
+//                if(pass.length<6){
+//                    binding.password.helperText = "Minimum 6 characters length password"
+//                }
+//
+//                if(!pass.matches(".*[A-Z].*".toRegex())){
+//                    binding.password.helperText = "Must contain 1 Upper case charcter"
+//                }
+//
+//                if(!pass.matches(".*[a-z].*".toRegex())){
+//                    binding.password.helperText = "Must contain 1 Upper case charcter"
+//                }
+//                if(!pass.matches(".*[@#\$%^&+=].*".toRegex())){
+//                    binding.password.helperText = "Must contain 1 special character"
+//                }
+//            }
+//        }
 
         return binding.root
     }
@@ -91,34 +115,19 @@ class RegisterFragment : Fragment() {
 
             if(linearLayout1.visibility == View.VISIBLE){  //pet owner
                 val email = binding.emailEt.text.toString()
-                var pass = binding.passwordEt.text.toString()
-                val confirmPasswor = binding.repasswordEt.text.toString()
+               var pass = binding.passwordEt.text.toString()
+               // var pass = " "
+
                 val Name = binding.firstNameEt.text.toString() + " " + binding.lastNameEt.text.toString()
                 val phoNumber = binding.phoneNumberEt.text.toString()
-                val address = binding.addressEt.text.toString()
+                val address1 = binding.addressEt.text.toString()
+                val address2 = binding.address2Et.text.toString()
+
+                val address = address1+ " " + address2
                 val mUserType = "petAdopter"
 
-//                binding.passwordEt.setOnFocusChangeListener{
-//                        _,focused->
-//                    if(!focused){
-//                        pass = binding.passwordEt.text.toString()
-//
-//                        if(pass.length<6){
-//                            binding.password.helperText = "Minimum 6 characters length password"
-//                        }
-//
-//                        if(!pass.matches(".*[A-Z].*".toRegex())){
-//                            binding.password.helperText = "Must contain 1 Upper case charcter"
-//                        }
-//
-//                        if(!pass.matches(".*[a-z].*".toRegex())){
-//                            binding.password.helperText = "Must contain 1 Upper case charcter"
-//                        }
-//                        if(!pass.matches(".*[@#\$%^&+=].*".toRegex())){
-//                            binding.password.helperText = "Must contain 1 special character"
-//                        }
-//                    }
-//                }
+
+                val confirmPasswor = binding.repasswordEt.text.toString()
 
                 if(email.isNotEmpty() && pass.isNotEmpty() && confirmPasswor.isNotEmpty()){
 
@@ -132,11 +141,7 @@ class RegisterFragment : Fragment() {
                                 databaseReference = FirebaseDatabase.getInstance().getReference("Users")
 
                                 if(uid!=null){
-                                    val user = User(null,Name,address,phoNumber)
-                                    var hashMap : HashMap<String, String> = HashMap<String, String> ()
-                                     hashMap.put(uid,mUserType)
-                                    val userType = UserType(hashMap)
-
+                                    val user = User(uid.toString(),Name,address,email,phoNumber)
                                     databaseReference.child(uid).setValue(user).addOnCompleteListener{
                                         if(it.isSuccessful){
                                           //  databaseReference.child(uid).setValue(userType)
@@ -198,7 +203,7 @@ class RegisterFragment : Fragment() {
                                 databaseReference = FirebaseDatabase.getInstance().getReference("Shelters")
 
                                 if(uid!=null){
-                                    val shelter = Shelter(uid,Name,shelterDesc,address2,null,null)
+                                    val shelter = Shelter(uid.toString(),Name,shelterDesc,address2,null,null)
                                   //  var hashMap : HashMap<String, String> = HashMap<String, String> ()
                                     //hashMap.put(uid,UserType)
                                     //val userType = UserType(hashMap)
