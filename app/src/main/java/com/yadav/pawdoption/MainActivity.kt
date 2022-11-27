@@ -31,11 +31,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-
-
-
     }
 
     public override fun onStart() {
@@ -49,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             Navigation.findNavController(this, R.id.nav_host_fragment)
                 .navigate(R.id.petListFragment)
             usersDAO.getCurrentUserTypeByUid().observe(this) {
-                Log.e("MainActivity","usersDAO.getCurrentUserTypeByUid() updated")
                 setBottomNavigation(it)
             }
         }
@@ -60,7 +54,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setBottomNavigation(userType: String) {
-        Log.e("MainActivity", "userType: "+userType)
         bottomNavigationView = if (userType == "petAdopter")
             findViewById(R.id.bottom_nav_pet_owner)
         else

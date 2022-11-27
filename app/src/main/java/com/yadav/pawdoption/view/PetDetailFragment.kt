@@ -141,7 +141,7 @@ class PetDetailFragment : Fragment() {
                 for(ls in it.children){
                     val lovedPet: UserLovedPet? = ls.getValue(UserLovedPet::class.java)
                     if(lovedPet?.shelterId!!.equals(shelter) && lovedPet?.petId.equals(petId)){
-                        liked = lovedPet?.id
+                        liked = lovedPet?.petId
                         binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_24)
                     }
                 }
