@@ -35,7 +35,7 @@ class ShelterAllDonationsAdapter(private val context: Context, private val shelt
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         viewHolder.tvsDonateAmount.text = shelterDonations[position].amount.toString() + " CAD"
-        viewHolder.tvsUser.text = shelterDonations[position].userID
+        viewHolder.tvsUser.text = shelterDonations[position].comment
 
 
 

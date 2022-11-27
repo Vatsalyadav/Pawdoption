@@ -50,7 +50,7 @@ class PendingAdoptionViewAdapter(private val context: Context, val pendingAdopti
                 Picasso.with(context).load(pendingAdoption.shelterPet?.imageURL?.get(0)).into(ivPetImage)
                 tvPetName.text = pendingAdoption.shelterPet?.name;
                 tvAdopterName.text = pendingAdoption.user?.name;
-                tvTimestamp.text = pendingAdoption.pendionAdoption.timestamp;
+                tvTimestamp.text = pendingAdoption.pendionAdoption.timestamp!!.split('T')[0];
             }
         }
     }

@@ -23,6 +23,7 @@
             android:layout_marginTop="10dp"
             android:text="User Profile"
             android:textAllCaps="true"
+            android:layout_gravity="center"
             android:textColor="@color/black"
             android:textSize="40sp"
             android:gravity="center"></TextView>
