@@ -57,7 +57,7 @@ class MapsFragment : Fragment() {
                         distance
                     )
 
-                    if (distance[0] < 10000) {
+                    if (distance[0] < 50000) {
                         nearbyShelters.add(LatLng(lat, long))
                     }
                 }

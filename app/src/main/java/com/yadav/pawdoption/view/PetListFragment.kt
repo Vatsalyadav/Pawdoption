@@ -12,24 +12,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.appcompat.widget.SearchView
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.ktx.Firebase
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.PetListAdapter
 import com.yadav.pawdoption.databinding.FragmentUserProfileBinding
 import com.yadav.pawdoption.model.Shelter
 import com.yadav.pawdoption.model.ShelterPet
+import com.yadav.pawdoption.model.UserLovedPet
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.SheltersDAO
 import com.yadav.pawdoption.persistence.UsersDAO
@@ -78,16 +73,10 @@ class PetListFragment : Fragment() {
 
         val fabAddPet = view.findViewById<FloatingActionButton>(R.id.fabAddPet)
 
-        Log.e(
-            "PetListFrag",
-            "FirebaseDatabaseSingleton.getCurrentUser() = " + FirebaseDatabaseSingleton.getCurrentUser()
-        )
+
         if (FirebaseDatabaseSingleton.getCurrentUser() == null) {
             FirebaseDatabaseSingleton.setCurrentUser()
-            Log.e(
-                "PetListFrag",
-                "FirebaseDatabaseSingleton.getCurrentUser()" + FirebaseDatabaseSingleton.getCurrentUid()
-            )
+
             usersDAO.setCurrentUserTypeByUid(FirebaseDatabaseSingleton.getCurrentUid())
             usersDAO.getCurrentUserTypeByUid().observe(viewLifecycleOwner) {
                 Log.e("PetListFrag", "usersDAO.getCurrentUserTypeByUid() updated")
@@ -138,13 +127,18 @@ class PetListFragment : Fragment() {
         recyclerView.adapter = petListAdapter
         sheltersDAO.getShelters().observe(
             viewLifecycleOwner
-        ) {
+        ) { item ->
 
             if (FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER"))
-                petsList = getAllPets(it)
+                usersDAO.getLovedPetsByUid(FirebaseDatabaseSingleton.getCurrentUid()).observe(viewLifecycleOwner) {
+                    Log.e("LobvedPets", "it: " + it)
+                    petsList = getAllPets(item, it)
+                    petListAdapter = PetListAdapter(requireContext(), petsList)
+                    recyclerView.adapter = petListAdapter
+                    petListAdapter.notifyDataSetChanged()
+                }
             else
-                petsList = getCurrentShelterPets(it)
-
+                    petsList = getCurrentShelterPets(item)
             petListAdapter = PetListAdapter(requireContext(), petsList)
             recyclerView.adapter = petListAdapter
             petListAdapter.notifyDataSetChanged()
@@ -167,14 +161,14 @@ class PetListFragment : Fragment() {
         return currentShelterPetList
     }
 
-    private fun getAllPets(it: HashMap<String, Shelter>): MutableList<ShelterPet> {
+    private fun getAllPets(it: HashMap<String, Shelter>, lovedPetsList: HashMap<String,UserLovedPet>): MutableList<ShelterPet> {
         val allPetList: MutableList<ShelterPet> = mutableListOf()
-        Log.e("mainac", it.toString())
         for (shelter in it) {
             for (pet in shelter.value.pets) {
                 if (pet != null) {
                     pet.shelterId = shelter.key
                     pet.shelterName = shelter.value.name.toString()
+                    pet.lovedPetsList = lovedPetsList
                     allPetList.add(pet)
                 }
             }
@@ -183,7 +177,7 @@ class PetListFragment : Fragment() {
     }
 
     fun setBottomNavigation(userType: String) {
-        Log.e("MainActivity", "userType: " + userType)
+        Log.e("PetList", "userType: " + userType)
         bottomNavigationView = if (userType == "petAdopter")
             activity?.findViewById(R.id.bottom_nav_pet_owner)!!
         else
