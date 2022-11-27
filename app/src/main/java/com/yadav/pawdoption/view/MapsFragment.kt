@@ -24,7 +24,12 @@ import com.yadav.pawdoption.R
 import com.yadav.pawdoption.persistence.SheltersDAO
 import kotlinx.android.synthetic.main.fragment_maps.*
 
-
+/**
+ *  CODE REFERENCES
+ *  1. https://stackoverflow.com/questions/60465435/how-to-add-marker-on-google-map-with-kotlin
+ *  2. https://stackoverflow.com/questions/14811579/how-to-create-a-custom-shaped-bitmap-marker-with-android-map-api-v2
+ *  3. https://stackoverflow.com/questions/51313359/get-current-location-android-kotlin
+ * */
 class MapsFragment : Fragment() {
 
     private val sheltersDAO = SheltersDAO()

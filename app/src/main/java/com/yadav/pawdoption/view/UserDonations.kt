@@ -61,23 +61,7 @@ class UserDonations : Fragment() {
                 userDonationsAdapter.notifyDataSetChanged()
             }
 
-//            for (key in keys) {
-//
-//                if (currentUser == it.get(key)!!.id) {
-//
-//                    if(it.get(key)!!.donations != null){
-//                        var donationKeys = it.get(key)!!.donations!!.keys
-//                        for (dk in donationKeys) {
-//                            donations.add(it.get(key)!!.donations!!.get(dk)!!)
-//                        }
-//                    }
-//
-//                }
-//            }
-//
-//            userDonationsAdapter = UserDonationsAdapter(requireContext(), donations)
-//            recyclerView.adapter = userDonationsAdapter
-//            userDonationsAdapter.notifyDataSetChanged()
+
         }
 
 

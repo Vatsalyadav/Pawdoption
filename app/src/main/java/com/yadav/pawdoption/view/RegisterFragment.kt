@@ -40,15 +40,6 @@ class RegisterFragment : Fragment() {
     var ccp: CountryCodePicker? = null
 
 
-
-
-
-
-    //for validation
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,28 +53,6 @@ class RegisterFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
-
-//        binding.passwordEt.setOnFocusChangeListener{
-//                _,focused->
-//            if(!focused){
-//                pass = binding.passwordEt.text.toString()
-//
-//                if(pass.length<6){
-//                    binding.password.helperText = "Minimum 6 characters length password"
-//                }
-//
-//                if(!pass.matches(".*[A-Z].*".toRegex())){
-//                    binding.password.helperText = "Must contain 1 Upper case charcter"
-//                }
-//
-//                if(!pass.matches(".*[a-z].*".toRegex())){
-//                    binding.password.helperText = "Must contain 1 Upper case charcter"
-//                }
-//                if(!pass.matches(".*[@#\$%^&+=].*".toRegex())){
-//                    binding.password.helperText = "Must contain 1 special character"
-//                }
-//            }
-//        }
 
         return binding.root
     }
@@ -114,54 +83,6 @@ class RegisterFragment : Fragment() {
 
 
 
-//        fun binding.passwordEt.afterTextChanged(afterTextChanged: (String) -> Unit) {
-//            this.addTextChangedListener(object: TextWatcher {
-//                override fun afterTextChanged(s: Editable?) {
-//                    afterTextChanged.invoke(s.toString())
-//                }
-//
-//                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-//
-//                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-//            })
-//        }
-
-
-//        binding.passwordEt.addTextChangedListener(object : TextWatcher {
-//
-//            override fun afterTextChanged(s: Editable) {}
-//
-//            override fun beforeTextChanged(s: CharSequence, start: Int,
-//                                           count: Int, after: Int) {
-//            }
-//
-//
-//
-//            override fun onTextChanged(s: CharSequence, start: Int,
-//                                       before: Int, count: Int) {
-//
-//                 var passwordSequence = s
-//                if(passwordSequence.length<6){
-//                    Toast.makeText(requireActivity(),"Minimum 6 characters length password",Toast.LENGTH_SHORT).show()
-//        }
-//        if(!passwordSequence.matches(".*[A-Z].*".toRegex())){
-//            Toast.makeText(requireActivity(),"Must contain 1 Upper case charcter",Toast.LENGTH_SHORT).show()
-//        }
-//
-//        if(!passwordSequence.matches(".*[a-z].*".toRegex())){
-//            Toast.makeText(requireActivity(),"Must contain 1 Upper case charcter",Toast.LENGTH_SHORT).show()
-//
-//        }
-//        if(!passwordSequence.matches(".*[@#\$%^&+=].*".toRegex())){
-//            Toast.makeText(requireActivity(),"Must contain 1 special character",Toast.LENGTH_SHORT).show()
-//        }
-//
-//                pass = pass
-//
-//
-//
-//            }
-//        })
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -366,9 +287,7 @@ class RegisterFragment : Fragment() {
 
                                 if(uid!=null){
                                     val shelter = Shelter(uid.toString(),Name,shelterDesc,address2,null,null)
-                                  //  var hashMap : HashMap<String, String> = HashMap<String, String> ()
-                                    //hashMap.put(uid,UserType)
-                                    //val userType = UserType(hashMap)
+
                                     shelter.latitude = 44.650111
                                     shelter.longitude = -63.59525
 
@@ -414,64 +333,6 @@ class RegisterFragment : Fragment() {
 
 
     }
-
-
-
-
-
-
-
-
-//    private fun emailFocusListener(){
-//        binding.emailEt.setOnFocusChangeListener{
-//            _,focused->
-//            if(!focused){
-//                binding.email.helperText= validEmail()
-//            }
-//        }
-//    }
-//
-//
-//    private fun validEmail(): String?{
-//        val emailText = binding.emailEt.text.toString()
-//        if(Patterns.EMAIL_ADDRESS.matcher(emailText).matches()){
-//            return "Invalid Email Address"
-//        }
-//        return "valid"
-//
-//    }
-//
-//
-//    private fun passwordFocusListener(){
-//        binding.passwordEt.setOnFocusChangeListener{
-//                _,focused->
-//            if(!focused){
-//                password.helperText= validPassword()
-//            }
-//        }
-//    }
-//
-//
-//    private fun validPassword(): String?{
-//        val passwordText = binding.passwordEt.text.toString()
-//
-//        if(passwordText.length<6){
-//            return "Minimum 6 characters length password"
-//        }
-//
-//        if(!passwordText.matches(".*[A-Z].*".toRegex())){
-//            return "Must contain 1 Upper case charcter"
-//        }
-//
-//        if(!passwordText.matches(".*[a-z].*".toRegex())){
-//            return "Must contain 1 Upper case charcter"
-//        }
-//        if(!passwordText.matches(".*[@#\$%^&+=].*".toRegex())){
-//            return "Must contain 1 special character"
-//        }
-//        return null
-//
-//    }
 
 
 

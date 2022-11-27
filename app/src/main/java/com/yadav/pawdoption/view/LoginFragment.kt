@@ -78,31 +78,7 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_forgetPasswordFragment)
         }
 
-//        requireActivity().getOnBackPressedDispatcher().addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-//           override fun handleOnBackPressed(){
-//              super.OnBack
-//           }
-//        });
 
-//        requireActivity()
-//            .onBackPressedDispatcher
-//            .addCallback(this, object : OnBackPressedCallback(true) {
-//                override fun handleOnBackPressed() {
-//                    Log.d("Fragments", "Fragment back pressed invoked")
-//                    // Do custom work here
-//
-//                    // if you want onBackPressed() to be called as normal afterwards
-//                    if (isEnabled) {
-//                        isEnabled = false
-//                        requireActivity().onBackPressed()
-//                        finishAffinity(MainActivity)
-//
-//                    }
-//                }
-//            }
-//            )
-
-//
     }
 
 

@@ -141,9 +141,7 @@ class UserProfileFragment : Fragment() {
                                         }
                                 }
 
-//                                binding.viewMyDonations.setOnClickListener() {
-//                                    Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.userDonations)
-//                                }
+
 
                                 //Display newly updated name and email
 

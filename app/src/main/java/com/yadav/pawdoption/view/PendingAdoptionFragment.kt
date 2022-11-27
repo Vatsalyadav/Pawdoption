@@ -96,10 +96,6 @@ class PendingAdoptionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // to navigate to the second fragment while click on the create note button (floating button)
-//        _binding?.button?.setOnClickListener {
-//            findNavController().navigate(R.id.action_pendingAdoptionFragment_to_confirmAdoptionFragment)
-//        }
     }
 
     override fun onDestroyView() {

@@ -128,26 +128,6 @@ class PetDetailFragment : Fragment() {
         }
 
 
-//        FirebaseDatabaseSingleton.getSheltersReference().child(shelterId).child("pendingAdoptions").addValueEventListener(object: ValueEventListener {
-//
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if(snapshot?.getValue() != null) {
-//                    val paList: HashMap<String, HashMap<String, String>> =
-//                        snapshot.getValue() as HashMap<String, HashMap<String, String>>
-//                    for ((key, value) in paList) {
-//
-//                        if (value.get("userId").equals(userId) && value.get("petId").equals(petId)) {
-//                            binding.btnPetDetailsAdopt.isEnabled = false
-//                        }
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Log.w("PET DETAILS", "Failed to read value.", error.toException())
-//            }
-//
-//        })
 
 
         // Changed to DAO
@@ -168,27 +148,7 @@ class PetDetailFragment : Fragment() {
         }
 
 
-//        val userRef = FirebaseDatabaseSingleton.getUsersReference().child(userId)
-//
-//        userRef.child("lovedPets").get().addOnSuccessListener {
-//            if(it.getValue() != null) {
-//
-//                for(ls in it.children){
-//                    val lovedPet: UserLovedPet? = ls.getValue(UserLovedPet::class.java)
-//                    if(lovedPet?.shelterId!!.equals(shelter) && lovedPet?.petId.equals(petId)){
-//                        liked = lovedPet?.id
-//                        binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_24)
-//                    }
-//                }
-//
-//                if (liked.isNullOrBlank()) {
-//                    binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_black_24)
-//                }
-//
-//
-//            }
-//
-//        }
+
 
         val userLovedPetDAO: UserLovedPetDAO = UserLovedPetDAO()
 

@@ -80,11 +80,7 @@ class PetListFragment : Fragment() {
             usersDAO.setCurrentUserTypeByUid(FirebaseDatabaseSingleton.getCurrentUid())
             usersDAO.getCurrentUserTypeByUid().observe(viewLifecycleOwner) {
                 Log.e("PetListFrag", "usersDAO.getCurrentUserTypeByUid() updated")
-//                if (it.equals("petAdopter"))
-//                    fabAddPet.visibility = View.GONE
-//                else {
-//                    fabAddPet.visibility = View.VISIBLE
-//                }
+
                 setBottomNavigation(it)
             }
         }
@@ -100,11 +96,7 @@ class PetListFragment : Fragment() {
             startActivity(intent);
         }
 
-//        var b = view.findViewById<Button>(R.id.sign_out_button).setOnClickListener {
-//            Firebase.auth.signOut()
-//            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-//                .navigate(R.id.loginFragment)
-//        }
+
         return view
     }
 
