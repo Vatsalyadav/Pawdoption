@@ -8,19 +8,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yadav.pawdoption.adapter.PendingAdoptionViewAdapter
-import com.yadav.pawdoption.persistence.PendingAdoptionDAO
 import com.yadav.pawdoption.databinding.FragmentPendingAdoptionsBinding
-import com.yadav.pawdoption.model.PendingAdoption
+import com.yadav.pawdoption.dataclass.PendingAdoptionData
+import com.yadav.pawdoption.model.ShelterPet
+import com.yadav.pawdoption.model.User
+import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
+import com.yadav.pawdoption.persistence.PendingAdoptionDAO
+import com.yadav.pawdoption.persistence.PetDAO
+import com.yadav.pawdoption.persistence.UsersDAO
 
 class PendingAdoptionFragment : Fragment() {
 
     var _binding: FragmentPendingAdoptionsBinding? = null
 
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
+    var shelterID: String = FirebaseDatabaseSingleton.getCurrentUid()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,24 +32,62 @@ class PendingAdoptionFragment : Fragment() {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_pending_adoptions, container, false)
 
-        val pendingAdoptionDAO: PendingAdoptionDAO = PendingAdoptionDAO();
+        if(shelterID == null){
+            shelterID = "2001"
+        }
 
-        val pendingAdoptionList: MutableList<PendingAdoption> = pendingAdoptionDAO.getAdoptionList("1");
-
-        val notesAdapter: RecyclerView.Adapter<PendingAdoptionViewAdapter.ViewHolder> = PendingAdoptionViewAdapter(pendingAdoptionList);
-
-
-
+        activity?.title = "Pending Adoption List"
 
         _binding = FragmentPendingAdoptionsBinding.inflate(inflater, container, false)
+
+
+        var pendingAdoptionAdapter: RecyclerView.Adapter<PendingAdoptionViewAdapter.ViewHolder> = PendingAdoptionViewAdapter(requireContext(),
+            mutableListOf());
 
         _binding?.apply {
             rvPendingAdoptions.apply{
                 layoutManager= LinearLayoutManager(requireActivity())
-                adapter=notesAdapter
+                adapter=pendingAdoptionAdapter
             }
         }
 
+        val pendingAdoptionDAO = PendingAdoptionDAO();
+
+
+        val mld = pendingAdoptionDAO.getAdoptionList(shelterID)
+
+        mld.observe(viewLifecycleOwner) {
+
+            if(it != null) {
+                val paList: MutableList<PendingAdoptionData> = mutableListOf()
+                for ((key, value) in it) {
+
+                    var pet: ShelterPet? = null;
+
+                        // Changed to the DAO
+                        PetDAO().getPet(value.petId!!, shelterID).addOnSuccessListener { p ->
+                            pet = p.getValue(ShelterPet::class.java)
+
+                            var user: User? = null
+
+                            // Changed to DAO
+                            UsersDAO().getUserById(value.userId!!).addOnSuccessListener {
+                                user = it.getValue(User::class.java)
+                                val pendingAdoptionData: PendingAdoptionData =
+                                    PendingAdoptionData(value, pet, user)
+
+                                paList.add(pendingAdoptionData)
+
+                                pendingAdoptionAdapter =
+                                    PendingAdoptionViewAdapter(requireContext(), paList)
+                                binding.rvPendingAdoptions.adapter = pendingAdoptionAdapter
+                                pendingAdoptionAdapter.notifyDataSetChanged()
+                            }
+                        }
+
+                }
+            }
+        }
 
         return binding.root
 
@@ -55,10 +96,6 @@ class PendingAdoptionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // to navigate to the second fragment while click on the create note button (floating button)
-//        _binding?.button?.setOnClickListener {
-//            findNavController().navigate(R.id.action_pendingAdoptionFragment_to_confirmAdoptionFragment)
-//        }
     }
 
     override fun onDestroyView() {

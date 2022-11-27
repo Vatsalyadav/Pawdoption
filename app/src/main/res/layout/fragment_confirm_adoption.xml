@@ -6,89 +6,96 @@
     android:layout_height="match_parent"
     tools:context=".view.ConfirmAdoptionFragment">
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvConfirmAdoptionPetImage"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:cardCornerRadius="10dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/ivConfirmAdoptionPetImage"
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/cvConfirmAdoptionPetImage"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="250dp"-->
+<!--            app:cardCornerRadius="10dp">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/ivConfirmAdoptionPetImage"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="250dp"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginTop="260dp"-->
+<!--                tools:src="@drawable/ic_launcher_background" />-->
+<!--        </androidx.cardview.widget.CardView>-->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvConfirmAdoptionPetImage"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_centerVertical="true"
+            app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="parent">
 
-<!--        <ImageView-->
-<!--            android:id="@+id/iv_images"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:scaleType="fitXY" />-->
-    </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/ivConfirmAdoptionPetImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                tools:src="@drawable/ic_launcher_background" />
+        </androidx.cardview.widget.CardView>
 
 
-    <ScrollView
-        android:id="@+id/svConfirmAdoptionDetails"
-        android:layout_width="match_parent"
-        android:layout_height="430dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cvConfirmAdoptionPetImage">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="12dp">
+
 
             <TextView
                 android:id="@+id/tvConfirmAdoptionPetName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-
                 android:text="@string/name"
-                android:textSize="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints" />
+                android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/tvConfirmAdoptionPetBreed"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/age"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmAdoptionPetName" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvConfirmAdoptionPetBreed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/breed"/>
+
+                <TextView
+                    android:id="@+id/tvConfirmAdoptionPetAge"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/age"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvConfirmAdoptionPetDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:minHeight="30dp"
-                android:text="@string/description"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmAdoptionPetBreed"
-                tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+                android:text="@string/description" />
 
             <TextView
                 android:id="@+id/tvConfirmAdoptionStaticAdopterDetails"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="@string/adopter_details"
                 android:textAlignment="center"
                 android:textSize="18dp"
@@ -97,155 +104,99 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvConfirmAdoptionPetDescription" />
 
-            <TextView
-                android:id="@+id/tvConfirmAdoptionStaticAdopterName"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/name"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmAdoptionStaticAdopterDetails" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvConfirmAdoptionStaticAdopterMobileNumber"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvConfirmAdoptionStaticAdopterName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/name" />
+
+                <TextView
+                    android:id="@+id/tvConfirmAdoptionAdopterName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/name" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/mobile_number"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmAdoptionStaticAdopterName" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvConfirmAdoptionStaticAdopterAddress"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvConfirmAdoptionStaticAdopterMobileNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/mobile_number" />
+
+
+                <TextView
+                    android:id="@+id/tvConfirmAdoptionAdopterMobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/mobile_number" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/address"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmAdoptionStaticAdopterMobileNumber" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvConfirmAdoptionAdopterName"
+
+                <TextView
+                    android:id="@+id/tvConfirmAdoptionStaticAdopterAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/address" />
+
+
+                <TextView
+                    android:id="@+id/tvConfirmAdoptionAdopterAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/address" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnConfirmAdopterApprove"
+                android:backgroundTint="#55A630"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.036"
-                app:layout_constraintStart_toEndOf="@+id/tvConfirmAdoptionStaticAdopterName"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmAdoptionStaticAdopterDetails" />
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="@string/approve" />
 
-            <TextView
-                android:id="@+id/tvConfirmAdoptionAdopterMobileNumber"
+            <Button
+                android:id="@+id/btnConfirmAdoptionDeny"
+                android:backgroundTint="#D00000"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mobile_number"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.036"
-                app:layout_constraintStart_toEndOf="@+id/tvConfirmAdoptionStaticAdopterMobileNumber"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmAdoptionAdopterName" />
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="@string/reject" />
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvConfirmAdoptionAdopterAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/address"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.036"
-                app:layout_constraintStart_toEndOf="@+id/tvConfirmAdoptionStaticAdopterAddress"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmAdoptionAdopterMobileNumber"
-                tools:ignore="MissingConstraints" />
-
-            <CheckBox
-                android:id="@+id/cbConfirmAdoptionAdequateFood"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:enabled="false"
-                android:text="@string/adequate_food"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmAdoptionStaticAdopterAddress" />
-
-            <CheckBox
-                android:id="@+id/cbConfirmAdoptionAdequateWater"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:enabled="false"
-                android:text="@string/adequate_water"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cbConfirmAdoptionAdequateFood" />
-
-            <CheckBox
-                android:id="@+id/cbConfirmAdoptionAdopterEnoughSpace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:enabled="false"
-                android:text="@string/enough_space"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cbConfirmAdoptionAdequateWater" />
-
-            <CheckBox
-                android:id="@+id/cbConfirmAdoptionAdopterDogHouse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:enabled="false"
-                android:text="@string/dog_house"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cbConfirmAdoptionAdopterEnoughSpace" />
-
-            <CheckBox
-                android:id="@+id/cbConfirmAdoptionAdopterAnyAllergic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:enabled="false"
-                android:text="@string/any_allergic"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cbConfirmAdoptionAdopterDogHouse" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 
-    </ScrollView>
 
-    <Button
-        android:id="@+id/btnConfirmAdopterApprove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:text="@string/approve"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/svConfirmAdoptionDetails" />
-
-    <Button
-        android:id="@+id/btnConfirmAdoptionDeny"
-        android:layout_width="112dp"
-        android:layout_height="47dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/reject"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.928"
-        app:layout_constraintStart_toEndOf="@+id/btnConfirmAdopterApprove"
-        app:layout_constraintTop_toBottomOf="@+id/svConfirmAdoptionDetails"
-        tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
