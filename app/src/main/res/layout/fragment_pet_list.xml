@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <!-- Code Reference: https://github.com/android/views-widgets-samples/blob/main/RecyclerViewKotlin/app/src/main/res/layout/activity_main.xml   -->
-    <androidx.appcompat.widget.SearchView
+    <android.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

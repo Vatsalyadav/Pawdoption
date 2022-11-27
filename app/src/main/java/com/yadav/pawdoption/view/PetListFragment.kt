@@ -13,7 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.appcompat.widget.SearchView
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -183,7 +183,7 @@ class PetListFragment : Fragment() {
     }
 
     fun setBottomNavigation(userType: String) {
-        Log.e("MainActivity", "userType: " + userType)
+        Log.e("PetList", "userType: " + userType)
         bottomNavigationView = if (userType == "petAdopter")
             activity?.findViewById(R.id.bottom_nav_pet_owner)!!
         else
