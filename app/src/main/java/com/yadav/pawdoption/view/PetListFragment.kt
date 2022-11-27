@@ -46,8 +46,6 @@ class PetListFragment : Fragment() {
 
 
     private var _binding: FragmentUserProfileBinding? = null
-    private lateinit var databaseReference: DatabaseReference
-    private lateinit var firebaseAuth: FirebaseAuth
 
     private val binding get() = _binding!!
 
@@ -113,11 +111,11 @@ class PetListFragment : Fragment() {
             startActivity(intent);
         }
 
-        var b = view.findViewById<Button>(R.id.sign_out_button).setOnClickListener {
-            Firebase.auth.signOut()
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-                .navigate(R.id.loginFragment)
-        }
+//        var b = view.findViewById<Button>(R.id.sign_out_button).setOnClickListener {
+//            Firebase.auth.signOut()
+//            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+//                .navigate(R.id.loginFragment)
+//        }
         return view
     }
 
