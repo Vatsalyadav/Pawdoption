@@ -28,7 +28,7 @@ import com.yadav.pawdoption.view.PetListFragmentDirections
 
 // Code Reference: https://developer.android.com/develop/ui/views/layout/recyclerview#kotlin
 
-class PetListAdapter(private val context: Context, private val petsList: MutableList<ShelterPet>) :
+class PetListAdapter(private val context: Context, private var petsList: MutableList<ShelterPet>) :
     RecyclerView.Adapter<PetListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -54,6 +54,11 @@ class PetListAdapter(private val context: Context, private val petsList: Mutable
             petLoveImage = view.findViewById(R.id.love_pet)
             petShareImage = view.findViewById(R.id.share_pet)
         }
+    }
+
+    fun setFilteredList(filteredList: MutableList<ShelterPet>) {
+        petsList = filteredList;
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
