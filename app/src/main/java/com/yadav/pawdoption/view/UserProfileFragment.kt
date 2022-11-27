@@ -131,6 +131,10 @@ class UserProfileFragment : Fragment() {
                                         }
                                 }
 
+                                binding.viewMyDonations.setOnClickListener() {
+                                    Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.userDonations)
+                                }
+
                                 //Display newly updated name and email
 
                             }
@@ -169,7 +173,7 @@ class UserProfileFragment : Fragment() {
                                         }
                                         else{
                                         Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-                                            .navigate(R.id.myAppointment)
+                                        .navigate(R.id.shelterAllDonations)
                                     }
                                 }
 

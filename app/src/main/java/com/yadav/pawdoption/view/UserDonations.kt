@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseUser
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.adapter.UserDonationsAdapter
+import com.yadav.pawdoption.model.User
 import com.yadav.pawdoption.model.UserDonation
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.UsersDAO
@@ -20,6 +22,7 @@ class UserDonations : Fragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var userDonationsAdapter: UserDonationsAdapter
     private val userDAO = UsersDAO()
+
 
 
     override fun onCreateView(
@@ -37,21 +40,40 @@ class UserDonations : Fragment() {
         var donations: ArrayList<UserDonation> = arrayListOf()
 
         userDAO.getUserList().observe(viewLifecycleOwner) {
-            var keys = it.keys
 
-            for (key in keys) {
+            var currentUserDonations = it.get(currentUser)!!.donations
 
-                if (currentUser == it.get(key)!!.id) {
-                    var donationKeys = it.get(key)!!.donations!!.keys
-                    for (dk in donationKeys) {
-                        donations.add(it.get(key)!!.donations!!.get(dk)!!)
-                    }
+            if(currentUserDonations != null){
+                var donationKeys = currentUserDonations.keys
+                for(dk in donationKeys){
+                    donations.add(currentUserDonations.get(dk)!!)
                 }
+                userDonationsAdapter = UserDonationsAdapter(requireContext(), donations)
+                recyclerView.adapter = userDonationsAdapter
+                userDonationsAdapter.notifyDataSetChanged()
+            } else {
+                userDonationsAdapter = UserDonationsAdapter(requireContext(), arrayListOf())
+                recyclerView.adapter = userDonationsAdapter
+                userDonationsAdapter.notifyDataSetChanged()
             }
 
-            userDonationsAdapter = UserDonationsAdapter(requireContext(), donations)
-            recyclerView.adapter = userDonationsAdapter
-            userDonationsAdapter.notifyDataSetChanged()
+//            for (key in keys) {
+//
+//                if (currentUser == it.get(key)!!.id) {
+//
+//                    if(it.get(key)!!.donations != null){
+//                        var donationKeys = it.get(key)!!.donations!!.keys
+//                        for (dk in donationKeys) {
+//                            donations.add(it.get(key)!!.donations!!.get(dk)!!)
+//                        }
+//                    }
+//
+//                }
+//            }
+//
+//            userDonationsAdapter = UserDonationsAdapter(requireContext(), donations)
+//            recyclerView.adapter = userDonationsAdapter
+//            userDonationsAdapter.notifyDataSetChanged()
         }
 
 
