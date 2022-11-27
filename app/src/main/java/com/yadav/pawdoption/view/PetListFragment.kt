@@ -161,7 +161,7 @@ class PetListFragment : Fragment() {
         return currentShelterPetList
     }
 
-    private fun getAllPets(it: HashMap<String, Shelter>, lovedPetsList: ArrayList<UserLovedPet>): MutableList<ShelterPet> {
+    private fun getAllPets(it: HashMap<String, Shelter>, lovedPetsList: HashMap<String,UserLovedPet>): MutableList<ShelterPet> {
         val allPetList: MutableList<ShelterPet> = mutableListOf()
         for (shelter in it) {
             for (pet in shelter.value.pets) {

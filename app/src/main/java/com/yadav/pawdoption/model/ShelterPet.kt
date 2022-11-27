@@ -29,5 +29,5 @@ data class ShelterPet(
 
     @set:Exclude @get:Exclude
     @IgnoredOnParcel
-    var lovedPetsList: ArrayList<UserLovedPet> = arrayListOf()
+    var lovedPetsList: HashMap<String,UserLovedPet> = hashMapOf()
 }

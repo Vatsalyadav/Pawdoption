@@ -16,7 +16,7 @@ class UsersDAO : IUsersDAO {
 
     private var users = MutableLiveData<HashMap<String, User>>()
     private var usersType = MutableLiveData<String>()
-    private var lovedPets = MutableLiveData<ArrayList<UserLovedPet>>()
+    private var lovedPets = MutableLiveData<HashMap<String,UserLovedPet>>()
 
     override fun getUserList(): MutableLiveData<HashMap<String, User>> {
         val usersReference = FirebaseDatabaseSingleton.getUsersReference()
@@ -62,20 +62,20 @@ class UsersDAO : IUsersDAO {
         return FirebaseDatabaseSingleton.getUsersReference().child(userId).get()
     }
 
-    override fun setPetToLoved(userId: String, lovedPets: ArrayList<UserLovedPet>) {
+    override fun setPetToLoved(userId: String, lovedPets: HashMap<String,UserLovedPet>) {
         val usersReference = FirebaseDatabaseSingleton.getUsersReference()
         usersReference.child(userId).child("lovedPets").setValue(lovedPets)
     }
 
-    override fun getLovedPetsByUid(userId: String): MutableLiveData<ArrayList<UserLovedPet>> {
+    override fun getLovedPetsByUid(userId: String): MutableLiveData<HashMap<String,UserLovedPet>> {
         val usersReference = FirebaseDatabaseSingleton.getUsersReference()
         usersReference.child(userId).child("lovedPets")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.value == null)
-                        lovedPets.value = ArrayList()
+                        lovedPets.value = hashMapOf()
                     else {
-                        lovedPets.value = snapshot.getValue<ArrayList<UserLovedPet>>()
+                        lovedPets.value = snapshot.getValue<HashMap<String,UserLovedPet>>()
                     }
                 }
 

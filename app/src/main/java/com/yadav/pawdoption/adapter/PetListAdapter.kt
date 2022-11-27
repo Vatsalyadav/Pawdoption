@@ -26,6 +26,7 @@ import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.UsersDAO
 import com.yadav.pawdoption.view.PetListFragmentDirections
 import java.util.*
+import kotlin.collections.HashMap
 
 
 // Code Reference: https://developer.android.com/develop/ui/views/layout/recyclerview#kotlin
@@ -113,9 +114,9 @@ class PetListAdapter(private val context: Context, private var petsList: Mutable
         }
 
         petsList[position].lovedPetsList.forEach {
-            if (petsList[position].shelterId + petsList[position].id == it.shelterId + it.petId) {
+            if (petsList[position].shelterId + petsList[position].id == it.value.shelterId + it.value.petId) {
                 viewHolder.petLoveImage.setImageResource(R.drawable.ic_round_love_24)
-                viewHolder.petLoveImage.tag = it.shelterId + it.petId
+                viewHolder.petLoveImage.tag = it.value.shelterId + it.value.petId
             }
         }
         var currentLovedPets = petsList[position].lovedPetsList
@@ -125,15 +126,15 @@ class PetListAdapter(private val context: Context, private var petsList: Mutable
                 viewHolder.petLoveImage.setImageResource(R.drawable.ic_round_love_24)
                 viewHolder.petLoveImage.tag = petsList[position].shelterId + petsList[position].id
                 val userLovedPet = UserLovedPet(UUID.randomUUID().toString(), petsList[position].id, petsList[position].shelterId)
-                currentLovedPets.add(userLovedPet)
+                currentLovedPets.put(userLovedPet.id!!,userLovedPet)
                 usersDAO.setPetToLoved(FirebaseDatabaseSingleton.getCurrentUid(),currentLovedPets)
             } else {
                 viewHolder.petLoveImage.setImageResource(R.drawable.ic_round_love_black_24)
                 var filteredList = currentLovedPets.filter {
-                    it.shelterId + it.petId != viewHolder.petLoveImage.tag }
+                    it.value.shelterId + it.value.petId != viewHolder.petLoveImage.tag }
                 viewHolder.petLoveImage.tag = "false"
                 usersDAO.setPetToLoved(FirebaseDatabaseSingleton.getCurrentUid(),
-                    filteredList as ArrayList<UserLovedPet>
+                    filteredList as HashMap<String, UserLovedPet>
                 )
             }
         }

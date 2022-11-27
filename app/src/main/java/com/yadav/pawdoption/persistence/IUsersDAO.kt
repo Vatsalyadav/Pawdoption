@@ -12,6 +12,6 @@ interface IUsersDAO {
     fun setCurrentUserTypeByUid(uid: String)
     fun getCurrentUserTypeByUid(): MutableLiveData<String>
     fun getUserById(userId: String): Task<DataSnapshot>
-    fun setPetToLoved(userId: String, lovedPets: ArrayList<UserLovedPet>)
-    fun getLovedPetsByUid(userId: String) : MutableLiveData<ArrayList<UserLovedPet>>
+    fun setPetToLoved(userId: String, lovedPets: HashMap<String,UserLovedPet>)
+    fun getLovedPetsByUid(userId: String) : MutableLiveData<HashMap<String,UserLovedPet>>
 }
