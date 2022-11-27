@@ -1,6 +1,7 @@
 package com.yadav.pawdoption.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.yadav.pawdoption.MainActivity
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.databinding.FragmentLoginBinding
 import com.yadav.pawdoption.databinding.FragmentRegisterBinding
@@ -39,7 +41,6 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -83,7 +84,28 @@ class LoginFragment : Fragment() {
 //           }
 //        });
 
+//        requireActivity()
+//            .onBackPressedDispatcher
+//            .addCallback(this, object : OnBackPressedCallback(true) {
+//                override fun handleOnBackPressed() {
+//                    Log.d("Fragments", "Fragment back pressed invoked")
+//                    // Do custom work here
+//
+//                    // if you want onBackPressed() to be called as normal afterwards
+//                    if (isEnabled) {
+//                        isEnabled = false
+//                        requireActivity().onBackPressed()
+//                        finishAffinity(MainActivity)
+//
+//                    }
+//                }
+//            }
+//            )
+
+//
     }
+
+
 
 
 }

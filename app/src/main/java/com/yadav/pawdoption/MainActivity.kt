@@ -2,14 +2,18 @@ package com.yadav.pawdoption
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.yadav.pawdoption.databinding.ActivityMainBinding
+import com.yadav.pawdoption.databinding.FragmentUserProfileBinding
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.UsersDAO
 
@@ -20,10 +24,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private val usersDAO = UsersDAO()
+    private lateinit var _binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
 
 
 
@@ -94,11 +103,17 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onBackPressed() {
-//        val radioGroup = view.findViewById(R.id.radio) as RadioGroup
-        super.onBackPressed()
-//        finishAffinity()
-//        finish()
-    }
+//    override fun onBackPressed() {
+//        val fragment = this.supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
+//        val currentFragment =             fragment?.childFragmentManager?.fragments?.get(0) as? FragmentOnBackPressListener
+//        if (currentFragment != null) {
+//            currentFragment.onBackPressed().takeIf { !it }?.let {
+//                super.onBackPressed()
+//            }         } else {
+//                super.onBackPressed()
+//            }
+//    }
+
+
 
 }

@@ -7,10 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.databinding.FragmentLoginBinding
 import com.yadav.pawdoption.databinding.FragmentUserProfileBinding
@@ -39,6 +42,11 @@ class UserProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
 
+//        if(Firebase.auth.currentUser == null){
+//            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+//                .navigate(R.id.loginFragment)
+//        }
+
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,7 +62,8 @@ class UserProfileFragment : Fragment() {
 
         binding.logoutBtn.setOnClickListener{
             firebaseAuth.signOut()
-            findNavController().navigate(R.id.action_userProfileFragment_to_loginFragment)
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.loginFragment)
         }
     }
 
