@@ -1,6 +1,9 @@
 package com.yadav.pawdoption.view
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +38,8 @@ class RegisterFragment : Fragment() {
     private val usersDAO = UsersDAO()
     private val sheltersDAO = SheltersDAO()
     var ccp: CountryCodePicker? = null
+
+
 
 
 
@@ -107,6 +112,57 @@ class RegisterFragment : Fragment() {
             }
         })
 
+
+
+//        fun binding.passwordEt.afterTextChanged(afterTextChanged: (String) -> Unit) {
+//            this.addTextChangedListener(object: TextWatcher {
+//                override fun afterTextChanged(s: Editable?) {
+//                    afterTextChanged.invoke(s.toString())
+//                }
+//
+//                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+//
+//                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+//            })
+//        }
+
+
+//        binding.passwordEt.addTextChangedListener(object : TextWatcher {
+//
+//            override fun afterTextChanged(s: Editable) {}
+//
+//            override fun beforeTextChanged(s: CharSequence, start: Int,
+//                                           count: Int, after: Int) {
+//            }
+//
+//
+//
+//            override fun onTextChanged(s: CharSequence, start: Int,
+//                                       before: Int, count: Int) {
+//
+//                 var passwordSequence = s
+//                if(passwordSequence.length<6){
+//                    Toast.makeText(requireActivity(),"Minimum 6 characters length password",Toast.LENGTH_SHORT).show()
+//        }
+//        if(!passwordSequence.matches(".*[A-Z].*".toRegex())){
+//            Toast.makeText(requireActivity(),"Must contain 1 Upper case charcter",Toast.LENGTH_SHORT).show()
+//        }
+//
+//        if(!passwordSequence.matches(".*[a-z].*".toRegex())){
+//            Toast.makeText(requireActivity(),"Must contain 1 Upper case charcter",Toast.LENGTH_SHORT).show()
+//
+//        }
+//        if(!passwordSequence.matches(".*[@#\$%^&+=].*".toRegex())){
+//            Toast.makeText(requireActivity(),"Must contain 1 special character",Toast.LENGTH_SHORT).show()
+//        }
+//
+//                pass = pass
+//
+//
+//
+//            }
+//        })
+
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.registerBtn.setOnClickListener() {
@@ -115,21 +171,75 @@ class RegisterFragment : Fragment() {
 
             if(linearLayout1.visibility == View.VISIBLE){  //pet owner
                 val email = binding.emailEt.text.toString()
-               var pass = binding.passwordEt.text.toString()
+                var pass = binding.passwordEt.text.toString()
                // var pass = " "
 
                 val Name = binding.firstNameEt.text.toString() + " " + binding.lastNameEt.text.toString()
                 val phoNumber = binding.phoneNumberEt.text.toString()
                 val address1 = binding.addressEt.text.toString()
                 val address2 = binding.address2Et.text.toString()
-
+                val confirmPasswor = binding.repasswordEt.text.toString()
                 val address = address1+ " " + address2
                 val mUserType = "petAdopter"
+                var flag = 0
+
+                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+
+                    Toast.makeText(this.context,"Invalid email address",Toast.LENGTH_SHORT).show()
+                    flag =1
+                }
+                if(pass.length<6 || confirmPasswor.length<6){
+                    password.helperText = "Password length small"
+                    flag =1
+
+                }
+
+                if(!confirmPasswor.matches(".*[A-Z].*".toRegex())){
+                    password.helperText = "Must contain 1 Upper case charcter"
+                    flag =1
+                }
+
+                if(!confirmPasswor.matches(".*[a-z].*".toRegex())){
+                    password.helperText = "Must contain 1 Upper case charcter"
+                    flag =1
+                }
+                if(!confirmPasswor.matches(".*[@#\$%^&+=].*".toRegex())){
+                    password.helperText = "Must contain 1 special character"
+                    flag =1
+                }
 
 
-                val confirmPasswor = binding.repasswordEt.text.toString()
+                if(!pass.matches(".*[A-Z].*".toRegex())){
+                    password.helperText = "Must contain 1 Upper case charcter"
+                    flag =1
+                }
 
-                if(email.isNotEmpty() && pass.isNotEmpty() && confirmPasswor.isNotEmpty()){
+                if(!pass.matches(".*[a-z].*".toRegex())){
+                    password.helperText = "Must contain 1 Upper case charcter"
+                    flag =1
+                }
+                if(!pass.matches(".*[@#\$%^&+=].*".toRegex())){
+                    password.helperText = "Must contain 1 special character"
+                    flag =1
+                }
+
+                if(Name.isEmpty()){
+                    firstName.helperText = "Cannot be Empty"
+                    lastName.helperText = "Cannot be Empty"
+                    flag =1
+                }
+
+
+                if(address1.isEmpty() || address2.isEmpty()){
+                    binding.address.helperText = "Please fill address fields correctly"
+                    address_2.helperText = "Please fill address fields correctly"
+                    flag =1
+                }
+
+
+
+
+                if(email.isNotEmpty() && pass.isNotEmpty() && confirmPasswor.isNotEmpty() && flag!=1){
 
                     if(pass == confirmPasswor){
                         firebaseAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener{
@@ -184,7 +294,7 @@ class RegisterFragment : Fragment() {
                 val email = binding.shelterEmailEt.text.toString()
                 val pass = binding.shelterPasswordEt.text.toString()
                 val confirmPasswor = binding.shelterRepasswordEt.text.toString()
-
+                var flag =0
                 val Name = binding.shelterNameEt.text.toString()
                 val phoNumber = binding.phoneNumberEt.text.toString()
                 val address1 = binding.addressEt.text.toString()
@@ -192,9 +302,61 @@ class RegisterFragment : Fragment() {
                 val shelterDesc = binding.shelterDescriptionEt.text.toString()
                 val userType = "shelterOwner"
 
+                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
 
+                    Toast.makeText(this.context,"Invalid email address",Toast.LENGTH_SHORT).show()
+                    flag =1
+                }
+                if(pass.length<6){
+                    shelterPassword.helperText = "Password length small"
+                    flag =1
 
-                if(email.isNotEmpty() && pass.isNotEmpty() && confirmPasswor.isNotEmpty()){
+                }
+
+         if(!pass.matches(".*[A-Z].*".toRegex())){
+             shelterPassword.helperText = "Must contain 1 Upper case charcter"
+             flag =1
+          }
+
+            if(!pass.matches(".*[a-z].*".toRegex())){
+                shelterPassword.helperText = "Must contain 1 Upper case charcter"
+                flag =1
+         }
+            if(!pass.matches(".*[@#\$%^&+=].*".toRegex())){
+                shelterPassword.helperText = "Must contain 1 special character"
+                flag =1
+           }
+                if(!confirmPasswor.matches(".*[A-Z].*".toRegex())){
+                    shelterRePassword.helperText = "Must contain 1 Upper case charcter"
+                    flag =1
+                }
+
+                if(!confirmPasswor.matches(".*[a-z].*".toRegex())){
+                    shelterRePassword.helperText = "Must contain 1 Upper case charcter"
+                    flag =1
+                }
+                if(!confirmPasswor.matches(".*[@#\$%^&+=].*".toRegex())){
+                    shelterRePassword.helperText = "Must contain 1 special character"
+                    flag =1
+                }
+
+                if(Name.isEmpty()){
+                    shelterName.helperText = "Cannot be empty"
+                    flag =1
+                }
+
+                if(shelterDesc.isEmpty()){
+                    shelter_description.helperText = "Do not leave this empty"
+                    flag =1
+                }
+                if(address1.isEmpty() || address2.isEmpty()){
+                    shelter_address.helperText = "Please fill address fields correctly"
+                    shelter_address2.helperText = "Please fill address fields correctly"
+                    flag =1
+                }
+
+                if(email.isNotEmpty() && pass.isNotEmpty() && confirmPasswor.isNotEmpty() && flag!=1){
+
                     if(pass == confirmPasswor){
                         firebaseAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener{
                             if(it.isSuccessful){
@@ -250,6 +412,9 @@ class RegisterFragment : Fragment() {
 
 
     }
+
+
+
 
 
 

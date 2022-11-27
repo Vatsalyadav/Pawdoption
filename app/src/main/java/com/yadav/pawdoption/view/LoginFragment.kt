@@ -62,7 +62,7 @@ class LoginFragment : Fragment() {
                         Toast.makeText(this.context, "Login Successful", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_loginFragment_to_petListFragment2)
                     } else {
-                        Toast.makeText(this.context, it.exception.toString(), Toast.LENGTH_SHORT)
+                        Toast.makeText(this.context, "Could not log in. Please try again!!", Toast.LENGTH_SHORT)
                             .show()
                     }
                 }

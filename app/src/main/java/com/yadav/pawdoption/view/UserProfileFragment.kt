@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -98,18 +99,41 @@ class UserProfileFragment : Fragment() {
                                     return
                                 }
                                 Log.e("user","User data is changed!"+user.name)
-
+                                binding.userEmail.setText("Logged in as : " + currentUser.email.toString())
                                 binding.userName.setText("Name : " + user.name)
                                 binding.userAddress.setText("Address :" + user.address )
 
-                                binding.viewMyAppointments.setOnClickListener() {
-                                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-                                        .navigate(R.id.myAppointment)
+
+
+                                    binding.viewMyDonations.setOnClickListener() {
+                                        if(user.donations?.isEmpty() == true){
+                                            Toast.makeText(requireActivity(),"You have not made any donations",Toast.LENGTH_SHORT).show()
+                                        }
+                                        else {
+                                            Navigation.findNavController(
+                                                requireActivity(),
+                                                R.id.nav_host_fragment
+                                            )
+                                                .navigate(R.id.userDonations)
+                                        }
+
                                 }
 
-                                binding.viewMyDonations.setOnClickListener() {
-                                    Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.userDonations)
+
+
+                                    binding.viewMyAppointments.setOnClickListener() {
+                                        if(user.appointments == null){
+                                            Toast.makeText(requireActivity(),"You have not made any appointments",Toast.LENGTH_SHORT).show()
+                                        }
+                                        else{
+                                            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                                                .navigate(R.id.myAppointment)
+                                        }
                                 }
+
+//                                binding.viewMyDonations.setOnClickListener() {
+//                                    Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.userDonations)
+//                                }
 
                                 //Display newly updated name and email
 
@@ -135,16 +159,23 @@ class UserProfileFragment : Fragment() {
                                     return
                                 }
                                 Log.e("user","User data is changed!"+shelter.name)
-
+                                binding.shelterEmail.setText("Logged in as : " + currentUser.email.toString())
                                 binding.shelterName.setText("Name : "+shelter.name)
                                 binding.shelterAddress.setText("Address : " + shelter.address)
                                 binding.shelterDescription.setText("Description : " + shelter.description)
 
-                                binding.viewDonations.setOnClickListener() {
-                                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+
+
+                                    binding.viewDonations.setOnClickListener() {
+
+                                        if(shelter.donations.isEmpty()){
+                                            Toast.makeText(requireActivity(),"Password not matching",Toast.LENGTH_SHORT).show()
+                                        }
+                                        else{
+                                        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
                                         .navigate(R.id.shelterAllDonations)
+                                    }
                                 }
-                                //Display newly updated name and email
 
                             }
                             override fun onCancelled(error: DatabaseError){
