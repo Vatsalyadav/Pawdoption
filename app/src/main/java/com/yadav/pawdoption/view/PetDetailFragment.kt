@@ -1,5 +1,6 @@
 package com.yadav.pawdoption.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -27,8 +28,7 @@ import com.yadav.pawdoption.model.PendingAdoption
 import com.yadav.pawdoption.model.Shelter
 import com.yadav.pawdoption.model.ShelterPet
 import com.yadav.pawdoption.model.UserLovedPet
-import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
-import com.yadav.pawdoption.persistence.SheltersDAO
+import com.yadav.pawdoption.persistence.*
 import me.relex.circleindicator.CircleIndicator
 import java.util.*
 import kotlin.collections.HashMap
@@ -57,6 +57,9 @@ class PetDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
+        activity?.title = "Pet details"
+
         _binding = FragmentPetDetailBinding.inflate(inflater, container, false)
 
         viewPager = binding.vpPetDetailsImage
@@ -70,17 +73,16 @@ class PetDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //TODO shelter id hard code
-        FirebaseDatabaseSingleton.getSheltersReference().child(shelterId).get().addOnSuccessListener { shelterDataSnapshot ->
+        // Changed to DAO
+        SheltersDAO().getShelterById(shelterId).addOnSuccessListener { shelterDataSnapshot ->
             if(shelterDataSnapshot.getValue() != null){
 
                 shelter = shelterDataSnapshot.getValue(Shelter::class.java)
 
                 shelter?.let { s ->
-                    //TODO pet id hardcode
-                    FirebaseDatabaseSingleton.getSheltersReference().child(shelterId)
-                        .child("pets").child(petId).get()
-                        .addOnSuccessListener { petDataSnapshot ->
+
+                    // Changed to DAO
+                    PetDAO().getPet(petId, shelterId).addOnSuccessListener { petDataSnapshot ->
                             if(petDataSnapshot.getValue() != null){
                                 pet = petDataSnapshot.getValue<ShelterPet>()
                                 pet?.imageURL?.let{
@@ -110,38 +112,46 @@ class PetDetailFragment : Fragment() {
         }
 
 
+        PendingAdoptionDAO().getAdoptionList(shelterId).observe(viewLifecycleOwner){ snapShot ->
+            for ((key, value) in snapShot ) {
 
-        FirebaseDatabaseSingleton.getSheltersReference().child(shelterId).child("pendingAdoptions").addValueEventListener(object: ValueEventListener {
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot?.getValue() != null) {
-                    val paList: HashMap<String, HashMap<String, String>> =
-                        snapshot.getValue() as HashMap<String, HashMap<String, String>>
-                    for ((key, value) in paList) {
-
-                        //TODO static user id
-                        if (value.get("userId").equals(userId) && value.get("petId").equals(petId)) {
-                            binding.btnPetDetailsAdopt.isEnabled = false
-                        }
-                    }
+                if (value.userId.equals(userId) && value.petId.equals(petId)) {
+                    binding.btnPetDetailsAdopt.isEnabled = false
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.w("PET DETAILS", "Failed to read value.", error.toException())
-            }
+        }
 
-        })
 
-        val userRef = FirebaseDatabaseSingleton.getUsersReference().child(userId)
+//        FirebaseDatabaseSingleton.getSheltersReference().child(shelterId).child("pendingAdoptions").addValueEventListener(object: ValueEventListener {
+//
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if(snapshot?.getValue() != null) {
+//                    val paList: HashMap<String, HashMap<String, String>> =
+//                        snapshot.getValue() as HashMap<String, HashMap<String, String>>
+//                    for ((key, value) in paList) {
+//
+//                        if (value.get("userId").equals(userId) && value.get("petId").equals(petId)) {
+//                            binding.btnPetDetailsAdopt.isEnabled = false
+//                        }
+//                    }
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                Log.w("PET DETAILS", "Failed to read value.", error.toException())
+//            }
+//
+//        })
 
-        userRef.child("lovedPets").get().addOnSuccessListener {
-            if(it.getValue() != null) {
 
-                for(ls in it.children){
-                    val lovedPet: UserLovedPet? = ls.getValue(UserLovedPet::class.java)
-                    if(lovedPet?.shelterId!!.equals(shelter) && lovedPet?.petId.equals(petId)){
-                        liked = lovedPet?.petId
+        // Changed to DAO
+        UserLovedPetDAO().getUserLovedPets(userId).observe(viewLifecycleOwner){
+
+            if (!it.isNullOrEmpty()) {
+                for ((key, lovedPet) in it) {
+                    if (lovedPet?.shelterId!!.equals(shelter) && lovedPet?.petId.equals(petId)) {
+                        liked = lovedPet?.id
                         binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_24)
                     }
                 }
@@ -149,32 +159,67 @@ class PetDetailFragment : Fragment() {
                 if (liked.isNullOrBlank()) {
                     binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_black_24)
                 }
-
-
             }
-
         }
+
+
+//        val userRef = FirebaseDatabaseSingleton.getUsersReference().child(userId)
+//
+//        userRef.child("lovedPets").get().addOnSuccessListener {
+//            if(it.getValue() != null) {
+//
+//                for(ls in it.children){
+//                    val lovedPet: UserLovedPet? = ls.getValue(UserLovedPet::class.java)
+//                    if(lovedPet?.shelterId!!.equals(shelter) && lovedPet?.petId.equals(petId)){
+//                        liked = lovedPet?.id
+//                        binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_24)
+//                    }
+//                }
+//
+//                if (liked.isNullOrBlank()) {
+//                    binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_black_24)
+//                }
+//
+//
+//            }
+//
+//        }
+
+        val userLovedPetDAO: UserLovedPetDAO = UserLovedPetDAO()
 
         binding.ivPetDetailsLikePet.setOnClickListener {
             if (liked.isNullOrBlank()) {
                 val userLovedPet: UserLovedPet =
                     UserLovedPet(UUID.randomUUID().toString(), petId, shelterId)
-                userRef.child("lovedPets").child(userLovedPet.id!!).setValue(userLovedPet);
+
+                // Changed to DAO
+                userLovedPetDAO.addLovedPet(userId, userLovedPet)
                 liked = userLovedPet.id
                 binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_24)
             } else {
-                userRef.child("lovedPets").child(liked!!).removeValue()
+
+                // Changed to DAO
+                userLovedPetDAO.deleteLovedPet(userId, liked!!)
                 binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_black_24)
                 liked = null;
             }
+        }
+
+        binding.ivPetDetailsSharePet.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "I found a pet!")
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            requireContext().startActivity(shareIntent)
         }
 
 
 
         binding.btnPetDetailsAdopt.setOnClickListener {
 
-
-            //TODO replace the static data here
             val action = PetDetailFragmentDirections.actionPetDetailFragmentToAdoptPetFragment(petId, shelterId)
 
             findNavController().navigate(action)

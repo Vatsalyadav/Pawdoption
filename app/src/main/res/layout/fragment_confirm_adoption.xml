@@ -179,6 +179,7 @@
 
             <Button
                 android:id="@+id/btnConfirmAdopterApprove"
+                android:backgroundTint="#55A630"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -186,6 +187,7 @@
 
             <Button
                 android:id="@+id/btnConfirmAdoptionDeny"
+                android:backgroundTint="#D00000"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"

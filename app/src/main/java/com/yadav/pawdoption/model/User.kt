@@ -6,6 +6,7 @@ import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 //https://stackoverflow.com/questions/61758963/how-to-ignore-fields-when-using-parcelize-annotation-in-kotlin
+//https://stackoverflow.com/questions/51380056/android-expected-a-list-while-deserializing-but-got-a-class-java-util-hashmap
 @Parcelize
 data class User(
 

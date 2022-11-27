@@ -28,9 +28,9 @@ class UserDonationsAdapter(private val context: Context, private val userdonatio
 
 
         init {
-            tvDonateAmount = view.findViewById(R.id.tvShelterName)
-            tvDonatedToShelter = view.findViewById(R.id.tvShelterAddress)
-            tvDonationTimeStamp = view.findViewById(R.id.tvShelterDescription)
+            tvDonateAmount = view.findViewById(R.id.tvDonatedAmount)
+            tvDonatedToShelter = view.findViewById(R.id.tvDonatedToShelter)
+            tvDonationTimeStamp = view.findViewById(R.id.tvDonationTimeStamp)
         }
     }
 

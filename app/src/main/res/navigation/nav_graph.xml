@@ -184,4 +184,14 @@
         android:id="@+id/myAppointment"
         android:name="com.yadav.pawdoption.view.MyAppointment"
         android:label="MyAppointment" />
+    <fragment
+        android:id="@+id/userDonations"
+        android:name="com.yadav.pawdoption.view.UserDonations"
+        android:label="fragment_user_donations"
+        tools:layout="@layout/fragment_user_donations" />
+    <fragment
+        android:id="@+id/shelterAllDonations"
+        android:name="com.yadav.pawdoption.view.ShelterAllDonations"
+        android:label="fragment_shelter_all_donations"
+        tools:layout="@layout/fragment_shelter_all_donations" />
 </navigation>

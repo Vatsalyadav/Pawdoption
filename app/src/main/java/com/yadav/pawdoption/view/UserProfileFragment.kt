@@ -48,11 +48,6 @@ class UserProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
 
-//        if(Firebase.auth.currentUser == null){
-//            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-//                .navigate(R.id.loginFragment)
-//        }
-
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,11 +67,7 @@ class UserProfileFragment : Fragment() {
 
         firebaseAuth = FirebaseAuth.getInstance()
        var uid = firebaseAuth.currentUser?.uid
-//        if(firebaseAuth.currentUser!=null){
-//            firebaseAuth.currentUser?.let {
-//                binding.userEmail.text = "Logged in with " + it.email
-//            }
-//        }
+
         auth = Firebase.auth
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -116,6 +107,10 @@ class UserProfileFragment : Fragment() {
                                         .navigate(R.id.myAppointment)
                                 }
 
+                                binding.viewMyDonations.setOnClickListener() {
+                                    Navigation.findNavController(requireActivity(),R.id.nav_host_fragment).navigate(R.id.userDonations)
+                                }
+
                                 //Display newly updated name and email
 
                             }
@@ -144,6 +139,11 @@ class UserProfileFragment : Fragment() {
                                 binding.shelterName.setText("Name : "+shelter.name)
                                 binding.shelterAddress.setText("Address : " + shelter.address)
                                 binding.shelterDescription.setText("Description : " + shelter.description)
+
+                                binding.viewDonations.setOnClickListener() {
+                                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                                        .navigate(R.id.shelterAllDonations)
+                                }
                                 //Display newly updated name and email
 
                             }

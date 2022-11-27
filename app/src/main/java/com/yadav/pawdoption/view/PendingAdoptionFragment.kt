@@ -10,13 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yadav.pawdoption.adapter.PendingAdoptionViewAdapter
 import com.yadav.pawdoption.databinding.FragmentPendingAdoptionsBinding
 import com.yadav.pawdoption.dataclass.PendingAdoptionData
-import com.yadav.pawdoption.persistence.PendingAdoptionDAOMock
-import com.yadav.pawdoption.model.PendingAdoption
 import com.yadav.pawdoption.model.ShelterPet
 import com.yadav.pawdoption.model.User
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.PendingAdoptionDAO
-import com.yadav.pawdoption.persistence.SheltersDAO
+import com.yadav.pawdoption.persistence.PetDAO
+import com.yadav.pawdoption.persistence.UsersDAO
 
 class PendingAdoptionFragment : Fragment() {
 
@@ -33,13 +32,14 @@ class PendingAdoptionFragment : Fragment() {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_pending_adoptions, container, false)
 
+        if(shelterID == null){
+            shelterID = "2001"
+        }
+
+        activity?.title = "Pending Adoption List"
+
         _binding = FragmentPendingAdoptionsBinding.inflate(inflater, container, false)
 
-
-
-        val pendingAdoptionDAOMock: PendingAdoptionDAOMock = PendingAdoptionDAOMock();
-
-        var pendingAdoptionList: MutableList<PendingAdoption> = pendingAdoptionDAOMock.getAdoptionList("1");
 
         var pendingAdoptionAdapter: RecyclerView.Adapter<PendingAdoptionViewAdapter.ViewHolder> = PendingAdoptionViewAdapter(requireContext(),
             mutableListOf());
@@ -53,26 +53,25 @@ class PendingAdoptionFragment : Fragment() {
 
         val pendingAdoptionDAO = PendingAdoptionDAO();
 
-//        val mld2 = SheltersDAO().getShelters()
 
-        val mld = pendingAdoptionDAO.getAdoptionListTest(shelterID)
+        val mld = pendingAdoptionDAO.getAdoptionList(shelterID)
 
         mld.observe(viewLifecycleOwner) {
-//            val pendingAdoptionList = it
 
             if(it != null) {
                 val paList: MutableList<PendingAdoptionData> = mutableListOf()
                 for ((key, value) in it) {
-                    val sheltersReference = FirebaseDatabaseSingleton.getSheltersReference()
+
                     var pet: ShelterPet? = null;
 
-                    sheltersReference.child(shelterID).child("pets").child(value.petId!!).get()
-                        .addOnSuccessListener {
+                        // Changed to the DAO
+                        PetDAO().getPet(shelterID, value.petId!!).addOnSuccessListener {
                             pet = it.getValue(ShelterPet::class.java)
 
                             var user: User? = null
-                            FirebaseDatabaseSingleton.getUsersReference().child(value.userId!!)
-                                .get().addOnSuccessListener {
+
+                            // Changed to DAO
+                            UsersDAO().getUserById(value.userId!!).addOnSuccessListener {
                                 user = it.getValue(User::class.java)
                                 val pendingAdoptionData: PendingAdoptionData =
                                     PendingAdoptionData(value, pet, user)
