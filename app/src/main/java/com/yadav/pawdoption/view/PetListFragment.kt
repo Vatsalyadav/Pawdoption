@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -40,6 +41,8 @@ class PetListFragment : Fragment() {
     private val sheltersDAO = SheltersDAO()
     private val usersDAO = UsersDAO()
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var searchView: SearchView
+    private var petsList: MutableList<ShelterPet> = mutableListOf()
 
 
     private var _binding: FragmentUserProfileBinding? = null
@@ -57,6 +60,22 @@ class PetListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_pet_list, container, false)
 
         activity?.title = "Pets"
+
+        searchView = view.findViewById(R.id.searchView)
+        searchView.clearFocus()
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    filterList(newText)
+                }
+                return false
+            }
+        })
+
         setupRecyclerView(view)
 
         val fabAddPet = view.findViewById<FloatingActionButton>(R.id.fabAddPet)
@@ -102,6 +121,17 @@ class PetListFragment : Fragment() {
         return view
     }
 
+    private fun filterList(text: String) {
+        var filteredList: MutableList<ShelterPet> = mutableListOf()
+        for (pet in petsList) {
+            if (pet.breed?.lowercase()?.contains(text.lowercase()) == true) {
+                filteredList.add(pet)
+            }
+        }
+
+        petListAdapter.setFilteredList(filteredList)
+    }
+
     private fun setupRecyclerView(view: View) {
         petListAdapter = PetListAdapter(requireContext(), mutableListOf())
         linearLayoutManager = LinearLayoutManager(activity)
@@ -113,9 +143,11 @@ class PetListFragment : Fragment() {
         ) {
 
             if (FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER"))
-                petListAdapter = PetListAdapter(requireContext(), getAllPets(it))
+                petsList = getAllPets(it)
             else
-                petListAdapter = PetListAdapter(requireContext(), getCurrentShelterPets(it))
+                petsList = getCurrentShelterPets(it)
+
+            petListAdapter = PetListAdapter(requireContext(), petsList)
             recyclerView.adapter = petListAdapter
             petListAdapter.notifyDataSetChanged()
         }
