@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="@color/teal_700"
+                android:backgroundTint="#55a630"
                 android:text="View My Donations"
                 android:textColor="@color/black"
                 app:iconTint="#009688">
@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="@color/teal_700"
+                android:backgroundTint="#55a630"
                 android:text="View My Appointments"
                 android:textColor="@color/black"
                 app:iconTint="#009688">
@@ -152,7 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="@color/teal_700"
+                android:backgroundTint="#55a630"
                 android:text="View All Donations"
                 android:textColor="@color/black"
                 app:iconTint="#009688">
@@ -167,7 +167,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/teal_700"
+            android:backgroundTint="#55a630"
             android:text="LogOut"
             android:textColor="@color/black"
             app:iconTint="#009688">
