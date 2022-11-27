@@ -40,7 +40,7 @@ class DayAppointmentAdapter(
 
         holder.cgTimeSlot.setOnCheckedStateChangeListener {
             btnView, isChecked ->
-            if (holder.cgTimeSlot.checkedChipId == -1) {
+            if (holder.cgTimeSlot.checkedChipId == -1 || !FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER")) {
                 holder.btnBookAppointment.visibility = View.GONE
             } else {
                 holder.btnBookAppointment.visibility = View.VISIBLE
@@ -61,8 +61,7 @@ class DayAppointmentAdapter(
                         day = day,
                         timeSlot = timeSlot.text.toString(),
                     )
-                    // TODO: Dynamically pick shelter ID
-                    appointmentDAO.bookAppointment("2001", dayAppointments[position].vetId, bookedSlot)
+                    appointmentDAO.bookAppointment(dayAppointments[position].shelterId, dayAppointments[position].vetId, bookedSlot)
                     val appointment = Appointment(
                         shelterName = dayAppointments[position].shelterName,
                         vetName = dayAppointments[position].vetName,

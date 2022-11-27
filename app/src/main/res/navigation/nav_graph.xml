@@ -65,9 +65,6 @@
         android:name="com.yadav.pawdoption.view.PetListFragment"
         android:label="PetListFragment" >
         <action
-            android:id="@+id/action_petListFragment_to_uploadAnimalPosting"
-            app:destination="@id/uploadAnimalPosting" />
-        <action
             android:id="@+id/action_petListFragment_to_petDetailFragment"
             app:destination="@id/petDetailFragment" />
     </fragment>
@@ -77,7 +74,11 @@
         android:id="@+id/mapsFragment"
         android:name="com.yadav.pawdoption.view.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_donateList"
+            app:destination="@id/donateList" />
+    </fragment>
 
 
     <!--    Donation List -->
@@ -163,14 +164,6 @@
             app:argType="string" />
         <action
             android:id="@+id/action_adoptPetFragment_to_petListFragment"
-            app:destination="@id/petListFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/uploadAnimalPosting"
-        android:name="com.yadav.pawdoption.view.UploadAnimalPosting"
-        android:label="UploadAnimalPosting" >
-        <action
-            android:id="@+id/action_uploadAnimalPosting_to_petListFragment"
             app:destination="@id/petListFragment" />
     </fragment>
     <fragment

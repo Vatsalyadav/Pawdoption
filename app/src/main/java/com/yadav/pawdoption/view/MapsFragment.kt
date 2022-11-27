@@ -8,9 +8,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -31,6 +33,7 @@ class MapsFragment : Fragment() {
     private lateinit var currentLocation: Location
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val permissionCode = 101
+    lateinit var btnMakeDonation: Button
 
     private val callback = OnMapReadyCallback { googleMap ->
 
@@ -88,6 +91,16 @@ class MapsFragment : Fragment() {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btnMakeDonation = view.findViewById(R.id.btnMakeDonation)
+
+        btnMakeDonation.setOnClickListener {
+            findNavController().navigate(R.id.action_mapsFragment_to_donateList)
+        }
+
+    }
 
     @SuppressLint("MissingPermission")
     private fun fetchLocation() {
