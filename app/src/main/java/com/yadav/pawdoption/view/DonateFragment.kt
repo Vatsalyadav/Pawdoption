@@ -47,10 +47,6 @@ class DonateFragment : Fragment() {
 
 
 
-
-
-
-
         tvShelterTitle.text = shelter.name?.uppercase()
         tvShelterDescription.text = shelter.description
         bDonate.setOnClickListener {

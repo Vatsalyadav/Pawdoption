@@ -1,3 +1,4 @@
+//https://stackoverflow.com/questions/3149414/how-to-receive-a-event-on-android-checkbox-check-change
 package com.yadav.pawdoption.view
 
 import android.os.Bundle
@@ -11,13 +12,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.databinding.FragmentAdoptPetBinding
 import com.yadav.pawdoption.databinding.FragmentConfirmAdoptionBinding
 import com.yadav.pawdoption.model.PendingAdoption
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
+import com.yadav.pawdoption.persistence.PendingAdoptionDAO
 import com.yadav.pawdoption.persistence.SheltersDAO
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -31,6 +35,12 @@ class AdoptPetFragment : Fragment() {
 
     val args: AdoptPetFragmentArgs by navArgs()
 
+    lateinit var shelterId: String
+
+    lateinit var petId: String
+
+    lateinit var userId: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +52,12 @@ class AdoptPetFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        val userId: String = "uid1";
+        activity?.title = "Adopt Pet "
 
-        val shelterId: String = args.shelterId
-        val petId: String = args.petId
+        userId = FirebaseAuth.getInstance().currentUser?.uid ?: "uid1"
+
+        shelterId = args.shelterId
+        petId = args.petId
 
         _binding = FragmentAdoptPetBinding.inflate(inflater, container, false)
 
@@ -60,20 +72,20 @@ class AdoptPetFragment : Fragment() {
         }
 
         binding.btnAdoptPetSubmit.setOnClickListener {
-            val shelterRef = FirebaseDatabaseSingleton.getSheltersReference().child(args.shelterId)
-            shelterRef.get().addOnSuccessListener {
 
-                val pendingAdoption: PendingAdoption = PendingAdoption(UUID.randomUUID().toString(),"uid1", args.petId, "fhedsjkf")
+            // Changed to DAO
+            SheltersDAO().getShelterById(shelterId).addOnSuccessListener {
 
-//                if(it.hasChild("pendingAdoptions")){
-                    shelterRef.child("pendingAdoptions").child(pendingAdoption.id!!).setValue(pendingAdoption)
-//                }
+                val pendingAdoption: PendingAdoption = PendingAdoption(UUID.randomUUID().toString(),userId, args.petId, LocalDateTime.now().toString())
+
+                // Changed to DAO
+
+                PendingAdoptionDAO().addPendingAdoption(shelterId, pendingAdoption)
 
                 binding.btnAdoptPetSubmit.isEnabled = false
 
                 val myToast = Toast.makeText(requireContext(),"Your request adoption request has been created successfully, You will be notified about update on request", Toast.LENGTH_SHORT)
 
-//                val myToast = Toast.makeText(applicationContext,"toast message with gravity",Toast.LENGTH_SHORT)
                 myToast.setGravity(Gravity.LEFT,200,200)
                 myToast.show()
 

@@ -19,6 +19,7 @@ import com.yadav.pawdoption.model.PendingAdoption
 import com.yadav.pawdoption.model.ShelterPet
 import com.yadav.pawdoption.model.User
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
+import com.yadav.pawdoption.persistence.PendingAdoptionDAO
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
@@ -48,14 +49,13 @@ class ConfirmAdoptionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-//        pendingAdoption = arguments?.getParcelable<PendingAdoption>("pendingAdoption")
-//
-//        shelterPet = arguments?.getParcelable<ShelterPet>("shelterPet")
-//
-//        user = arguments?.getParcelable<User>("user")
 
 //        https://developer.android.com/guide/navigation/navigation-pass-data
 
+        if(shelterId == null){
+            shelterId = "2001"
+        }
+        activity?.title = "Confirm pending adoption "
 
         pendingAdoption = args.pendingAdoption
         shelterPet = args.shelterPet
@@ -87,30 +87,6 @@ class ConfirmAdoptionFragment : Fragment() {
 
 
         binding.btnConfirmAdopterApprove.setOnClickListener {
-//            val intent = Intent(Intent.ACTION_SEND)
-////            intent.putExtra(Intent.EXTRA_EMAIL, user?.email)
-//            val receiver = arrayOfNulls<String>(1)
-//            receiver[0] = user?.email
-//            intent.data = Uri.parse("mailto:test@gmail.com")
-//            intent.setType("message/rfc822")
-////            intent.putExtra(Intent.EXTRA_EMAIL, receiver)
-//            intent.putExtra(Intent.EXTRA_SUBJECT, "Approval of adoption request")
-//            intent.putExtra(Intent.EXTRA_TEXT, "Hi, " +
-//                    "Your request for the pet adoption is approved." +
-//                    "You can visit the shelter and complete the remaining procedure." +
-//                    "Thanks")
-//
-//            try {
-//                //start email intent
-//                startActivity(Intent.createChooser(intent, "Choose Email Client..."))
-//
-//                print("end")
-//            }
-//            catch (e: Exception){
-//                //if any thing goes wrong for example no email client application or any exception
-//                //get and show exception message
-//                Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
-//            }
             val SDK_INT = Build.VERSION.SDK_INT
             if (SDK_INT > 8) {
                 val policy = ThreadPolicy.Builder()
@@ -121,8 +97,6 @@ class ConfirmAdoptionFragment : Fragment() {
                     "You can visit the shelter and complete the remaining procedure." +
                     "Thanks")
             }
-
-
 
 
         }
@@ -160,19 +134,12 @@ class ConfirmAdoptionFragment : Fragment() {
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) throw IOException("Unexpected code $response")
 
-//            for ((name, value) in response.headers) {
-//                println("$name: $value")
-//            }
-//
-//            println(response.body!!.string())
 
             binding.btnConfirmAdopterApprove.isEnabled = false
             binding.btnConfirmAdoptionDeny.isEnabled = false
 
-            FirebaseDatabaseSingleton.getSheltersReference().child(shelterId)
-                .child("pendingAdoptions")
-                .child(pendingAdoption?.id!!)
-                .removeValue()
+            // Changed to DAO
+            PendingAdoptionDAO().deletePendingAdoption(pendingAdoption?.id!!, shelterId);
 
             val approveToast = Toast.makeText(requireContext(), "Email sent ", Toast.LENGTH_SHORT)
             approveToast.setGravity(Gravity.LEFT,200,200)

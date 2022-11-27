@@ -1,5 +1,7 @@
 package com.yadav.pawdoption.persistence
 
+import com.google.android.gms.tasks.Task
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ktx.getValue
 import com.yadav.pawdoption.model.ShelterPet
 
@@ -15,5 +17,10 @@ class PetDAO: IPetDAO {
             pet.id = petsSize.toString()
             petRef.child(petsSize.toString()).setValue(pet)
         }
+    }
+
+    override  fun getPet(petId: String, shelterId: String): Task<DataSnapshot> {
+        val sheltersReference = FirebaseDatabaseSingleton.getSheltersReference()
+        return sheltersReference.child(shelterId).child("pets").child(petId).get()
     }
 }
