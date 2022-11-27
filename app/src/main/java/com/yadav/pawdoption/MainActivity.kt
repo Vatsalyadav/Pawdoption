@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.vet -> {
                     Navigation.findNavController(this, R.id.nav_host_fragment)
-                        .navigate(R.id.userProfileFragment)
+                        .navigate(R.id.createVetAppointment)
                     true
                 }
                 R.id.profile -> {
