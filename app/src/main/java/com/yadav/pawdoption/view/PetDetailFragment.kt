@@ -1,3 +1,4 @@
+//https://www.geeksforgeeks.org/android-image-slider-using-viewpager-in-kotlin/
 package com.yadav.pawdoption.view
 
 import android.content.Intent
@@ -62,6 +63,10 @@ class PetDetailFragment : Fragment() {
 
         _binding = FragmentPetDetailBinding.inflate(inflater, container, false)
 
+        if(FirebaseDatabaseSingleton.getCurrentUserType() == "shelterOwner"){
+            binding.btnPetDetailsAdopt.visibility = View.GONE
+        }
+
         viewPager = binding.vpPetDetailsImage
 
         shelterId = args.shelterId
@@ -113,6 +118,7 @@ class PetDetailFragment : Fragment() {
 
 
         PendingAdoptionDAO().getAdoptionList(shelterId).observe(viewLifecycleOwner){ snapShot ->
+            if(snapShot!=null)
             for ((key, value) in snapShot ) {
 
                 if (value.userId.equals(userId) && value.petId.equals(petId)) {
@@ -123,26 +129,6 @@ class PetDetailFragment : Fragment() {
         }
 
 
-//        FirebaseDatabaseSingleton.getSheltersReference().child(shelterId).child("pendingAdoptions").addValueEventListener(object: ValueEventListener {
-//
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if(snapshot?.getValue() != null) {
-//                    val paList: HashMap<String, HashMap<String, String>> =
-//                        snapshot.getValue() as HashMap<String, HashMap<String, String>>
-//                    for ((key, value) in paList) {
-//
-//                        if (value.get("userId").equals(userId) && value.get("petId").equals(petId)) {
-//                            binding.btnPetDetailsAdopt.isEnabled = false
-//                        }
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Log.w("PET DETAILS", "Failed to read value.", error.toException())
-//            }
-//
-//        })
 
 
         // Changed to DAO
@@ -150,7 +136,7 @@ class PetDetailFragment : Fragment() {
 
             if (!it.isNullOrEmpty()) {
                 for ((key, lovedPet) in it) {
-                    if (lovedPet?.shelterId!!.equals(shelter) && lovedPet?.petId.equals(petId)) {
+                    if (lovedPet?.shelterId!!.equals(shelterId) && lovedPet?.petId.equals(petId)) {
                         liked = lovedPet?.id
                         binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_24)
                     }
@@ -163,27 +149,7 @@ class PetDetailFragment : Fragment() {
         }
 
 
-//        val userRef = FirebaseDatabaseSingleton.getUsersReference().child(userId)
-//
-//        userRef.child("lovedPets").get().addOnSuccessListener {
-//            if(it.getValue() != null) {
-//
-//                for(ls in it.children){
-//                    val lovedPet: UserLovedPet? = ls.getValue(UserLovedPet::class.java)
-//                    if(lovedPet?.shelterId!!.equals(shelter) && lovedPet?.petId.equals(petId)){
-//                        liked = lovedPet?.id
-//                        binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_24)
-//                    }
-//                }
-//
-//                if (liked.isNullOrBlank()) {
-//                    binding.ivPetDetailsLikePet.setImageResource(R.drawable.ic_round_love_black_24)
-//                }
-//
-//
-//            }
-//
-//        }
+
 
         val userLovedPetDAO: UserLovedPetDAO = UserLovedPetDAO()
 
@@ -227,6 +193,7 @@ class PetDetailFragment : Fragment() {
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
+
         val latLng = LatLng(shelter?.latitude!!, shelter?.longitude!!)
         val markerOptions = MarkerOptions().position(latLng).title("Shelter")
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))

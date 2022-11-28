@@ -1,35 +1,31 @@
 package com.yadav.pawdoption.view
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.findFragment
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.yadav.pawdoption.R
 import com.yadav.pawdoption.model.Shelter
 import com.yadav.pawdoption.model.ShelterDonation
 import com.yadav.pawdoption.model.UserDonation
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
-import kotlinx.android.synthetic.main.sheltercard.view.*
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 
 class DonateFragment : Fragment() {
 
     val args: DonateFragmentArgs by navArgs()
-    lateinit var tvShelterTitle:TextView
-    lateinit var tvShelterDescription:TextView
-    lateinit var bDonate:Button
+    lateinit var tvShelterTitle: TextView
+    lateinit var tvShelterDescription: TextView
+    lateinit var bDonate: Button
     var currentUser: String = FirebaseDatabaseSingleton.getCurrentUid()
     lateinit var shelter: Shelter
 
@@ -50,7 +46,11 @@ class DonateFragment : Fragment() {
         tvShelterTitle.text = shelter.name?.uppercase()
         tvShelterDescription.text = shelter.description
         bDonate.setOnClickListener {
-            Toast.makeText(activity?.applicationContext,"Thank you for you donation.",Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                activity?.applicationContext,
+                "Thank you for you donation.",
+                Toast.LENGTH_LONG
+            ).show()
         }
 
 
@@ -61,21 +61,28 @@ class DonateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bDonate.setOnClickListener {
-            var userDonation : UserDonation = UserDonation(UUID.randomUUID().toString(),shelter.id,
+            var userDonation: UserDonation = UserDonation(
+                UUID.randomUUID().toString(), shelter.id,
                 view.findViewById<TextInputEditText>(R.id.ttComment).text.toString(),
                 view.findViewById<TextInputEditText>(R.id.ttAmount).text.toString().toDouble(),
-                LocalDateTime.now().toString())
+                LocalDateTime.now().toString()
+            )
 
-            var shelterDonation : ShelterDonation = ShelterDonation(userDonation.id,currentUser,
+            var shelterDonation: ShelterDonation = ShelterDonation(
+                userDonation.id, currentUser,
                 view.findViewById<TextInputEditText>(R.id.ttComment).text.toString(),
                 view.findViewById<TextInputEditText>(R.id.ttAmount).text.toString().toDouble(),
-                LocalDateTime.now().toString())
+                LocalDateTime.now().toString()
+            )
 
             FirebaseDatabaseSingleton.getUsersReference().child(currentUser).child("donations")
                 .child(userDonation.id!!).setValue(userDonation)
 
             FirebaseDatabaseSingleton.getSheltersReference().child(shelter.id!!).child("donations")
                 .child(userDonation.id!!).setValue(shelterDonation)
+
+
+            findNavController().navigate(R.id.userDonations)
 
         }
 

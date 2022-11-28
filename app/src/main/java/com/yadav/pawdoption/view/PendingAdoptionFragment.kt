@@ -65,8 +65,8 @@ class PendingAdoptionFragment : Fragment() {
                     var pet: ShelterPet? = null;
 
                         // Changed to the DAO
-                        PetDAO().getPet(shelterID, value.petId!!).addOnSuccessListener {
-                            pet = it.getValue(ShelterPet::class.java)
+                        PetDAO().getPet(value.petId!!, shelterID).addOnSuccessListener { p ->
+                            pet = p.getValue(ShelterPet::class.java)
 
                             var user: User? = null
 
@@ -96,10 +96,6 @@ class PendingAdoptionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // to navigate to the second fragment while click on the create note button (floating button)
-//        _binding?.button?.setOnClickListener {
-//            findNavController().navigate(R.id.action_pendingAdoptionFragment_to_confirmAdoptionFragment)
-//        }
     }
 
     override fun onDestroyView() {

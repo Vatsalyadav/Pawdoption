@@ -80,11 +80,7 @@ class PetListFragment : Fragment() {
             usersDAO.setCurrentUserTypeByUid(FirebaseDatabaseSingleton.getCurrentUid())
             usersDAO.getCurrentUserTypeByUid().observe(viewLifecycleOwner) {
                 Log.e("PetListFrag", "usersDAO.getCurrentUserTypeByUid() updated")
-//                if (it.equals("petAdopter"))
-//                    fabAddPet.visibility = View.GONE
-//                else {
-//                    fabAddPet.visibility = View.VISIBLE
-//                }
+
                 setBottomNavigation(it)
             }
         }
@@ -100,11 +96,7 @@ class PetListFragment : Fragment() {
             startActivity(intent);
         }
 
-//        var b = view.findViewById<Button>(R.id.sign_out_button).setOnClickListener {
-//            Firebase.auth.signOut()
-//            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-//                .navigate(R.id.loginFragment)
-//        }
+
         return view
     }
 
@@ -153,7 +145,7 @@ class PetListFragment : Fragment() {
                     pet.shelterId =
                         it.get(FirebaseDatabaseSingleton.getCurrentUid())!!.id.toString()
                     pet.shelterName =
-                        it.get(FirebaseDatabaseSingleton.getCurrentUid())!!.id.toString()
+                        it.get(FirebaseDatabaseSingleton.getCurrentUid())!!.name.toString()
                     currentShelterPetList.add(pet)
                 }
             }
@@ -210,6 +202,16 @@ class PetListFragment : Fragment() {
                 R.id.pending -> {
                     Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
                         .navigate(R.id.pendingAdoptionFragment)
+                    true
+                }
+                R.id.donations -> {
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.shelterAllDonations)
+                    true
+                }
+                R.id.loved -> {
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+                        .navigate(R.id.userDonations)
                     true
                 }
 //                TODO: Add others too

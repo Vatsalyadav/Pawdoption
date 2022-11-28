@@ -47,7 +47,6 @@
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:textColor="@color/black"
-
                     ></com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,23 +82,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
-            <CheckBox
-                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-                android:id="@+id/remember_me"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:buttonTint="@color/black"
-                android:text="@string/rememberMe"
-                android:textColor="@color/black"></CheckBox>
+
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/forget_password"
-                android:layout_alignParentEnd="true"
-                android:backgroundTint="@color/teal_200"
-                android:text="@string/forgetPassword"
+                android:backgroundTint="@color/white"
+                android:text= "Forget Password ? "
                 android:textColor="#121111">
 
             </Button>
@@ -112,7 +102,7 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/teal_700"
             android:text="@string/login"
-            android:textColor="@color/black"
+
             app:iconTint="#009688">
 
         </Button>
@@ -124,9 +114,8 @@
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/green"
             android:text="New User"
-            android:textColor="#131212"
             android:onClick="call_register"
             >
 

@@ -20,6 +20,7 @@ import com.yadav.pawdoption.model.ShelterPet
 import com.yadav.pawdoption.model.User
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.PendingAdoptionDAO
+import com.yadav.pawdoption.persistence.UsersDAO
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
@@ -92,7 +93,8 @@ class ConfirmAdoptionFragment : Fragment() {
                 val policy = ThreadPolicy.Builder()
                     .permitAll().build()
                 StrictMode.setThreadPolicy(policy)
-                run("khushalgondaliya872@gmail.com", "Request Approval", "Hi, " +
+
+                run(user?.email!!, "Request Approval", "Hi, " +
                     "Your request for the pet adoption is approved." +
                     "You can visit the shelter and complete the remaining procedure." +
                     "Thanks")
@@ -108,7 +110,7 @@ class ConfirmAdoptionFragment : Fragment() {
                 val policy = ThreadPolicy.Builder()
                     .permitAll().build()
                 StrictMode.setThreadPolicy(policy)
-                run("khushalgondaliya872@gmail.com", "Request denied", "Hi, " +
+                run(user?.email!!, "Request denied", "Hi, " +
                         "Your request for the pet adoption is denied." +
                         "You can create a request again" +
                         "Thanks")
@@ -124,6 +126,7 @@ class ConfirmAdoptionFragment : Fragment() {
 
 
 //    https://square.github.io/okhttp/recipes/
+//    https://stackoverflow.com/questions/45219379/how-to-make-an-api-request-in-kotlin
 
     fun run(email: String, subject: String, body: String) {
         val client = OkHttpClient()

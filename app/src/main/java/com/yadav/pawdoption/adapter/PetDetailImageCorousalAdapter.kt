@@ -1,4 +1,6 @@
 //https://stackoverflow.com/questions/41156698/loading-images-in-recyclerview-with-picasso-from-api
+//https://stackoverflow.com/questions/29991780/how-could-i-develop-an-image-carousel-on-android
+//https://www.geeksforgeeks.org/android-image-slider-using-viewpager-in-kotlin/
 package com.yadav.pawdoption.adapter
 
 import android.content.Context

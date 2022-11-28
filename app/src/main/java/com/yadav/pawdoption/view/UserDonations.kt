@@ -29,8 +29,12 @@ class UserDonations : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_user_donations, container, false)
+
+        activity?.title = "My Donations"
+
         userDonationsAdapter = UserDonationsAdapter(requireContext(), arrayListOf())
         linearLayoutManager = LinearLayoutManager(activity)
         val recyclerView: RecyclerView = view.findViewById(R.id.rvUserDonation)
@@ -57,23 +61,7 @@ class UserDonations : Fragment() {
                 userDonationsAdapter.notifyDataSetChanged()
             }
 
-//            for (key in keys) {
-//
-//                if (currentUser == it.get(key)!!.id) {
-//
-//                    if(it.get(key)!!.donations != null){
-//                        var donationKeys = it.get(key)!!.donations!!.keys
-//                        for (dk in donationKeys) {
-//                            donations.add(it.get(key)!!.donations!!.get(dk)!!)
-//                        }
-//                    }
-//
-//                }
-//            }
-//
-//            userDonationsAdapter = UserDonationsAdapter(requireContext(), donations)
-//            recyclerView.adapter = userDonationsAdapter
-//            userDonationsAdapter.notifyDataSetChanged()
+
         }
 
 

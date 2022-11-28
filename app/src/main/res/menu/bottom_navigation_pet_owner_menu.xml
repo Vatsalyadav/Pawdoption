@@ -7,8 +7,8 @@
     <item
         android:id="@+id/loved"
         android:enabled="true"
-        android:icon="@drawable/ic_round_love_black_24"
-        android:title="Love"/>
+        android:icon="@drawable/ic_donations"
+        android:title="Donations"/>
     <item
         android:id="@+id/pets"
         android:enabled="true"

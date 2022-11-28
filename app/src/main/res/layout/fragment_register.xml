@@ -29,6 +29,7 @@
             android:id="@+id/radio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -66,7 +67,7 @@
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="clear_text"
-                app:helperText="@string/required"
+                app:helperText="Required"
                 app:helperTextTextColor="@color/test"
                 app:startIconDrawable="@drawable/ic_baseline_person_24">
 
@@ -86,6 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/lastName"
+                app:helperText="Required"
                 android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
@@ -176,7 +178,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/address2"
+                android:id="@+id/address_2"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -344,8 +346,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:helperText="@string/required"
-                app:helperTextTextColor="@color/test"
+                app:helperTextTextColor="#d00000"
                 android:hint="Address Line 1"
                 android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/black"
@@ -368,8 +369,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:helperText="@string/required"
-                app:helperTextTextColor="@color/test"
+                app:helperTextTextColor="#d00000"
                 android:hint="Address Line 2"
                 android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/black"
@@ -392,8 +392,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:helperText="@string/required"
-                app:helperTextTextColor="@color/test"
+                app:helperTextTextColor="#d00000"
                 android:hint="Write about shelter in you own words"
                 android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/black"
