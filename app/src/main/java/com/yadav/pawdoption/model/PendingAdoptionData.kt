@@ -1,4 +1,4 @@
-package com.yadav.pawdoption.dataclass
+package com.yadav.pawdoption.model
 
 import com.yadav.pawdoption.model.PendingAdoption
 import com.yadav.pawdoption.model.ShelterPet

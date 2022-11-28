@@ -1,4 +1,4 @@
-package com.yadav.pawdoption.dataclass
+package com.yadav.pawdoption.model
 
 import com.google.gson.annotations.SerializedName
 

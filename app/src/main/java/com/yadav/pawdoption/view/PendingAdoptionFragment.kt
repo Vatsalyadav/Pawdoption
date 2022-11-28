@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yadav.pawdoption.adapter.PendingAdoptionViewAdapter
 import com.yadav.pawdoption.databinding.FragmentPendingAdoptionsBinding
-import com.yadav.pawdoption.dataclass.PendingAdoptionData
+import com.yadav.pawdoption.model.PendingAdoptionData
 import com.yadav.pawdoption.model.ShelterPet
 import com.yadav.pawdoption.model.User
 import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
