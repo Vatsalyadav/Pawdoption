@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.ViewPager
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -65,6 +66,9 @@ class PetDetailFragment : Fragment() {
 
         if(FirebaseDatabaseSingleton.getCurrentUserType() == "shelterOwner"){
             binding.btnPetDetailsAdopt.visibility = View.GONE
+            binding.ivPetDetailsSharePet.visibility = View.GONE
+            binding.ivPetDetailsLikePet.visibility = View.GONE
+
         }
 
         viewPager = binding.vpPetDetailsImage
@@ -77,6 +81,9 @@ class PetDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
 
         // Changed to DAO
         SheltersDAO().getShelterById(shelterId).addOnSuccessListener { shelterDataSnapshot ->
@@ -107,9 +114,11 @@ class PetDetailFragment : Fragment() {
                                     tvPetDetailsShelterDescription.text = shelter?.description
                                 }
 
+
                                 val mapFragment =
                                     childFragmentManager.findFragmentById(R.id.mapPetDetailsShelterLocation) as SupportMapFragment?
                                 mapFragment?.getMapAsync(callback)
+
                             }
                         }
                 }
