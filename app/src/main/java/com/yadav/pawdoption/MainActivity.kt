@@ -33,10 +33,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
+    // Check if user is signed in (non-null) and update UI accordingly.
     public override fun onStart() {
         super.onStart()
         auth = Firebase.auth
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
             FirebaseDatabaseSingleton.setCurrentUid(currentUser.uid)
@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+//    Setup bottom navigation bar as per logged in user type
     fun setBottomNavigation(userType: String) {
         bottomNavigationView = if (userType == "petAdopter")
             findViewById(R.id.bottom_nav_pet_owner)
@@ -98,25 +99,11 @@ class MainActivity : AppCompatActivity() {
                         .navigate(R.id.userDonations)
                     true
                 }
-//                TODO: Add others too
                 else -> true
             }
 
         }
     }
-
-
-//    override fun onBackPressed() {
-//        val fragment = this.supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
-//        val currentFragment =             fragment?.childFragmentManager?.fragments?.get(0) as? FragmentOnBackPressListener
-//        if (currentFragment != null) {
-//            currentFragment.onBackPressed().takeIf { !it }?.let {
-//                super.onBackPressed()
-//            }         } else {
-//                super.onBackPressed()
-//            }
-//    }
-
 
 
 }

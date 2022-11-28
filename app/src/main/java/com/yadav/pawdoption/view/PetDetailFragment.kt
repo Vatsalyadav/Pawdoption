@@ -1,3 +1,4 @@
+//https://www.geeksforgeeks.org/android-image-slider-using-viewpager-in-kotlin/
 package com.yadav.pawdoption.view
 
 import android.content.Intent

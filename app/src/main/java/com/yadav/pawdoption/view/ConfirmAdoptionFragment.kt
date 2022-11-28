@@ -126,6 +126,7 @@ class ConfirmAdoptionFragment : Fragment() {
 
 
 //    https://square.github.io/okhttp/recipes/
+//    https://stackoverflow.com/questions/45219379/how-to-make-an-api-request-in-kotlin
 
     fun run(email: String, subject: String, body: String) {
         val client = OkHttpClient()
