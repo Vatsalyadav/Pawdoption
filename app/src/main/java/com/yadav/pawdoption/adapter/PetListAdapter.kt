@@ -67,7 +67,7 @@ class PetListAdapter(private val context: Context, private var petsList: Mutable
         return ViewHolder(view)
     }
 
-//    Bind and inflate pet list item with pet details like name, shelter name, image, love and share buttons
+    //    Bind and inflate pet list item with pet details like name, shelter name, image, love and share buttons
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val circularProgressDrawable = CircularProgressDrawable(context)
         val usersDAO = UsersDAO()
@@ -117,19 +117,31 @@ class PetListAdapter(private val context: Context, private var petsList: Mutable
         }
         var currentLovedPets = petsList[position].lovedPetsList
 
+        if (FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER")) {
+            viewHolder.petLoveImage.visibility = View.VISIBLE
+        } else {
+            viewHolder.petLoveImage.visibility = View.GONE
+        }
+
         viewHolder.petLoveImage.setOnClickListener { view ->
             if (viewHolder.petLoveImage.tag.toString() == "false") {
                 viewHolder.petLoveImage.setImageResource(R.drawable.ic_round_love_24)
                 viewHolder.petLoveImage.tag = petsList[position].shelterId + petsList[position].id
-                val userLovedPet = UserLovedPet(UUID.randomUUID().toString(), petsList[position].id, petsList[position].shelterId)
-                currentLovedPets.put(userLovedPet.id!!,userLovedPet)
-                usersDAO.setPetToLoved(FirebaseDatabaseSingleton.getCurrentUid(),currentLovedPets)
+                val userLovedPet = UserLovedPet(
+                    UUID.randomUUID().toString(),
+                    petsList[position].id,
+                    petsList[position].shelterId
+                )
+                currentLovedPets.put(userLovedPet.id!!, userLovedPet)
+                usersDAO.setPetToLoved(FirebaseDatabaseSingleton.getCurrentUid(), currentLovedPets)
             } else {
                 viewHolder.petLoveImage.setImageResource(R.drawable.ic_round_love_black_24)
                 var filteredList = currentLovedPets.filter {
-                    it.value.shelterId + it.value.petId != viewHolder.petLoveImage.tag }
+                    it.value.shelterId + it.value.petId != viewHolder.petLoveImage.tag
+                }
                 viewHolder.petLoveImage.tag = "false"
-                usersDAO.setPetToLoved(FirebaseDatabaseSingleton.getCurrentUid(),
+                usersDAO.setPetToLoved(
+                    FirebaseDatabaseSingleton.getCurrentUid(),
                     filteredList as HashMap<String, UserLovedPet>
                 )
             }
