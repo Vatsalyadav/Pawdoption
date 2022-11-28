@@ -5,6 +5,7 @@ import com.yadav.pawdoption.model.Appointment
 import com.yadav.pawdoption.model.BookedSlot
 import com.yadav.pawdoption.model.Veterinarian
 
+
 class AppointmentDAO: IAppointmentDAO {
     override fun createSchedule(shelterId: String, vet: Veterinarian) {
         val sheltersReference = FirebaseDatabaseSingleton.getSheltersReference()
