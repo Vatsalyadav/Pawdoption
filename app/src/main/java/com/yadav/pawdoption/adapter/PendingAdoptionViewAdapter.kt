@@ -9,8 +9,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.yadav.pawdoption.databinding.PendingAdoptionBinding
-import com.yadav.pawdoption.dataclass.PendingAdoptionData
-import com.yadav.pawdoption.model.PendingAdoption
+import com.yadav.pawdoption.model.PendingAdoptionData
 import com.yadav.pawdoption.view.PendingAdoptionFragmentDirections
 
 
