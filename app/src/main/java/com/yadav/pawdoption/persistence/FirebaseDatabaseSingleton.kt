@@ -9,6 +9,7 @@ import com.google.firebase.ktx.Firebase
 
 
 // Code Reference 7: https://blog.mindorks.com/how-to-create-a-singleton-class-in-kotlin
+//https://firebase.google.com/docs/database/android/read-and-write
 object FirebaseDatabaseSingleton {
 
     private val database = Firebase.database
