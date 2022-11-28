@@ -1,8 +1,3 @@
-/**
- *  This file represents the the RecyclerView Adapter and ViewHolder for Notes.
- *  @author Vatsal Yadav - B00893030
- */
-
 package com.yadav.pawdoption.adapter
 
 import android.content.Context
@@ -30,7 +25,8 @@ import kotlin.collections.HashMap
 
 
 // Code Reference: https://developer.android.com/develop/ui/views/layout/recyclerview#kotlin
-
+// https://stackoverflow.com/a/35306315
+// https://github.com/bumptech/glide
 class PetListAdapter(private val context: Context, private var petsList: MutableList<ShelterPet>) :
     RecyclerView.Adapter<PetListAdapter.ViewHolder>() {
 
@@ -71,8 +67,8 @@ class PetListAdapter(private val context: Context, private var petsList: Mutable
         return ViewHolder(view)
     }
 
+//    Bind and inflate pet list item with pet details like name, shelter name, image, love and share buttons
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        // https://stackoverflow.com/a/35306315
         val circularProgressDrawable = CircularProgressDrawable(context)
         val usersDAO = UsersDAO()
         circularProgressDrawable.strokeWidth = 5f

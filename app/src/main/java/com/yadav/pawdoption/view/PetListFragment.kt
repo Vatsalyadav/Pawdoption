@@ -1,8 +1,3 @@
-/**
- *  This file represents the First Fragment that shows the list of Notes
- *  and a FloatingActionButton to create a new Note
- *  @author Vatsal Yadav - B00893030
- */
 package com.yadav.pawdoption.view
 
 import android.annotation.SuppressLint
@@ -29,6 +24,7 @@ import com.yadav.pawdoption.persistence.FirebaseDatabaseSingleton
 import com.yadav.pawdoption.persistence.SheltersDAO
 import com.yadav.pawdoption.persistence.UsersDAO
 
+// Code Reference: https://firebase.google.com/docs/database/android/read-and-write
 
 class PetListFragment : Fragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -39,12 +35,10 @@ class PetListFragment : Fragment() {
     private lateinit var searchView: SearchView
     private var petsList: MutableList<ShelterPet> = mutableListOf()
 
-    //added button but was removed
     private var _binding: FragmentUserProfileBinding? = null
 
     private val binding get() = _binding!!
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -73,18 +67,17 @@ class PetListFragment : Fragment() {
 
         val fabAddPet = view.findViewById<FloatingActionButton>(R.id.fabAddPet)
 
-
+//      Setup bottom navigation bar as per user type
         if (FirebaseDatabaseSingleton.getCurrentUser() == null) {
             FirebaseDatabaseSingleton.setCurrentUser()
 
             usersDAO.setCurrentUserTypeByUid(FirebaseDatabaseSingleton.getCurrentUid())
             usersDAO.getCurrentUserTypeByUid().observe(viewLifecycleOwner) {
-                Log.e("PetListFrag", "usersDAO.getCurrentUserTypeByUid() updated")
-
                 setBottomNavigation(it)
             }
         }
 
+//      Change add pet FAB visibility as per user type
         if (FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER"))
             fabAddPet.visibility = View.GONE
         else {
@@ -100,6 +93,7 @@ class PetListFragment : Fragment() {
         return view
     }
 
+//  Filter pet list by pet breed for searching
     private fun filterList(text: String) {
         var filteredList: MutableList<ShelterPet> = mutableListOf()
         for (pet in petsList) {
@@ -111,6 +105,7 @@ class PetListFragment : Fragment() {
         petListAdapter.setFilteredList(filteredList)
     }
 
+//    Setup recycler view for pet list
     private fun setupRecyclerView(view: View) {
         petListAdapter = PetListAdapter(requireContext(), mutableListOf())
         linearLayoutManager = LinearLayoutManager(activity)
@@ -123,7 +118,6 @@ class PetListFragment : Fragment() {
 
             if (FirebaseDatabaseSingleton.getCurrentUserType().uppercase().equals("PETADOPTER"))
                 usersDAO.getLovedPetsByUid(FirebaseDatabaseSingleton.getCurrentUid()).observe(viewLifecycleOwner) {
-                    Log.e("LobvedPets", "it: " + it)
                     petsList = getAllPets(item, it)
                     petListAdapter = PetListAdapter(requireContext(), petsList)
                     recyclerView.adapter = petListAdapter
@@ -137,6 +131,7 @@ class PetListFragment : Fragment() {
         }
     }
 
+//    Fetch pets for the logged in shelter user
     private fun getCurrentShelterPets(it: HashMap<String, Shelter>): MutableList<ShelterPet> {
         val currentShelterPetList: MutableList<ShelterPet> = mutableListOf()
         if (it.get(FirebaseDatabaseSingleton.getCurrentUid())?.pets != null) {
@@ -153,6 +148,7 @@ class PetListFragment : Fragment() {
         return currentShelterPetList
     }
 
+//    Get all pets from all shelters for user
     private fun getAllPets(it: HashMap<String, Shelter>, lovedPetsList: HashMap<String,UserLovedPet>): MutableList<ShelterPet> {
         val allPetList: MutableList<ShelterPet> = mutableListOf()
         for (shelter in it) {
@@ -168,8 +164,8 @@ class PetListFragment : Fragment() {
         return allPetList
     }
 
+    //    Setup bottom navigation bar as per logged in user type
     fun setBottomNavigation(userType: String) {
-        Log.e("PetList", "userType: " + userType)
         bottomNavigationView = if (userType == "petAdopter")
             activity?.findViewById(R.id.bottom_nav_pet_owner)!!
         else
@@ -214,7 +210,6 @@ class PetListFragment : Fragment() {
                         .navigate(R.id.userDonations)
                     true
                 }
-//                TODO: Add others too
                 else -> true
             }
 
