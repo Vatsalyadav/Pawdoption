@@ -1,11 +1,12 @@
+📄 [Download Full Documentation (PDF)](CSCI5708_Group5_Design.pdf)
 
-Group - 05  
-Project Name - Pawdoption
+CSCI5708 – Mobile Computing (Group - 05)  
+Pawdoption App
 
-Group Members:
+Contributors:
 
-Aditya Mahale – B00867619  
-Khushalkumar Maganbhai Gondaliya – B00912092  
-Kishan Mahendrabhai Savaliya - B00896729  
-Navya Jayapal -B00886554  
-Vatsal Yadav – B00893030
+Aditya Mahale   
+Khushalkumar Maganbhai Gondaliya  
+Kishan Mahendrabhai Savaliya  
+Navya Jayapal  
+Vatsal Yadav
